@@ -2,7 +2,7 @@
  * capability-e2e — capability proof for the showcase (real browser).
  *
  * How to run: start `pnpm --filter showcase dev` (:3010), then `node apps/showcase/tests/capability-e2e.mjs`.
- * Assertions cover the gallery directory (47 templates / four tabs / sty- pinned first / thumbnails
+ * Assertions cover the gallery directory (43 curated templates / four tabs / sty- pinned first / thumbnails
  * reachable) and that **platform capabilities actually work inside the templates** — motion
  * (Animate + motion.counter), multi-page nav.to, in-page nav.scroll (back to top + landing offset),
  * overlay.open/close (sub-page + onOverlayInit payload + cross-page write-back), Sortable drag
@@ -83,10 +83,13 @@ for (const tab of tabIds) {
 }
 check('Gallery: first card of every tab is a pinned sty- style piece', pinnedOk, JSON.stringify(perTabFirst));
 
+// 43 = the upstream set (47) minus the four curated out by exhibits.config.json.
+// Deliberately hardcoded: a count drift here means templates were lost or leaked in.
+const EXPECTED_TEMPLATES = 43;
 const templateTotal = Object.values(perTabCount).reduce((sum, n) => sum + n, 0);
 check(
-  'Gallery: all 47 templates are clickable (sum across four tabs)',
-  templateTotal === 47,
+  `Gallery: all ${EXPECTED_TEMPLATES} templates are clickable (sum across four tabs)`,
+  templateTotal === EXPECTED_TEMPLATES,
   `perTab=${JSON.stringify(perTabCount)} → total=${templateTotal}`,
 );
 

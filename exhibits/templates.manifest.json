@@ -1,6 +1,6 @@
 {
   "$comment": "生成物 —— 由 monorepo 的 scripts/sync-showcase-exhibits.mjs 生成，请勿手改。 元数据已投影为英文；lang 字段标记该模板正文实际用的语言（过渡期中文回退）。",
-  "generatedAt": "2026-09-25T06:45:28.332Z",
+  "generatedAt": "2026-09-25T07:11:23.887Z",
   "tabs": [
     {
       "id": "marketing",
@@ -235,46 +235,6 @@
         "export"
       ],
       "priority": "P0",
-      "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
-    },
-    {
-      "id": "mkt-ads",
-      "tab": "marketing",
-      "group": null,
-      "title": "App Promo Ad (Portrait Poster)",
-      "summary": "Poster-grade portrait creative in a 9:16 frame: a three-layer night background, an SVG-drawn glowing key visual (birds and feathers), typographic breaks, and a drawn capsule CTA — with a built-in 9:16 export preset.",
-      "tags": [
-        "advertising",
-        "poster",
-        "export"
-      ],
-      "pages": 1,
-      "capabilities": [
-        "export"
-      ],
-      "priority": "P1",
-      "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
-    },
-    {
-      "id": "mkt-social",
-      "tab": "marketing",
-      "group": null,
-      "title": "Social Post Cover",
-      "summary": "A 3:4 portrait post cover: coral display headline with manual line breaks, numbered highlight cards, and a brand bar — exportable at 3:4 or 1:1.",
-      "tags": [
-        "social",
-        "cover",
-        "export"
-      ],
-      "pages": 1,
-      "capabilities": [
-        "export"
-      ],
-      "priority": "P1",
       "status": "built",
       "lang": "zh",
       "thumbLang": "zh"
@@ -688,26 +648,6 @@
       "thumbLang": "zh"
     },
     {
-      "id": "sty-nature",
-      "tab": "marketing",
-      "group": null,
-      "title": "Natural Palette (Pet Food Brand)",
-      "summary": "Moss green, oat, and terracotta earth tones with organic arcs and soft-cornered shadows: a split hero with library photography, a three-column ingredients section, a sustainability number band, and two monthly subscription cards.",
-      "tags": [
-        "natural palette",
-        "visual style",
-        "pet brand"
-      ],
-      "pages": 1,
-      "capabilities": [
-        "motion"
-      ],
-      "priority": "P0",
-      "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
-    },
-    {
       "id": "sty-luxe",
       "tab": "marketing",
       "group": null,
@@ -817,26 +757,6 @@
         "split screen",
         "visual style",
         "duality"
-      ],
-      "pages": 1,
-      "capabilities": [
-        "motion"
-      ],
-      "priority": "P0",
-      "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
-    },
-    {
-      "id": "sty-mesh-gradient",
-      "tab": "marketing",
-      "group": null,
-      "title": "Mesh Gradient (AI Landing Page)",
-      "summary": "A deep ink-purple ground layered with four soft-focus color clouds forming a mesh gradient, plus glassmorphic cards: a product UI mock-up, three capability cards, a metrics band, and two pricing cards.",
-      "tags": [
-        "mesh gradient",
-        "glassmorphism",
-        "saas landing"
       ],
       "pages": 1,
       "capabilities": [

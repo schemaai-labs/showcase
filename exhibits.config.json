@@ -1,0 +1,10 @@
+{
+  "$comment": "展示站策展配置：控制哪些模板不上公开展示站。模板真源仍在 monorepo（产品侧继续用），这里只是不下发。由 monorepo 的 scripts/sync-showcase-exhibits.mjs 读取 —— 被排除的模板不会进入 exhibits/，也不会出现在画廊目录里。",
+  "$why": "画廊是**编辑式精选**，不是模板库的全量镜像。混排过多相互冲突的风格会削弱整体的设计感。",
+  "exclude": [
+    "sty-nature",
+    "sty-mesh-gradient",
+    "mkt-ads",
+    "mkt-social"
+  ]
+}
