@@ -1,0 +1,927 @@
+{
+  "$comment": "生成物 —— 由 monorepo 的 scripts/sync-showcase-exhibits.mjs 从 packages/ai-knowledge 真源复制，请勿手改。",
+  "generatedAt": "2026-09-25T04:27:59.402Z",
+  "tabs": [
+    {
+      "id": "marketing",
+      "label": "营销 / 增长"
+    },
+    {
+      "id": "product",
+      "label": "产品 / 应用",
+      "groups": [
+        {
+          "id": "saas",
+          "label": "SaaS 工具"
+        },
+        {
+          "id": "biz",
+          "label": "业务系统"
+        },
+        {
+          "id": "mobile",
+          "label": "移动端"
+        },
+        {
+          "id": "design",
+          "label": "设计系统"
+        }
+      ]
+    },
+    {
+      "id": "content",
+      "label": "内容 / 品牌"
+    },
+    {
+      "id": "interaction",
+      "label": "交互 / 动效"
+    }
+  ],
+  "templates": [
+    {
+      "id": "mkt-landing",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "SaaS 产品官网 / 落地页",
+      "summary": "转化导向的单页官网：首屏入场编排 + 数字滚动、能力卡视图揭示、三档定价与 FAQ——开箱即用的营销起点。",
+      "tags": [
+        "落地页",
+        "官网",
+        "转化"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "app-dashboard",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "saas",
+      "title": "数据看板（经营驾驶舱）",
+      "summary": "工具类看板标准骨架：KPI 行 + 真实图表（折线 / 环形）+ 明细表，浅灰画布白卡风格、零动效工具页纪律。",
+      "tags": [
+        "看板",
+        "图表",
+        "管理后台"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "mkt-campaign",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "活动专题页（大促 / 节日）",
+      "summary": "限时大促专题：暖色节日氛围 + 数字滚动 + 优惠券领取 + 爆款清单与售罄进度 + 规则折叠。",
+      "tags": [
+        "活动页",
+        "大促",
+        "专题"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "app-crud",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "saas",
+      "title": "数据表格管理页（CRUD）",
+      "summary": "后台最通用列表形态：页头动作 + 筛选卡（关键词 / 分类 / 状态）+ 数据表格 + 分页。",
+      "tags": [
+        "表格",
+        "列表",
+        "管理页"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "biz-crm",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "biz",
+      "title": "CRM 客户管理（列表 + 详情）",
+      "summary": "主从式业务页：数据驱动的客户列表（循环渲染）+ 客户档案（字段 / 跟进时间线 / 备注）。",
+      "tags": [
+        "CRM",
+        "客户",
+        "主从"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "data"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "mob-app",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "mobile",
+      "title": "移动端应用（引导 → 首页 → 详情）",
+      "summary": "三页移动端骨架：引导页入场编排、首页目标卡与课程列表、底部标签栏、课程详情吸底行动栏。",
+      "tags": [
+        "移动端",
+        "App",
+        "多页"
+      ],
+      "pages": 3,
+      "capabilities": [
+        "motion",
+        "data"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "ctn-report",
+      "kind": "app-template",
+      "tab": "content",
+      "title": "文档 / 报告（数据报告）",
+      "summary": "长文档报告：阅读进度条 + 关键指标 + 图表（趋势 / 构成）+ 章节排版 + 明细表 + 方法论说明。",
+      "tags": [
+        "报告",
+        "文档",
+        "数据"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "itr-scroll",
+      "kind": "app-template",
+      "tab": "interaction",
+      "title": "滚动叙事长页",
+      "summary": "首屏一次性入场 + 折叠线下分带 scrub（节奏档位 soft/standard/emphasis）：深色产品叙事页。",
+      "tags": [
+        "滚动叙事",
+        "动效",
+        "长页"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "itr-kanban",
+      "kind": "app-template",
+      "tab": "interaction",
+      "title": "看板拖拽（跨列 + 把手）",
+      "summary": "三列数据驱动看板：拖动把手跨列搬运、三态 onChange 回写、列头计数实时联动。",
+      "tags": [
+        "拖拽",
+        "看板",
+        "排序"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "drag",
+        "data"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "mkt-edm",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "EDM 邮件模板",
+      "summary": "邮件安全单列结构（600px）：品牌栏 + 渐变 Hero + 要点正文 + 满宽 CTA + 合规页脚；导出 HTML 快照与图片双轨。",
+      "tags": [
+        "EDM",
+        "邮件",
+        "导出"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "export"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "mkt-ads",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "应用推广广告（竖版海报）",
+      "summary": "海报级竖版推广素材（9:16 主画幅）：三层夜色背景 + SVG 手绘发光主视觉（飞鸟/羽毛）+ 排印断层 + 绘制胶囊 CTA；导出预设「竖版 9:16」。",
+      "tags": [
+        "广告",
+        "海报",
+        "导出"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "export"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "mkt-social",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "Social 图文封面",
+      "summary": "3:4 竖版笔记封面：珊瑚色大标题（手工断行）+ 编号亮点卡 + 品牌条；导出 3:4 / 1:1。",
+      "tags": [
+        "社交",
+        "封面",
+        "导出"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "export"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "mkt-poster",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "海报 / 电子邀请函",
+      "summary": "A4 竖版海报构图：题字 + 金色主标题 + 信息行 + 议程 + 二维码报名区；导出 PNG / PDF 两用。",
+      "tags": [
+        "海报",
+        "邀请函",
+        "导出"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "export"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "app-settings",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "saas",
+      "title": "设置中心",
+      "summary": "设置页标准形态：左分区导航（menu）+ 基础信息表单 / 通知开关组 / 危险区（转让所有权入口）。",
+      "tags": [
+        "设置",
+        "表单",
+        "管理页"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "app-wall",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "saas",
+      "title": "数据大屏（监控墙）",
+      "summary": "深色大屏：线路状态栏 + 四格 KPI（数字滚动）+ 双图表 + 事件流；仅数字滚动一处动效（大屏克制）。",
+      "tags": [
+        "大屏",
+        "监控",
+        "图表"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "biz-ticket",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "biz",
+      "title": "工单 / 客服台",
+      "summary": "队列-详情主从：数据驱动工单队列（List）+ 工单详情（摘要头 / 字段 / 描述 / 处理时间线 / 动作）。",
+      "tags": [
+        "工单",
+        "客服",
+        "主从"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "data"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "biz-approval",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "biz",
+      "title": "审批流程",
+      "summary": "审批三件套：发起（steps 进度 + 表单）+ 待办（行内通过 / 驳回）+ 审批记录时间线。",
+      "tags": [
+        "审批",
+        "流程",
+        "表单"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "ds-showcase",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "design",
+      "title": "设计系统 / 组件库展示",
+      "summary": "设计令牌陈列：色板 / 字阶 / 按钮与标签变体 / 表单控件 / 间距刻度（平台组件的活样例页）。",
+      "tags": [
+        "设计系统",
+        "规范",
+        "组件库"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "app-prototype",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "saas",
+      "title": "可点击原型（多页流程）",
+      "summary": "三页跳转链（登录 → 工作台 → 项目详情）：整卡可点（container onClick + nav.to），流程原型起点。",
+      "tags": [
+        "原型",
+        "多页",
+        "流程"
+      ],
+      "pages": 3,
+      "capabilities": [],
+      "priority": "P2",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "ctn-deck",
+      "kind": "app-template",
+      "tab": "content",
+      "title": "Pitch Deck（多页翻页）",
+      "summary": "五页提案演示（封面 / 洞察 / 方案 / 数据 / 收尾）：每页页码与翻页按钮（nav.to），深浅页交替节奏。",
+      "tags": [
+        "演示",
+        "提案",
+        "多页"
+      ],
+      "pages": 5,
+      "capabilities": [],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "ctn-brand",
+      "kind": "app-template",
+      "tab": "content",
+      "title": "品牌视觉套件",
+      "summary": "品牌手册：标志规范 / 主辅四色体系 / 字体三档 / 应用示例（名片·信纸·包装）/ 使用禁忌。",
+      "tags": [
+        "品牌",
+        "VI",
+        "规范"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "itr-pinned",
+      "kind": "app-template",
+      "tab": "interaction",
+      "title": "钉住叙事 + 视差 + 叠层",
+      "summary": "滚动叙事进阶三件套：sticky 行程钉住（分段 scrub 换幕）+ 双速率视差光斑 + 纯 CSS 叠层卡。",
+      "tags": [
+        "钉住",
+        "视差",
+        "滚动叙事"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "itr-value",
+      "kind": "app-template",
+      "tab": "interaction",
+      "title": "值插值（打字机 + 数字滚动）",
+      "summary": "首屏打字机逐字揭示 + 三组指标数字滚动；默认文本 / 默认数字即终帧（降级面完整）。",
+      "tags": [
+        "打字机",
+        "数字滚动",
+        "动效"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "itr-pointer",
+      "kind": "app-template",
+      "tab": "interaction",
+      "title": "指针特效（磁吸 + 跟随光标）",
+      "summary": "磁吸购票 CTA（一屏一处）+ 装饰光斑阻尼跟随（pointer-events 穿透、内容之下）；触屏静置。",
+      "tags": [
+        "磁吸",
+        "光标",
+        "动效"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "itr-loop",
+      "kind": "app-template",
+      "tab": "interaction",
+      "title": "交互闭环（行内编辑 + 危险确认）",
+      "summary": "事件驱动双闭环：行内编辑（draft 草稿态 + 成对标志）+ 删除确认浮层（输入原名方可提交、结果回传）。",
+      "tags": [
+        "行内编辑",
+        "确认流",
+        "事件轨"
+      ],
+      "pages": 2,
+      "capabilities": [
+        "data"
+      ],
+      "priority": "P2",
+      "status": "built",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "sty-lineart",
+      "kind": "app-template",
+      "tab": "content",
+      "title": "线描插画风（独立插画工作室）",
+      "summary": "纸白底 + 单色墨线：细描边 SVG 插画（无填充只走线）、大字距素净排印、细线作品框与自述带——插画即内容。",
+      "tags": [
+        "线描",
+        "视觉风格",
+        "插画工作室"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-type-lab",
+      "kind": "app-template",
+      "tab": "content",
+      "title": "实验字体风（字体设计工作室）",
+      "summary": "文字即图形：三层叠压实心 / 描边 / 反白实验标题、极端字距、字族展示卡与字符集平铺带，荧光黄绿点睛。",
+      "tags": [
+        "实验字体",
+        "视觉风格",
+        "字体发布"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-clay",
+      "kind": "app-template",
+      "tab": "content",
+      "title": "粘土拟物风（手作软陶工作室）",
+      "summary": "奶油底 + 糖果色软块：双影立体（外投影 + 内高光）、40px 级大圆角、捏出来的软形状插画与软圆课程卡。",
+      "tags": [
+        "粘土拟物",
+        "视觉风格",
+        "手作工作室"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-lamp-illust",
+      "kind": "app-template",
+      "tab": "content",
+      "title": "灯具插画风（夜晚生活品牌）",
+      "summary": "深夜蓝紫底 + 暖黄光晕：手绘灯插画（台灯 / 吊灯 / 落地灯，灯罩下带光池）、「一晚上的光」叙事与线下空间。",
+      "tags": [
+        "灯具插画",
+        "视觉风格",
+        "夜晚生活"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-organic",
+      "kind": "app-template",
+      "tab": "content",
+      "title": "有机曲线风（肢体工作室）",
+      "summary": "雾青 / 灰粉柔和渐变 + 连续流动的巨幅曲线与 blob：非对称圆润版面、动线插画与呼吸感留白。",
+      "tags": [
+        "有机曲线",
+        "视觉风格",
+        "肢体工作室"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-material",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "saas",
+      "title": "材料设计风（任务管理产品页）",
+      "summary": "Material Design 3 语汇：色调调色板分层（surface → primary-container）、大圆角与高程阴影、导航轨 + 任务列表 + FAB 的真实界面模拟。",
+      "tags": [
+        "材料设计",
+        "视觉风格",
+        "SaaS 产品页"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-datadash",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "saas",
+      "title": "数据看板风（NOC 监控大屏）",
+      "summary": "近黑蓝画布 + 荧光数据色 + 等宽数字：KPI 五连（含迷你趋势）／折线区 + 负载环形／事件流表——图表全部手写 SVG，适合大屏值班。",
+      "tags": [
+        "数据看板",
+        "视觉风格",
+        "监控大屏"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-terminal",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "saas",
+      "title": "程序员终端风（CLI 工具落地页）",
+      "summary": "终端配色 + 等宽字体 + 提示符行与光标：终端窗口首屏（安装命令 + 真实输出）、man 风格参数表、性能基准对照与 QUICKSTART 分步。",
+      "tags": [
+        "终端",
+        "视觉风格",
+        "开发者工具"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-nature",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "自然生态风（宠物天然粮品牌）",
+      "summary": "苔绿 / 燕麦 / 陶土大地色系 + 有机弧带与圆角柔影：左文右图首屏（素材库照片）、成分三栏与可持续数字带、按月订购双卡。",
+      "tags": [
+        "自然生态",
+        "视觉风格",
+        "宠物品牌"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-luxe",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "奢华极简风（高级珠宝私享会）",
+      "summary": "近黑底 + 香槟金细线 + 极细字重大行距：居中题字首屏、系列细线条目、主作品大幅照片（金细框 + 玻璃题注）、私享服务三栏。",
+      "tags": [
+        "奢华极简",
+        "视觉风格",
+        "高级珠宝"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-fashion",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "时尚大片风（年度企划特辑）",
+      "summary": "黑 / 白 / 酸性红 + 超大刊头排印：全幅封面压题、编号 LOOK 条目、短片放映区（video 组件 + 素材海报图）与订阅 CTA。",
+      "tags": [
+        "时尚大片",
+        "视觉风格",
+        "刊物特辑"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-scroll-narrative",
+      "kind": "app-template",
+      "tab": "interaction",
+      "title": "叙事滚动风（城市的一天）",
+      "summary": "滚动驱动的章节叙事：阅读进度条（motion.progress）+ 三章 scrub（motion.scroll rhythm 分档，回退可逆）+ 黄昏山影视差层（motion.parallax）。",
+      "tags": [
+        "叙事滚动",
+        "动效",
+        "纪实影像"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-memphis",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "孟菲斯风（创意热店官网）",
+      "summary": "高饱和撞色 + 粗黑描边 + 波浪圆点图案的 80s 孟菲斯语言：贴纸式卡片、斜向色带、斜切装饰与俏皮不对称构图。",
+      "tags": [
+        "孟菲斯",
+        "视觉风格",
+        "创意机构"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-abstract-geo",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "抽象几何风（当代艺术展）",
+      "summary": "暖灰纸底 + 四色大色块与巨幅平面叠压构成：画廊式排印（编号 / 材质尺寸）、策展人语引用带与参观信息表。",
+      "tags": [
+        "抽象几何",
+        "视觉风格",
+        "艺术展览"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-split",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "分屏构成风（双面咖啡馆）",
+      "summary": "50:50 昼夜分屏对撞：中缝发光线、左栏 sticky 钉住右栏滚动的行程构图、双面菜单对照与中缝合流 CTA。",
+      "tags": [
+        "分屏",
+        "视觉风格",
+        "双面对照"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-mesh-gradient",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "渐变网格风（AI 产品落地页）",
+      "summary": "深墨紫底叠四团柔焦色雾的 mesh 渐变 + 玻璃拟态卡片：产品界面模拟、能力三卡、数字带与定价双卡。",
+      "tags": [
+        "渐变网格",
+        "玻璃拟态",
+        "SaaS 落地页"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-lowpoly3d",
+      "kind": "app-template",
+      "tab": "product",
+      "group": "design",
+      "title": "低多边形 3D 风（潮玩藏品页）",
+      "summary": "暗房底 + 面片装饰 + 双强调色的 low-poly 视觉：核心区用 model3d 组件承载真实可旋转的 3D 模型（glb 走素材库，建应用自动播种），面片插画藏品卡与工序带收束。",
+      "tags": [
+        "3D",
+        "低多边形",
+        "藏品页"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-bw-photo",
+      "kind": "app-template",
+      "tab": "content",
+      "title": "黑白摄影排版风（摄影师作品集）",
+      "summary": "纯黑白灰三阶 + 编辑排版：阶梯错位超大标题、全幅作品图叠压题注卡与竖排系列标、行式系列索引、黑底自述带——素材驱动（作品图走素材库，建应用自动播种）。",
+      "tags": [
+        "黑白摄影",
+        "编辑排版",
+        "作品集"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "sty-bauhaus",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "包豪斯风（几何工作室官网）",
+      "summary": "三原色 + 基本形 + 大字重排印的包豪斯语言：首屏阶梯错位超大字与几何装饰叠层、黑底宣言带、阶梯错位作品卡、红底 CTA——版式驱动的高设计感起点。",
+      "tags": [
+        "包豪斯",
+        "视觉风格",
+        "工作室官网"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-19"
+    },
+    {
+      "id": "mkt-seoul-after-dark",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "复古丝网印海报（首尔夜市 · 图文叠印）",
+      "summary": "一张插画底图 + 全排版层叠印的海报复刻件：超粗压题黑描边与品红错位色影、旋转圆徽章、韩文点缀、红底菜单牌与黄底三栏信息条——单素材 + 平台能力 = 设计师成稿。",
+      "tags": [
+        "海报",
+        "复古丝网印",
+        "图文叠印"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-23"
+    },
+    {
+      "id": "mkt-portfolio-cover",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "3D 作品集封面（双素材叠放）",
+      "summary": "底图 + 人物双素材叠放的作品集封面：超大渐变字标题压在人物之下、薄荷徽章与技能标签、应用图标瓦片与上下信息条——多素材定位与透明素材前置的完整示范。",
+      "tags": [
+        "作品集",
+        "封面",
+        "双素材"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-23"
+    },
+    {
+      "id": "mkt-portfolio-page",
+      "kind": "app-template",
+      "tab": "marketing",
+      "title": "3D 作品集落地页（自适应）",
+      "summary": "与封面同素材的完整页面形态：hero 用容器查询单位（cqw）保持版式比例，作品栅格 auto-fit 自动 3/2/1 列、关于区自动堆叠，仅两处显式断点决策——响应式复刻的参考实现。",
+      "tags": [
+        "作品集",
+        "落地页",
+        "响应式"
+      ],
+      "pages": 1,
+      "capabilities": [],
+      "priority": "P0",
+      "status": "built",
+      "updated": "2026-09-23"
+    }
+  ]
+}

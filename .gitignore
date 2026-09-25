@@ -1,0 +1,12 @@
+# 构建期派生数据（scripts/sync-exhibits.mjs 于 dev/build 前重建）
+src/generated/
+public/exhibits/
+
+node_modules/
+dist/
+.vite/
+
+# 本地验证产物（monorepo 侧 scripts/verify-compressed-browser.mjs 生成并在结束时回收；
+# 这两条是兜底，防止中途被强杀后留下未跟踪文件）
+dist-smoke/
+vite.config.compressed-smoke.ts

@@ -1,0 +1,48 @@
+{
+  "name": "showcase",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "SchemaAI 能力展示站：模板画廊 → 预览页（Lang DSL → 编译 → 渲染的核心链路 + 完整能力宿主，无编辑器 / 无后端）",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schemaai-labs/showcase.git"
+  },
+  "homepage": "https://schemaai-labs.github.io/showcase",
+  "scripts": {
+    "sync:exhibits": "node scripts/sync-exhibits.mjs",
+    "predev": "pnpm sync:exhibits",
+    "dev": "vite",
+    "prebuild": "pnpm sync:exhibits",
+    "build": "vite build",
+    "preview": "vite preview --port 3010",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "node tests/capability-e2e.mjs"
+  },
+  "dependencies": {
+    "@lottiefiles/dotlottie-web": "^0.80.0",
+    "@schemaai/lang-compiler": "^0.1.1",
+    "@schemaai/motion": "^0.1.1",
+    "@schemaai/renderer-react": "^0.1.1",
+    "@schemaai/runtime-core": "^0.1.1",
+    "@schemaai/runtime-host": "^0.1.1",
+    "@schemaai/schema": "^0.1.1",
+    "fast-json-patch": "^3.1.1",
+    "lucide-react": "^0.555.0",
+    "qrcode.react": "^3.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.3",
+    "recharts": "^2.15.1",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "playwright": "1.61.1",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.0"
+  }
+}
