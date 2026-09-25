@@ -1,7 +1,7 @@
 /**
  * GalleryPage — the template gallery (`/`).
  *
- * Layout: brand header → statement hero → theme chips → editorial card grid.
+ * Layout: brand header → theme chips → uniform card grid.
  * All data comes from the build-time catalog (src/generated/catalog.json).
  *
  * Design intent: the gallery is a **lightbox for the templates**, and the templates are where the
@@ -9,8 +9,8 @@
  * flat: one neutral ramp, one accent used only for interactive state, no decorative gradients, and
  * capability markers kept monochrome. Anything louder competes with the work on display.
  *
- * The grid is editorial rather than uniform: the first card of a tab is featured (2×2), which gives
- * the eye somewhere to land before it scans the rest.
+ * The grid is **uniform**: every card is the same size so no template is visually promoted over
+ * another. The thumbnail is the subject, so the text strip below it stays to a single compact row.
  */
 
 import React, { useMemo, useState } from 'react';
@@ -41,36 +41,27 @@ const BrandMark: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 /**
- * One exhibit card.
+ * One exhibit card. Uniform by design — see the file header.
  *
- * `featured` promotes it to the 2×2 slot that anchors the tab. The summary is only shown there —
- * on a regular card it would push three lines of small grey text into every tile, which reads as
- * noise at a glance (the title plus the capability markers already say what it is).
+ * The text strip is deliberately one row: title on the left, capability markers on the right.
+ * The thumbnail is what a visitor is scanning; a paragraph under every tile slows that scan down
+ * and pushes the cards apart.
  */
-const TemplateCard: React.FC<{ entry: ExhibitEntry; featured?: boolean }> = ({
-  entry,
-  featured = false,
-}) => (
+const TemplateCard: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => (
   <button
     type="button"
     data-showcase-card={entry.id}
     onClick={() => navigate(previewPath(entry.id))}
-    className={`group relative flex flex-col overflow-hidden rounded-xl border border-ink-700/70 bg-ink-850 text-left transition-colors duration-200 hover:border-ink-600 hover:bg-ink-800 ${
-      featured ? 'sm:col-span-2 lg:row-span-2' : ''
-    }`}
+    className="group relative flex flex-col overflow-hidden rounded-xl border border-ink-700/70 bg-ink-850 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-600 hover:bg-ink-800 hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.9)] active:translate-y-0 active:duration-75"
   >
-    {/* Thumbnail. `flex-1` lets the featured card's image absorb the extra height of its 2-row span. */}
-    <div
-      className={`relative overflow-hidden bg-ink-900 ${
-        featured ? 'flex-1 min-h-[260px]' : 'aspect-[16/10] shrink-0'
-      }`}
-    >
+    {/* Thumbnail — the subject of the card. */}
+    <div className="relative aspect-[16/10] shrink-0 overflow-hidden bg-ink-900">
       {entry.thumb ? (
         <img
           src={entry.thumb}
           alt={entry.title}
           loading="lazy"
-          className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
         />
       ) : (
         <div className="grid h-full w-full place-items-center text-[11px] text-ink-600">
@@ -116,29 +107,17 @@ const TemplateCard: React.FC<{ entry: ExhibitEntry; featured?: boolean }> = ({
       </span>
     </div>
 
-    <div className={`flex flex-col gap-2 ${featured ? 'p-5' : 'p-4'}`}>
-      <h3
-        className={`font-semibold leading-snug text-ink-100 ${
-          featured ? 'text-lg tracking-tight' : 'text-[13px]'
-        }`}
-      >
+    {/* One compact row: title left, capability markers right. */}
+    <div className="flex items-center justify-between gap-3 px-4 py-3">
+      <h3 className="truncate text-[13px] font-semibold tracking-tight text-ink-100">
         {entry.title}
       </h3>
-
-      {featured && entry.summary ? (
-        <p className="max-w-[52ch] text-[13px] leading-relaxed text-ink-400">{entry.summary}</p>
-      ) : null}
-
-      {/* Capability markers as plain text, separated by a middot — no chips, no colour, no rotation. */}
       {entry.capabilities?.length ? (
-        <div className="mt-0.5 flex items-center gap-2 text-[11px] text-ink-500">
-          {entry.capabilities.map((cap, i) => (
-            <React.Fragment key={cap}>
-              {i > 0 ? <span className="text-ink-600">·</span> : null}
-              <span>{CAPABILITY_LABEL[cap] ?? cap}</span>
-            </React.Fragment>
+        <span className="flex shrink-0 items-center gap-1.5 text-[11px] text-ink-500">
+          {entry.capabilities.map((cap) => (
+            <span key={cap}>{CAPABILITY_LABEL[cap] ?? cap}</span>
           ))}
-        </div>
+        </span>
       ) : null}
     </div>
   </button>
@@ -147,59 +126,34 @@ const TemplateCard: React.FC<{ entry: ExhibitEntry; featured?: boolean }> = ({
 export const GalleryPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState(CATALOG.tabs[0]?.id ?? 'marketing');
   const templates = useMemo(() => templatesByTab(activeTab), [activeTab]);
-  const tab = CATALOG.tabs.find((t) => t.id === activeTab);
 
   return (
     <div className="min-h-screen bg-ink-950 text-ink-300">
-      {/* ─── Header ─── */}
+      {/* ─── Header ───
+          Centred cluster rather than brand-left / actions-right: the page carries a single identity
+          and a single outbound link, so spreading them to opposite edges just reads as empty. */}
       <header className="border-b border-ink-700/60">
-        <div className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-5 sm:px-8">
-          <div className="flex items-center gap-2.5">
-            <BrandMark className="h-[22px] w-[22px] text-accent-500" />
+        <div className="mx-auto flex max-w-[2560px] items-center justify-center gap-6 px-6 py-4 sm:px-10">
+          <span className="group flex items-center gap-2.5">
+            <BrandMark className="h-5 w-5 text-accent-500 transition-transform duration-300 ease-out group-hover:rotate-[18deg] group-hover:scale-110" />
             <span className="text-[15px] font-bold tracking-tight text-ink-100">SchemaAI</span>
-            <span className="ml-1 text-[13px] text-ink-500">Showcase</span>
-          </div>
-          <nav className="flex items-center gap-5 text-[13px]">
-            <a
-              href="https://github.com/schemaai-labs/showcase"
-              target="_blank"
-              rel="noreferrer"
-              className="text-ink-400 transition-colors hover:text-ink-100"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://www.npmjs.com/org/schemaai"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-lg bg-ink-800 px-3 py-1.5 font-medium text-ink-200 transition-colors hover:bg-ink-700 hover:text-ink-100"
-            >
-              npm packages
-            </a>
-          </nav>
+          </span>
+          <a
+            href="https://github.com/schemaai-labs/showcase"
+            target="_blank"
+            rel="noreferrer"
+            className="group relative text-[13px] text-ink-400 transition-colors duration-200 hover:text-ink-100"
+          >
+            GitHub
+            {/* Sliding underline — the hover cue reads as motion, not as a colour swap. */}
+            <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-accent-500 transition-transform duration-200 group-hover:scale-x-100" />
+          </a>
         </div>
       </header>
 
-      {/* ─── Statement hero ─── */}
-      <section className="mx-auto max-w-[1240px] px-6 pb-14 pt-16 sm:px-8 sm:pt-24">
-        <h1 className="max-w-[18ch] text-4xl font-black leading-[1.05] tracking-tightest text-ink-100 sm:text-5xl lg:text-6xl">
-          Schema in.
-          <br />
-          <span className="text-ink-400">Interface out.</span>
-        </h1>
-        <p className="mt-7 max-w-[62ch] text-[15px] leading-relaxed text-ink-400">
-          The capability showcase for <span className="text-ink-200">SchemaAI</span>, a schema-driven
-          low-code engine. Every template below is compiled from the Lang DSL and rendered by the
-          engine — in your browser, with no editor, no sign-in and no backend.
-        </p>
-        <p className="mt-6 text-[13px] text-ink-500">
-          {CATALOG.templates.length} templates · {CATALOG.tabs.length} themes · static render
-        </p>
-      </section>
-
       {/* ─── Theme chips ─── */}
       <div className="sticky top-0 z-40 border-b border-ink-700/60 bg-ink-950/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1240px] items-center gap-1 overflow-x-auto px-6 py-3.5 sm:px-8">
+        <div className="mx-auto flex max-w-[2560px] items-center justify-center gap-1 overflow-x-auto px-6 py-3 sm:px-10">
           {CATALOG.tabs.map((t) => {
             const active = t.id === activeTab;
             return (
@@ -208,42 +162,50 @@ export const GalleryPage: React.FC = () => {
                 type="button"
                 data-showcase-tab={t.id}
                 onClick={() => setActiveTab(t.id)}
-                className={`shrink-0 rounded-lg px-3.5 py-1.5 text-[13px] transition-colors duration-150 ${
+                className={`group relative shrink-0 rounded-lg px-4 py-2 text-[13px] transition-all duration-200 active:scale-[0.97] ${
                   active
-                    ? 'bg-ink-800 font-medium text-ink-100'
-                    : 'text-ink-500 hover:bg-ink-900 hover:text-ink-300'
+                    ? 'bg-ink-800/70 font-medium text-ink-100'
+                    : 'text-ink-500 hover:bg-ink-900 hover:text-ink-200'
                 }`}
               >
                 {t.label}
+                {/* Accent underline: slides in under the active chip, and peeks in on hover so the
+                    control feels responsive before it becomes the active one. */}
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-x-2.5 bottom-0.5 h-px origin-center bg-accent-500 transition-transform duration-200 ${
+                    active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-50'
+                  }`}
+                />
               </button>
             );
           })}
-          <span className="ml-auto hidden shrink-0 pl-4 text-[12px] text-ink-600 sm:block">
-            {tab?.label} · {templates.length}
-          </span>
         </div>
       </div>
 
-      {/* ─── Editorial grid ─── */}
-      <main className="mx-auto max-w-[1240px] px-6 pb-24 pt-8 sm:px-8">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-          {templates.map((entry, i) => (
-            <TemplateCard key={entry.id} entry={entry} featured={i === 0} />
+      {/* ─── Uniform grid ───
+          Near-full-bleed: a gallery is scanned as images, and images don't suffer from long lines
+          the way body text does. Columns grow with the viewport so cards stay large on wide
+          displays instead of the layout hugging a narrow column down the middle. */}
+      <main className="mx-auto max-w-[2560px] px-6 pb-20 pt-6 sm:px-10">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+          {templates.map((entry) => (
+            <TemplateCard key={entry.id} entry={entry} />
           ))}
         </div>
       </main>
 
       {/* ─── Footer ─── */}
       <footer className="border-t border-ink-700/60">
-        <div className="mx-auto flex max-w-[1240px] flex-col gap-3 px-6 py-10 text-[12px] text-ink-600 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <div className="flex items-center gap-2">
+        <div className="mx-auto flex max-w-[2560px] flex-col items-center gap-3 px-6 py-8 text-[12px] text-ink-600 sm:flex-row sm:justify-center sm:gap-6 sm:px-10">
+          <span className="flex items-center gap-2">
             <BrandMark className="h-3.5 w-3.5 text-ink-600" />
             <span>
-              Templates sourced from the SchemaAI monorepo · rendered by{' '}
+              Templates from the SchemaAI monorepo · rendered by{' '}
               <span className="text-ink-500">@schemaai/renderer-react</span> + lang-compiler +
               runtime-host
             </span>
-          </div>
+          </span>
           <a
             href="https://github.com/schemaai-labs/showcase/blob/main/CREDITS.md"
             target="_blank"
