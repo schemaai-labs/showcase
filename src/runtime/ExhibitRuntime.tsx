@@ -11,7 +11,7 @@
  *     → OverlayLayer (overlays) + ToastHost (feedback)
  */
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { PreviewRuntimeProvider, type PreviewRuntimeEditorActions } from '@schemaai/renderer-react';
 import { compileLangDocument, parseLangDocument } from '@schemaai/lang-compiler';
 import type { PreviewInitPayload } from '@schemaai/runtime-core';
@@ -23,6 +23,7 @@ import { ShowcaseCanvas } from './ShowcaseNode.js';
 import { OverlayLayer } from './OverlayLayer.js';
 import { ToastHost } from './toast.js';
 import { PreviewToolbar, useArtboardWidth } from './PreviewToolbar.js';
+import { DslInspector } from './DslInspector.js';
 
 // ─── Compilation (DSL text → page tree) ──────────────────────────────────────
 
@@ -105,15 +106,19 @@ const CanvasSurface: React.FC = () => {
 export const ExhibitRuntime: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => {
   const [payload, setPayload] = useState<PreviewInitPayload | null>(null);
   const [error, setError] = useState('');
+  // The compiled source is kept around so the DSL inspector can show it and recompile an edit.
+  const [lang, setLang] = useState('');
 
   useEffect(() => {
     let cancelled = false;
     setPayload(null);
     setError('');
+    setLang('');
     loadExhibitLang(entry)
-      .then((lang) => {
+      .then((text) => {
         if (cancelled) return;
-        setPayload(compileExhibit(lang));
+        setLang(text);
+        setPayload(compileExhibit(text));
       })
       .catch((err: unknown) => {
         if (cancelled) return;
@@ -125,6 +130,20 @@ export const ExhibitRuntime: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => 
       cancelled = true;
     };
   }, [entry]);
+
+  /**
+   * Swap an edited document into the canvas. Recompiling yields a **new** payload object, which is
+   * what the runtime watches (identity, not deep equality) — so the canvas re-renders in place.
+   * Failures propagate to the caller; the canvas keeps running the last good document.
+   */
+  const applyLang = useCallback((next: string) => {
+    // Compile first: a failure must leave both the canvas and the inspector's notion of "current
+    // source" on the last good document. `lang` is committed alongside the payload so that
+    // reopening the panel shows what is actually rendering, not the file's original text.
+    const compiled = compileExhibit(next);
+    setLang(next);
+    setPayload(compiled);
+  }, []);
 
   if (error) {
     return (
@@ -147,6 +166,8 @@ export const ExhibitRuntime: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => 
   return (
     <ShowcaseStoreProvider>
       <RuntimeBridge payload={payload} />
+      {/* App chrome, not exhibit content — fixed-positioned so it never perturbs the artboard. */}
+      <DslInspector lang={lang} onApply={applyLang} />
     </ShowcaseStoreProvider>
   );
 };

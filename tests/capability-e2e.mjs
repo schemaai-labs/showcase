@@ -6,8 +6,9 @@
  * reachable) and that **platform capabilities actually work inside the templates** — motion
  * (Animate + motion.counter), multi-page nav.to, in-page nav.scroll (back to top + landing offset),
  * overlay.open/close (sub-page + onOverlayInit payload + cross-page write-back), Sortable drag
- * (data-axis across columns), and the event-code sandbox (DOM.data write-back / controlled
- * validation bindings).
+ * (data-axis across columns), the event-code sandbox (DOM.data write-back / controlled
+ * validation bindings), and the Lang DSL inspector (source → edit → apply → re-render in place,
+ * with the compiler's line/column surfaced on a broken edit).
  */
 
 import { createRequire } from 'node:module';
@@ -293,6 +294,80 @@ check(
     kanbanAfter.doing.length === kanbanInitial.doing.length + 1 &&
     kanbanAfter.doing.includes(kanbanInitial.todo[0]),
   `todo ${kanbanInitial.todo.length}→${kanbanAfter.todo.length} / doing ${kanbanInitial.doing.length}→${kanbanAfter.doing.length}`,
+);
+
+// ─── 8. Lang DSL inspector: read → edit → apply → re-render in place ──────
+//
+// The exhibit's own source is the editable artifact here, so this proves the round trip end to end:
+// the panel shows the exact document the canvas is running, an edit recompiles into a **new** payload
+// which the runtime hydrates by identity (no remount), and a broken edit surfaces the compiler's
+// line/column without bricking the canvas.
+
+await openExhibit('mkt-landing');
+
+const dslButton = page.locator('[data-showcase-dsl-open]');
+const dslBox = await dslButton.boundingBox();
+const viewport = page.viewportSize();
+check(
+  'Lang DSL: floating button sits bottom-right and the panel is hidden until clicked',
+  (await dslButton.count()) === 1 &&
+    dslBox.x + dslBox.width > viewport.width * 0.8 &&
+    dslBox.y > viewport.height * 0.8 &&
+    (await page.locator('[data-showcase-dsl-panel]').count()) === 0,
+  dslBox ? `x=${Math.round(dslBox.x)} y=${Math.round(dslBox.y)}` : 'no button',
+);
+
+await dslButton.click();
+await page.waitForSelector('[data-showcase-dsl-panel]', { timeout: 5000 });
+const source = await page.locator('[data-showcase-dsl-input]').inputValue();
+check(
+  'Lang DSL: panel opens with the compiled source (App + Page, not the markdown wrapper)',
+  source.includes('<App dsl-version="0.3"') && source.includes('<Page id="home"'),
+  `${source.length} chars`,
+);
+
+const PROBE = 'Start for free';
+const MARKER = 'DSL APPLY WORKS';
+const canvasBefore = await page.locator('[data-rb-artboard="true"]').innerText();
+const occurrences = canvasBefore.split(PROBE).length - 1;
+await page.locator('[data-showcase-dsl-input]').fill(source.replaceAll(PROBE, MARKER));
+await page.locator('[data-showcase-dsl-apply]').click();
+await page.waitForTimeout(1200);
+const canvasAfter = await page.locator('[data-rb-artboard="true"]').innerText();
+check(
+  'Lang DSL: Apply recompiles and re-renders in place (panel closes, every occurrence swapped)',
+  (await page.locator('[data-showcase-dsl-panel]').count()) === 0 &&
+    canvasAfter.split(MARKER).length - 1 === occurrences &&
+    occurrences > 0,
+  `"${PROBE}" ${occurrences} → "${MARKER}" ${canvasAfter.split(MARKER).length - 1}`,
+);
+
+await dslButton.click();
+await page.waitForSelector('[data-showcase-dsl-panel]', { timeout: 5000 });
+await page.locator('[data-showcase-dsl-input]').fill('<App dsl-version="0.3">\n  <Page id="p">\n    <Broken');
+await page.locator('[data-showcase-dsl-apply]').click();
+await page.waitForTimeout(600);
+const dslError = await page.locator('[data-showcase-dsl-error]').innerText().catch(() => '');
+check(
+  'Lang DSL: a broken edit reports line/column and leaves the last good document rendering',
+  dslError.length > 0 &&
+    (await page.locator('[data-showcase-dsl-panel]').count()) === 1 &&
+    (await page.locator('[data-rb-artboard="true"]').innerText()).includes(MARKER),
+  dslError.split('\n')[0].slice(0, 80),
+);
+
+await page.keyboard.press('Escape');
+await page.waitForTimeout(300);
+const closedByEscape = (await page.locator('[data-showcase-dsl-panel]').count()) === 0;
+await dslButton.click();
+await page.waitForSelector('[data-showcase-dsl-panel]', { timeout: 5000 });
+const reopened = await page.locator('[data-showcase-dsl-input]').inputValue();
+await page.keyboard.press('Escape');
+await page.waitForTimeout(200);
+check(
+  'Lang DSL: Escape closes, and reopening shows the applied source (not the discarded draft)',
+  closedByEscape && reopened.includes(MARKER) && !reopened.includes('<Broken'),
+  `escape=${closedByEscape} reapplied=${reopened.includes(MARKER)} draftLeaked=${reopened.includes('<Broken')}`,
 );
 
 // ─── Final check: zero uncaught errors ───────────────────────────────────
