@@ -211,6 +211,8 @@ check(
 );
 
 // ─── 6. Overlay + event-code sandbox: itr-loop confirmation (open → validate → cross-page write-back) ─
+// NB: the gate phrase is a behaviour literal inside the template, not copy — the English document
+// gates on "Weekly draft" (see its Production notes), so this must match it.
 
 await openExhibit('itr-loop');
 await page.click('[data-node-id="loop_delete_btn"]');
@@ -227,7 +229,7 @@ check(
   JSON.stringify(overlayOpen),
 );
 
-await page.fill('[data-node-id="loop_confirm_input"] input, [data-node-id="loop_confirm_input"] textarea', '周报草稿');
+await page.fill('[data-node-id="loop_confirm_input"] input, [data-node-id="loop_confirm_input"] textarea', 'Weekly draft');
 await page.waitForTimeout(400);
 const afterTyping = await page.evaluate(() => ({
   mismatchVisible: Boolean(document.querySelector('[data-node-id="loop_confirm_error"]')),

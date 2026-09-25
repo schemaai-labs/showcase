@@ -1,6 +1,6 @@
 {
   "$comment": "生成物 —— 由 monorepo 的 scripts/sync-showcase-exhibits.mjs 生成，请勿手改。 元数据已投影为英文；lang 字段标记该模板正文实际用的语言（过渡期中文回退）。",
-  "generatedAt": "2026-09-25T11:34:54.370Z",
+  "generatedAt": "2026-09-25T12:19:16.495Z",
   "tabs": [
     {
       "id": "marketing",
@@ -96,8 +96,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "app-crud",
@@ -114,8 +114,8 @@
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "biz-crm",
@@ -134,8 +134,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "mob-app",
@@ -155,8 +155,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "ctn-report",
@@ -175,8 +175,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "itr-scroll",
@@ -195,8 +195,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "itr-kanban",
@@ -216,8 +216,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "mkt-edm",
@@ -236,8 +236,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "mkt-poster",
@@ -256,8 +256,8 @@
       ],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "app-settings",
@@ -274,8 +274,8 @@
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "app-wall",
@@ -294,8 +294,8 @@
       ],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "biz-ticket",
@@ -314,8 +314,8 @@
       ],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "biz-approval",
@@ -332,8 +332,8 @@
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "ds-showcase",
@@ -350,8 +350,8 @@
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "app-prototype",
@@ -368,8 +368,8 @@
       "capabilities": [],
       "priority": "P2",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "ctn-deck",
@@ -386,8 +386,8 @@
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "ctn-brand",
@@ -404,8 +404,8 @@
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "itr-pinned",
@@ -424,8 +424,8 @@
       ],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "itr-value",
@@ -444,8 +444,8 @@
       ],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "itr-pointer",
@@ -464,8 +464,8 @@
       ],
       "priority": "P1",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "itr-loop",
@@ -484,8 +484,8 @@
       ],
       "priority": "P2",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-lineart",
@@ -504,8 +504,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-type-lab",
@@ -524,8 +524,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-clay",
@@ -544,8 +544,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-lamp-illust",
@@ -564,8 +564,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-organic",
@@ -584,8 +584,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-material",
@@ -604,8 +604,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-datadash",
@@ -624,8 +624,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-terminal",
@@ -644,8 +644,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-luxe",
@@ -664,8 +664,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-fashion",
@@ -684,8 +684,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-scroll-narrative",
@@ -704,8 +704,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-memphis",
@@ -724,8 +724,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-abstract-geo",
@@ -744,8 +744,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-split",
@@ -764,8 +764,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-lowpoly3d",
@@ -782,8 +782,8 @@
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-bw-photo",
@@ -802,8 +802,8 @@
       ],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "sty-bauhaus",
@@ -840,8 +840,8 @@
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "mkt-portfolio-cover",
@@ -858,8 +858,8 @@
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "mkt-portfolio-page",
@@ -876,8 +876,8 @@
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "lang": "zh",
-      "thumbLang": "zh"
+      "lang": "en",
+      "thumbLang": "en"
     }
   ]
 }

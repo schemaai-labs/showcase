@@ -1,50 +1,56 @@
-# CRM 客户管理（列表 + 详情） — 「长风 CRM」客户中心
+# CRM Customer Management (List + Detail) — "Beacon CRM" Customer Center
 
-> 模板定位（产品 / 应用 tab · 业务系统）：主从式业务页标准形态——左栏数据驱动客户列表（List + item 模板）+ 右栏客户档案（摘要头 + 字段描述 + 跟进时间线）。
-> 场景需求：给销售团队做客户中心：左栏是可搜索的客户列表（姓名 / 公司 / 状态标签，数据来自 dataSource 循环渲染），右栏是选中客户的完整档案——头像姓名公司 + 状态标签 + 跟进 / 转商机动作、六项客户字段（Descriptions 两列）、最近四次跟进记录（Timeline）与备注。浅色商务风、零动效（工具页纪律）、静态数据零 API。
+> Template role (product / app tab · business systems): the standard master-detail business page —
+> a data-driven customer list on the left (List + item template) beside a customer profile on the
+> right (summary header + field descriptions + follow-up timeline).
+> Scenario: a customer center for a sales team. The left rail is a searchable customer list (name /
+> company / status tag, loop-rendered from a dataSource); the right pane holds the full profile of
+> the selected customer — avatar, name, company, status tag, follow-up and convert-to-deal actions,
+> six customer fields (two-column Descriptions), the last four follow-up entries (Timeline), and a
+> note. Light business styling, zero motion (utility-page discipline), static data, no API calls.
 
 ```lang
-<App dsl-version="0.3" name="长风 CRM · 客户中心">
-  <Page id="crm_customers" name="客户中心" route="/customers">
+<App dsl-version="0.3" name="Beacon CRM · Customer Center">
+  <Page id="crm_customers" name="Customers" route="/customers">
     <FlexContainer id="crm_root" props={direction: "column"} style="width:100%; min-height:100vh; height:auto">
 
-      <!-- ─── 1. 顶栏 ─── -->
+      <!-- ─── 1. Header ─── -->
       <Container id="crm_header" style="flex-shrink:0; flex-grow:0; height:64px; width:100%">
         <FlexContainer id="crm_header_row" props={direction: "row"} style="height:100%; width:100%; justify-content:space-between; align-items:center; padding:0px 24px">
           <Container id="crm_brand_cell" style="height:auto; width:auto; flex-shrink:0">
             <FlexContainer id="crm_brand_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:10px">
               <Container id="crm_logo_cell" style="height:auto; width:auto"><Icon id="crm_logo" props={iconName: "Contact", iconSource: "lucide"}/></Container>
-              <Container id="crm_brand_text_cell" style="height:auto; width:auto"><Text id="crm_brand" props={content: "长风 CRM · 客户中心", tagName: "span"}/></Container>
+              <Container id="crm_brand_text_cell" style="height:auto; width:auto"><Text id="crm_brand" props={content: "Beacon CRM · Customer Center", tagName: "span"}/></Container>
             </FlexContainer>
           </Container>
           <Container id="crm_user_cell" style="height:auto; width:auto; flex-shrink:0">
             <FlexContainer id="crm_user_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:14px">
               <Container id="crm_bell_cell" style="height:auto; width:auto"><Icon id="crm_bell" props={iconName: "Bell", iconSource: "lucide"}/></Container>
-              <Container id="crm_avatar_cell" style="height:auto; width:auto"><Avatar id="crm_avatar" props={text: "许", shape: "circle"} style="height:32px; width:32px"/></Container>
-              <Container id="crm_user_name_cell" style="height:auto; width:auto"><Text id="crm_user_name" props={content: "许晨", tagName: "span"}/></Container>
+              <Container id="crm_avatar_cell" style="height:auto; width:auto"><Avatar id="crm_avatar" props={text: "D", shape: "circle"} style="height:32px; width:32px"/></Container>
+              <Container id="crm_user_name_cell" style="height:auto; width:auto"><Text id="crm_user_name" props={content: "Dana Whitfield", tagName: "span"}/></Container>
             </FlexContainer>
           </Container>
         </FlexContainer>
       </Container>
 
-      <!-- ─── 2. 主从区 ─── -->
+      <!-- ─── 2. Master-detail region ─── -->
       <Container id="crm_body" style="flex-grow:1; height:auto; width:100%; padding:20px 24px 36px">
         <FlexContainer id="crm_body_row" props={direction: "row"} style="height:auto; width:100%; align-items:stretch; gap:16px">
 
-          <!-- 左栏：客户列表 -->
+          <!-- Left: customer list -->
           <Container id="crm_list_card" style="flex-shrink:0; height:auto; width:320px">
             <FlexContainer id="crm_list_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:14px; padding:18px 16px">
               <Container id="crm_list_head_cell" style="height:auto; width:100%">
                 <FlexContainer id="crm_list_head_row" props={direction: "row"} style="height:auto; width:100%; align-items:baseline; justify-content:space-between">
-                  <Container id="crm_list_title_cell" style="height:auto; width:auto"><Text id="crm_list_title" props={content: "客户列表", tagName: "h3"}/></Container>
-                  <Container id="crm_list_count_cell" style="height:auto; width:auto"><Text id="crm_list_count" props={content: "6 位跟进中", tagName: "span"}/></Container>
+                  <Container id="crm_list_title_cell" style="height:auto; width:auto"><Text id="crm_list_title" props={content: "Customer list", tagName: "h3"}/></Container>
+                  <Container id="crm_list_count_cell" style="height:auto; width:auto"><Text id="crm_list_count" props={content: "6 in pipeline", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="crm_search_cell" style="height:auto; width:100%">
-                <Input id="crm_search" props={placeholder: "搜索姓名 / 公司"} style="height:auto; width:100%"/>
+                <Input id="crm_search" props={placeholder: "Search name / company"} style="height:auto; width:100%"/>
               </Container>
               <Container id="crm_list_body_cell" style="height:auto; width:100%">
-                <List id="crm_list" props={dataSource: [{name: "沈知远", company: "青禾食品集团", status: "重点跟进"}, {name: "黎晚晴", company: "湾流跨境电商", status: "方案沟通"}, {name: "陆铭", company: "北辰连锁便利", status: "重点跟进"}, {name: "苏叶", company: "云栖茶饮", status: "新线索"}, {name: "程野", company: "风行物流", status: "方案沟通"}, {name: "宋清和", company: "澄海文旅", status: "新线索"}], direction: "vertical", gap: "10px"} style="height:auto; width:100%">
+                <List id="crm_list" props={dataSource: [{name: "Marcus Reed", company: "Evergreen Foods Group", status: "Priority"}, {name: "Elena Vasquez", company: "Gulfstream Commerce", status: "Proposal"}, {name: "Daniel Okafor", company: "Polaris Convenience", status: "Priority"}, {name: "Sofia Lindqvist", company: "Cloudrest Tea", status: "New lead"}, {name: "Victor Hale", company: "Tradewind Logistics", status: "Proposal"}, {name: "Nadia Farouk", company: "Clearwater Travel", status: "New lead"}], direction: "vertical", gap: "10px"} style="height:auto; width:100%">
                   <Container id="crm_item_tpl" style="height:auto; width:100%">
                     <FlexContainer id="crm_item_col" props={direction: "column"} style="height:auto; width:100%; align-items:flex-start; gap:6px; padding:12px 12px">
                       <Container id="crm_item_name_cell" style="height:auto; width:100%"><Text id="crm_item_name" props={content: "{{item.name}}", tagName: "h4"} style="height:auto; width:100%"/></Container>
@@ -57,51 +63,51 @@
             </FlexContainer>
           </Container>
 
-          <!-- 右栏：客户档案 -->
+          <!-- Right: customer profile -->
           <Container id="crm_detail_card" style="flex-grow:1; height:auto; width:auto">
             <FlexContainer id="crm_detail_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:20px; padding:22px 24px">
 
-              <!-- 摘要头 -->
+              <!-- Summary header -->
               <Container id="crm_profile_cell" style="height:auto; width:100%">
                 <FlexContainer id="crm_profile_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; justify-content:space-between">
                   <Container id="crm_profile_left_cell" style="height:auto; width:auto">
                     <FlexContainer id="crm_profile_left_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:14px">
-                      <Container id="crm_profile_avatar_cell" style="height:auto; width:auto"><Avatar id="crm_profile_avatar" props={text: "沈", shape: "square"} style="height:52px; width:52px"/></Container>
+                      <Container id="crm_profile_avatar_cell" style="height:auto; width:auto"><Avatar id="crm_profile_avatar" props={text: "MR", shape: "square"} style="height:52px; width:52px"/></Container>
                       <Container id="crm_profile_text_cell" style="height:auto; width:auto">
                         <FlexContainer id="crm_profile_text_col" props={direction: "column"} style="height:auto; width:auto; align-items:flex-start; gap:6px">
                           <Container id="crm_profile_name_row_cell" style="height:auto; width:auto">
                             <FlexContainer id="crm_profile_name_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:10px">
-                              <Container id="crm_profile_name_cell" style="height:auto; width:auto"><Text id="crm_profile_name" props={content: "沈知远", tagName: "h2"}/></Container>
-                              <Container id="crm_profile_tag_cell" style="height:auto; width:auto"><Tag id="crm_profile_tag" props={text: "重点跟进", color: "gold"}/></Container>
+                              <Container id="crm_profile_name_cell" style="height:auto; width:auto"><Text id="crm_profile_name" props={content: "Marcus Reed", tagName: "h2"}/></Container>
+                              <Container id="crm_profile_tag_cell" style="height:auto; width:auto"><Tag id="crm_profile_tag" props={text: "Priority", color: "gold"}/></Container>
                             </FlexContainer>
                           </Container>
-                          <Container id="crm_profile_company_cell" style="height:auto; width:auto"><Text id="crm_profile_company" props={content: "青禾食品集团 · 采购总监", tagName: "span"}/></Container>
+                          <Container id="crm_profile_company_cell" style="height:auto; width:auto"><Text id="crm_profile_company" props={content: "Evergreen Foods Group · Head of Procurement", tagName: "span"}/></Container>
                         </FlexContainer>
                       </Container>
                     </FlexContainer>
                   </Container>
                   <Container id="crm_profile_actions_cell" style="height:auto; width:auto; flex-shrink:0">
                     <FlexContainer id="crm_profile_actions_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:12px">
-                      <Container id="crm_follow_btn_cell" style="height:auto; width:auto"><Button id="crm_follow_btn" props={content: "记录跟进", variant: "default"} style="height:auto; width:auto; padding:8px 18px"/></Container>
-                      <Container id="crm_convert_cell" style="height:auto; width:auto"><Button id="crm_convert_btn" props={content: "转为商机", variant: "primary"} style="height:auto; width:auto; padding:8px 20px"/></Container>
+                      <Container id="crm_follow_btn_cell" style="height:auto; width:auto"><Button id="crm_follow_btn" props={content: "Log follow-up", variant: "default"} style="height:auto; width:auto; padding:8px 18px"/></Container>
+                      <Container id="crm_convert_cell" style="height:auto; width:auto"><Button id="crm_convert_btn" props={content: "Convert to deal", variant: "primary"} style="height:auto; width:auto; padding:8px 20px"/></Container>
                     </FlexContainer>
                   </Container>
                 </FlexContainer>
               </Container>
 
-              <!-- 客户字段 -->
+              <!-- Customer fields -->
               <Container id="crm_fields_cell" style="height:auto; width:100%">
-                <Descriptions id="crm_fields" props={title: "客户档案", column: 2, items: [{"label": "所属行业", "value": "食品加工 / 供应链"}, {"label": "企业规模", "value": "2,400 人 · 年营收 18 亿"}, {"label": "对接负责人", "value": "沈知远（采购总监）"}, {"label": "线索来源", "value": "行业展会 · 2026 春季糖酒会"}, {"label": "联系电话", "value": "138-0000-2688"}, {"label": "企业邮箱", "value": "shen@qinghe-food.example.com"}]} style="height:auto; width:100%"/>
+                <Descriptions id="crm_fields" props={title: "Customer profile", column: 2, items: [{"label": "Industry", "value": "Food processing · supply chain"}, {"label": "Company size", "value": "2,400 staff · $180M revenue"}, {"label": "Account owner", "value": "Marcus Reed (Head of Procurement)"}, {"label": "Lead source", "value": "Trade show · Spring 2026 F&B Expo"}, {"label": "Phone", "value": "+1 415 555 0186"}, {"label": "Email", "value": "m.reed@evergreenfoods.example.com"}]} style="height:auto; width:100%"/>
               </Container>
 
-              <!-- 跟进时间线 -->
+              <!-- Follow-up timeline -->
               <Container id="crm_timeline_cell" style="height:auto; width:100%">
-                <Timeline id="crm_follow_timeline" props={items: [{"label": "电话沟通：确认三季度供货品类与账期（30 天）", "time": "2026-09-12 15:40"}, {"label": "寄送样品：低温奶与烘焙系列共 6 款", "time": "2026-09-08 10:20"}, {"label": "现场拜访：参观中央厨房并演示对账系统", "time": "2026-09-03 14:00"}, {"label": "首次建联：展会留资，需求为区域集中采购", "time": "2026-08-27 11:15"}]} style="height:auto; width:100%"/>
+                <Timeline id="crm_follow_timeline" props={items: [{"label": "Call: confirmed Q3 supply categories and 30-day payment terms", "time": "2026-09-12 15:40"}, {"label": "Samples sent: 6 SKUs across chilled dairy and bakery", "time": "2026-09-08 10:20"}, {"label": "On-site visit: toured the central kitchen, demoed reconciliation", "time": "2026-09-03 14:00"}, {"label": "First contact: trade-show lead, regional bulk purchasing", "time": "2026-08-27 11:15"}]} style="height:auto; width:100%"/>
               </Container>
 
-              <!-- 备注 -->
+              <!-- Note -->
               <Container id="crm_note_cell" style="height:auto; width:100%">
-                <Text id="crm_note" props={content: "备注：客户对账期敏感，需财务侧确认 30 天方案；下周三前给出定制报价单。", tagName: "p"} style="height:auto; width:100%; padding:14px 16px"/>
+                <Text id="crm_note" props={content: "Note: payment terms are the sticking point — finance must approve the 30-day option; custom quote due Wednesday.", tagName: "p"} style="height:auto; width:100%; padding:14px 16px"/>
               </Container>
             </FlexContainer>
           </Container>
@@ -110,17 +116,17 @@
     </FlexContainer>
 
     <script>
-      # 工具页无数据逻辑；动作为声明式反馈
+      # Utility page has no data logic; the buttons are declarative feedback only
       @crm_follow_btn = {
-        events: { addFollow: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "已打开跟进记录表单（演示）"}) } }
+        events: { addFollow: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "Follow-up form opened (demo)"}) } }
       };
       @crm_convert_btn = {
-        events: { convertLead: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "已创建商机：青禾食品集团 · 三季度集采"}) } }
+        events: { convertLead: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "Deal created: Evergreen Foods Group · Q3 bulk order"}) } }
       };
     </script>
 
     <styles>
-      # 0. 画布与顶栏
+      # 0. Canvas and header
       @crm_root = { background: #f4f6fb; }
       @crm_header = { background: #ffffff; :scope { border-bottom: 1px solid rgba(148, 163, 184, 0.16); box-shadow: 0 1px 8px rgba(15, 23, 42, 0.03); } }
       @crm_logo = { color: #2563eb; font-size: 22px; }
@@ -129,16 +135,18 @@
       @crm_avatar = { background-color: #2563eb; color: #ffffff; font-size: 13px; }
       @crm_user_name = { color: #334155; font-size: 14px; font-weight: 600; }
 
-      # 1. 左栏列表
+      # 1. Left list
       @crm_list_card = { background: #ffffff; border-radius: 14px; box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04); }
       @crm_list_title = { color: #0f172a; font-size: 16px; font-weight: 800; }
       @crm_list_count = { color: #94a3b8; font-size: 12px; }
       @crm_item_tpl = { background: #f8fafc; border-radius: 12px; :scope { border: 1px solid #eef2f7; transition: transform 0.18s ease, box-shadow 0.18s ease; } :scope:hover { transform: translateX(2px); box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06); } }
+      # 12px company line: an English company name is ~2x the CJK one at the same size, so it keeps
+      # 12px (two stacked lines at 13px+ would push the third list row out of the first screen).
       @crm_item_name = { color: #0f172a; font-size: 15px; font-weight: 700; }
       @crm_item_company = { color: #64748b; font-size: 12px; }
       @crm_item_status = { background-color: #eff6ff; color: #1d4ed8; font-size: 11px; font-weight: 700; border-radius: 999px; }
 
-      # 2. 右栏档案
+      # 2. Right profile
       @crm_detail_card = { background: #ffffff; border-radius: 14px; box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04); }
       @crm_profile_avatar = { background-color: #dbeafe; color: #1d4ed8; font-size: 20px; font-weight: 800; }
       @crm_profile_name = { color: #0f172a; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
@@ -163,10 +171,44 @@
         :scope:hover { background-color: #1d4ed8; }
       }
       @crm_note_cell = { background: #eff6ff; border-radius: 12px; :scope { border-left: 3px solid #2563eb; } }
-      @crm_note = { color: #1e3a8a; font-size: 13px; line-height: 1.8; }
+      # Latin gets 1.7 leading (CJK needed 1.8) — the English note is one full-width line, and the
+      # looser leading only made the box taller without helping the read.
+      @crm_note = { color: #1e3a8a; font-size: 13px; line-height: 1.7; }
     </styles>
   </Page>
 </App>
 ```
 
-> 制作要点：主从布局（左列表 320px 固定 + 右档案伸缩）；列表为 **List 数据驱动**（`{{item.*}}` 模板，数据轴展示）；档案区三段式（摘要头 / Descriptions 字段 / Timeline 跟进）；工具页零动效。
+> Craft notes: master-detail layout (fixed 320px list on the left, fluid profile on the right); the
+> list is **data-driven** (List with a `{{item.*}}` template — the data axis on display); the profile
+> is a three-part stack (summary header / Descriptions fields / follow-up Timeline); a utility page
+> ships with zero motion.
+
+## Production notes
+
+**Geometry re-tuned for Latin type (2026-09-25).** Same reasoning as the other English templates:
+the Chinese source is typeset for CJK metrics (square glyphs, no inter-word spacing), so Latin at the
+same nominal size runs wider. This scene is a form-and-list page — most of it is auto-width text in
+wide containers, so the deltas are small; the note block was the one place where the English copy had
+to be *written to a measure* rather than re-sized.
+
+| Element | Chinese source | English version | Why |
+| --- | --- | --- | --- |
+| `crm_note` leading | `1.8` | **`1.7`** | Latin does not need CJK leading; at 1.8 the single-line note box only grew taller |
+| `crm_note` copy | 44 CJK glyphs | **112 Latin glyphs** | written to a measure: the note box is 813px of text width (816px minus the 3px accent border), and the English line measures **726px** — one line, same as the Chinese. The phrasing was tightened rather than allowed to wrap, because a wrapped note would push the whole detail column down |
+| `crm_item_company` | 12px | 12px (kept) | an English company name is ~2x the CJK width; keeping 12px holds the 6-row list at the same height so the master column still fills the first screen |
+| `crm_profile_name` | 26px | 26px (kept) | "Marcus Reed" is 11 Latin glyphs ≈ 160px — no longer than the 3 CJK glyphs it replaces at display size |
+| list card / detail card widths | `320px` / fluid | unchanged | the master column carries a 3-line stacked item (name / company / tag), so its width is set by the tag row, not by the name |
+
+Everything else — radii, shadows, the action button padding, the Descriptions column count, the
+Timeline shape and the hover translate on list items — is language-neutral and unchanged.
+
+**Copy policy**: not a literal translation. Chinese-specific framing is rewritten to international
+equivalents: `长风 CRM` → Beacon CRM, `青禾食品集团` → Evergreen Foods Group, person names replaced
+with neutral English stand-ins (沈知远 → Marcus Reed), and the phone number moved from the mainland
+`138-0000-2688` format to `+1 415 555 0186` with company size restated from 年营收 18 亿 to
+`$180M revenue` (USD, not RMB). Status vocabulary maps onto standard CRM English: 重点跟进 → Priority,
+方案沟通 → Proposal, 新线索 → New lead.
+
+**Node ids are identical to the Chinese version** — the two documents are the same scene, so tooling
+(the capability E2E, the thumbnail pipeline) can address either one by the same selectors.

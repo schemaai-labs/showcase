@@ -1,47 +1,53 @@
-# 工单 / 客服台 — 「栖木科技」客服工单台
+# Support Ticket Desk — "Perch Technologies" agent console
 
-> 模板定位（产品 / 应用 tab · 业务系统）：客服/支持台的队列-详情标准形态——左栏工单队列（List 数据驱动）+ 右栏工单详情（摘要头 + 字段 + 描述 + 处理时间线 + 动作）。
-> 场景需求：给虚构 SaaS 公司做客服工单台：顶栏品牌，左栏工单队列（6 条工单：标题 / 客户 / 时间 / 状态标签，数据驱动循环渲染），右栏选中工单详情（编号 + 标题 + 紧急/处理中标签、五项字段、问题描述、四条处理记录时间线、回复/转派/关闭动作）。浅灰画布、白卡、零动效。
+> Template role (product / app tab · business systems): the standard queue-to-detail support desk —
+> a ticket queue on the left (data-driven List) beside the ticket detail on the right (summary header
+> + fields + description + handling timeline + actions).
+> Scenario: a support desk for a fictional SaaS company: brand bar on top; the left rail is the
+> ticket queue (six tickets: number / title / customer / time / status tag, loop-rendered); the right
+> pane is the selected ticket (number + title + urgent and in-progress tags, five fields, the problem
+> description, a four-entry handling timeline, and reply / transfer / close actions). Light grey
+> canvas, white cards, zero motion.
 
 ```lang
-<App dsl-version="0.3" name="栖木科技 · 客服工单台">
-  <Page id="ticket" name="客服工单台" route="/tickets">
+<App dsl-version="0.3" name="Perch Technologies · Support Desk">
+  <Page id="ticket" name="Support Desk" route="/tickets">
     <FlexContainer id="tk_root" props={direction: "column"} style="width:100%; min-height:100vh; height:auto">
 
-      <!-- ─── 顶栏 ─── -->
+      <!-- ─── Header ─── -->
       <Container id="tk_header" style="flex-shrink:0; flex-grow:0; height:64px; width:100%">
         <FlexContainer id="tk_header_row" props={direction: "row"} style="height:100%; width:100%; align-items:center; justify-content:space-between; padding:0px 24px">
           <Container id="tk_brand_cell" style="height:auto; width:auto; flex-shrink:0">
             <FlexContainer id="tk_brand_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:10px">
               <Container id="tk_logo_cell" style="height:auto; width:auto"><Icon id="tk_logo" props={iconName: "Headset", iconSource: "lucide"}/></Container>
-              <Container id="tk_brand_text_cell" style="height:auto; width:auto"><Text id="tk_brand" props={content: "栖木科技 · 客服工单台", tagName: "span"}/></Container>
+              <Container id="tk_brand_text_cell" style="height:auto; width:auto"><Text id="tk_brand" props={content: "Perch Technologies · Support Desk", tagName: "span"}/></Container>
             </FlexContainer>
           </Container>
           <Container id="tk_user_cell" style="height:auto; width:auto; flex-shrink:0">
             <FlexContainer id="tk_user_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:14px">
               <Container id="tk_bell_cell" style="height:auto; width:auto"><Icon id="tk_bell" props={iconName: "Bell", iconSource: "lucide"}/></Container>
-              <Container id="tk_avatar_cell" style="height:auto; width:auto"><Avatar id="tk_avatar" props={text: "栖", shape: "circle"} style="height:32px; width:32px"/></Container>
-              <Container id="tk_user_name_cell" style="height:auto; width:auto"><Text id="tk_user_name" props={content: "值班坐席 · 阿澈", tagName: "span"}/></Container>
+              <Container id="tk_avatar_cell" style="height:auto; width:auto"><Avatar id="tk_avatar" props={text: "P", shape: "circle"} style="height:32px; width:32px"/></Container>
+              <Container id="tk_user_name_cell" style="height:auto; width:auto"><Text id="tk_user_name" props={content: "On duty · R. Osei", tagName: "span"}/></Container>
             </FlexContainer>
           </Container>
         </FlexContainer>
       </Container>
 
-      <!-- ─── 主从区 ─── -->
+      <!-- ─── Master-detail region ─── -->
       <Container id="tk_body" style="flex-grow:1; height:auto; width:100%; padding:20px 24px 36px">
         <FlexContainer id="tk_body_row" props={direction: "row"} style="height:auto; width:100%; align-items:flex-start; gap:16px">
 
-          <!-- 左栏：工单队列 -->
+          <!-- Left: ticket queue -->
           <Container id="tk_queue_card" style="flex-shrink:0; height:auto; width:380px">
             <FlexContainer id="tk_queue_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:14px; padding:18px 14px">
               <Container id="tk_queue_head_cell" style="height:auto; width:100%">
                 <FlexContainer id="tk_queue_head_row" props={direction: "row"} style="height:auto; width:100%; align-items:baseline; justify-content:space-between">
-                  <Container id="tk_queue_title_cell" style="height:auto; width:auto"><Text id="tk_queue_title" props={content: "工单队列", tagName: "h3"}/></Container>
-                  <Container id="tk_queue_note_cell" style="height:auto; width:auto"><Text id="tk_queue_note" props={content: "6 条跟进中 · 1 条紧急", tagName: "span"}/></Container>
+                  <Container id="tk_queue_title_cell" style="height:auto; width:auto"><Text id="tk_queue_title" props={content: "Ticket queue", tagName: "h3"}/></Container>
+                  <Container id="tk_queue_note_cell" style="height:auto; width:auto"><Text id="tk_queue_note" props={content: "6 open · 1 urgent", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="tk_queue_list_cell" style="height:auto; width:100%">
-                <List id="tk_queue_list" props={dataSource: [{no: "QU-2026-0921", title: "导出报表在 Safari 下乱码", customer: "青禾食品 · 沈知远", time: "12 分钟前", status: "紧急"}, {no: "QU-2026-0920", title: "批量导入商品时 500 报错", customer: "明湖生鲜 · 林选品", time: "48 分钟前", status: "处理中"}, {no: "QU-2026-0919", title: "子账号无法查看订单列表", customer: "长风物流 · 陆铭", time: "2 小时前", status: "处理中"}, {no: "QU-2026-0918", title: "发票抬头信息修改未生效", customer: "澄见科技 · 苏叶", time: "4 小时前", status: "待回复"}, {no: "QU-2026-0917", title: "API 限流阈值能否调高", customer: "湾流跨境 · 黎晚晴", time: "昨天", status: "待回复"}, {no: "QU-2026-0916", title: "移动端消息推送延迟", customer: "北辰便利 · 程野", time: "昨天", status: "已解决"}], direction: "vertical", gap: "10px"} style="height:auto; width:100%">
+                <List id="tk_queue_list" props={dataSource: [{no: "QU-2026-0921", title: "Report export garbled in Safari", customer: "Evergreen Foods · Marcus Reed", time: "12 minutes ago", status: "Urgent"}, {no: "QU-2026-0920", title: "500 error on bulk product import", customer: "Ming Lake Fresh · Lena Xu", time: "48 minutes ago", status: "In progress"}, {no: "QU-2026-0919", title: "Sub-account can't see the order list", customer: "Longwind Freight · Owen Blake", time: "2 hours ago", status: "In progress"}, {no: "QU-2026-0918", title: "Invoice header edit did not save", customer: "Clarity Tech · Grace Ito", time: "4 hours ago", status: "Awaiting reply"}, {no: "QU-2026-0917", title: "Can we raise the API rate limit?", customer: "Gulfstream Commerce · Elena Vasquez", time: "Yesterday", status: "Awaiting reply"}, {no: "QU-2026-0916", title: "Push notifications delayed on mobile", customer: "Polaris Convenience · Daniel Okafor", time: "Yesterday", status: "Resolved"}], direction: "vertical", gap: "10px"} style="height:auto; width:100%">
                   <Container id="tk_item_tpl" style="height:auto; width:100%">
                     <FlexContainer id="tk_item_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:6px; padding:12px 12px">
                       <Container id="tk_item_top_cell" style="height:auto; width:100%">
@@ -59,60 +65,60 @@
             </FlexContainer>
           </Container>
 
-          <!-- 右栏：工单详情 -->
+          <!-- Right: ticket detail -->
           <Container id="tk_detail_card" style="flex-grow:1; height:auto; width:auto">
             <FlexContainer id="tk_detail_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:20px; padding:22px 24px">
 
-              <!-- 摘要头 -->
+              <!-- Summary header -->
               <Container id="tk_detail_head_cell" style="height:auto; width:100%">
                 <FlexContainer id="tk_detail_head_row" props={direction: "row"} style="height:auto; width:100%; align-items:flex-start; justify-content:space-between">
                   <Container id="tk_detail_head_left_cell" style="height:auto; width:auto">
                     <FlexContainer id="tk_detail_head_left_col" props={direction: "column"} style="height:auto; width:auto; align-items:flex-start; gap:8px">
                       <Container id="tk_detail_no_cell" style="height:auto; width:auto"><Text id="tk_detail_no" props={content: "QU-2026-0921", tagName: "span"}/></Container>
-                      <Container id="tk_detail_title_cell" style="height:auto; width:300px">
-                        <Text id="tk_detail_title" props={content: "导出报表在 Safari 下乱码", tagName: "h2"} style="height:auto; width:100%"/>
+                      <Container id="tk_detail_title_cell" style="height:auto; width:440px">
+                        <Text id="tk_detail_title" props={content: "Report export garbled in Safari", tagName: "h2"} style="height:auto; width:100%"/>
                       </Container>
                       <Container id="tk_detail_tags_cell" style="height:auto; width:auto">
                         <FlexContainer id="tk_detail_tags_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:8px">
-                          <Container id="tk_detail_tag_urgent_cell" style="height:auto; width:auto"><Tag id="tk_detail_tag_urgent" props={text: "紧急", color: "red"}/></Container>
-                          <Container id="tk_detail_tag_status_cell" style="height:auto; width:auto"><Tag id="tk_detail_tag_status" props={text: "处理中", color: "blue"}/></Container>
-                          <Container id="tk_detail_tag_channel_cell" style="height:auto; width:auto"><Tag id="tk_detail_tag_channel" props={text: "企业微信", color: "cyan"}/></Container>
+                          <Container id="tk_detail_tag_urgent_cell" style="height:auto; width:auto"><Tag id="tk_detail_tag_urgent" props={text: "Urgent", color: "red"}/></Container>
+                          <Container id="tk_detail_tag_status_cell" style="height:auto; width:auto"><Tag id="tk_detail_tag_status" props={text: "In progress", color: "blue"}/></Container>
+                          <Container id="tk_detail_tag_channel_cell" style="height:auto; width:auto"><Tag id="tk_detail_tag_channel" props={text: "In-app chat", color: "cyan"}/></Container>
                         </FlexContainer>
                       </Container>
                     </FlexContainer>
                   </Container>
                   <Container id="tk_detail_actions_cell" style="height:auto; width:auto; flex-shrink:0">
                     <FlexContainer id="tk_detail_actions_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:12px">
-                      <Container id="tk_transfer_cell" style="height:auto; width:auto"><Button id="tk_transfer_btn" props={content: "转派", variant: "default"} style="height:auto; width:auto; padding:8px 18px"/></Container>
-                      <Container id="tk_close_cell" style="height:auto; width:auto"><Button id="tk_close_btn" props={content: "关闭工单", variant: "default"} style="height:auto; width:auto; padding:8px 18px"/></Container>
+                      <Container id="tk_transfer_cell" style="height:auto; width:auto"><Button id="tk_transfer_btn" props={content: "Transfer", variant: "default"} style="height:auto; width:auto; padding:8px 18px"/></Container>
+                      <Container id="tk_close_cell" style="height:auto; width:auto"><Button id="tk_close_btn" props={content: "Close ticket", variant: "default"} style="height:auto; width:auto; padding:8px 18px"/></Container>
                     </FlexContainer>
                   </Container>
                 </FlexContainer>
               </Container>
 
-              <!-- 字段 -->
+              <!-- Fields -->
               <Container id="tk_fields_cell" style="height:auto; width:100%">
-                <Descriptions id="tk_fields" props={title: "工单信息", column: 2, items: [{"label": "客户", "value": "青禾食品集团 · 沈知远"}, {"label": "联系邮箱", "value": "shen@qinghe-food.example.com"}, {"label": "问题模块", "value": "数据导出 / 报表中心"}, {"label": "首次提交", "value": "2026-09-14 20:33"}, {"label": "影响范围", "value": "Safari 17+ / 桌面端"}, {"label": "当前负责人", "value": "阿澈（一线支持）"}]} style="height:auto; width:100%"/>
+                <Descriptions id="tk_fields" props={title: "Ticket details", column: 2, items: [{"label": "Customer", "value": "Evergreen Foods Group · Marcus Reed"}, {"label": "Contact email", "value": "m.reed@evergreenfoods.example.com"}, {"label": "Module", "value": "Data export / Reports"}, {"label": "First submitted", "value": "2026-09-14 20:33"}, {"label": "Scope", "value": "Safari 17+ / desktop"}, {"label": "Assigned to", "value": "R. Osei (Tier-1 support)"}]} style="height:auto; width:100%"/>
               </Container>
 
-              <!-- 问题描述 -->
+              <!-- Problem description -->
               <Container id="tk_desc_cell" style="height:auto; width:100%">
                 <FlexContainer id="tk_desc_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:8px; padding:16px 18px">
-                  <Container id="tk_desc_title_cell" style="height:auto; width:100%"><Text id="tk_desc_title" props={content: "问题描述", tagName: "h3"}/></Container>
-                  <Container id="tk_desc_text_cell" style="height:auto; width:100%"><Text id="tk_desc_text" props={content: "客户在 Safari 浏览器点击「导出报表」后，下载的 CSV 中文字段显示为乱码；Chrome 下正常。已确认导出文件未带 UTF-8 BOM，建议在导出服务端补 BOM 或改用 Excel 兼容编码。", tagName: "p"} style="height:auto; width:100%"/></Container>
+                  <Container id="tk_desc_title_cell" style="height:auto; width:100%"><Text id="tk_desc_title" props={content: "Problem description", tagName: "h3"}/></Container>
+                  <Container id="tk_desc_text_cell" style="height:auto; width:100%"><Text id="tk_desc_text" props={content: "Safari exports the CSV with mojibake in every non-ASCII field; the same file is correct in Chrome. The export is missing a UTF-8 BOM — add it server-side or switch to an Excel-compatible encoding.", tagName: "p"} style="height:auto; width:100%"/></Container>
                 </FlexContainer>
               </Container>
 
-              <!-- 处理记录 -->
+              <!-- Handling history -->
               <Container id="tk_timeline_cell" style="height:auto; width:100%">
-                <Timeline id="tk_timeline" props={items: [{"label": "定位完成：Safari 对无 BOM 的 UTF-8 CSV 判定为 GBK —— 已提交修复分支 fix/csv-bom", "time": "20:52 阿澈"}, {"label": "复现成功：客服复现环境为 Safari 17.4，Chrome 17 无问题", "time": "20:47 小满"}, {"label": "已升级为紧急：客户财务月底结账依赖该报表", "time": "20:41 阿澈"}, {"label": "工单创建：客户通过企业微信提交", "time": "20:33 系统"}]} style="height:auto; width:100%"/>
+                <Timeline id="tk_timeline" props={items: [{"label": "Root cause found: Safari reads a BOM-less UTF-8 CSV as Latin-1 — fix on branch fix/csv-bom", "time": "20:52 R. Osei"}, {"label": "Reproduced: tier-1 sees it on Safari 17.4; Chrome 17 is clean", "time": "20:47 M. Ferrer"}, {"label": "Escalated to urgent: the client's month-end close depends on this report", "time": "20:41 R. Osei"}, {"label": "Ticket created: the client filed it from the in-app widget", "time": "20:33 System"}]} style="height:auto; width:100%"/>
               </Container>
 
-              <!-- 底部动作 -->
+              <!-- Footer actions -->
               <Container id="tk_footer_actions_cell" style="height:auto; width:100%; justify-content:flex-end">
                 <FlexContainer id="tk_footer_actions_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:12px">
-                  <Container id="tk_note_cell" style="height:auto; width:auto"><Button id="tk_note_btn" props={content: "添加内部备注", variant: "default"} style="height:auto; width:auto; padding:9px 20px"/></Container>
-                  <Container id="tk_reply_cell" style="height:auto; width:auto"><Button id="tk_reply_btn" props={content: "回复客户", variant: "primary"} style="height:auto; width:auto; padding:9px 24px"/></Container>
+                  <Container id="tk_note_cell" style="height:auto; width:auto"><Button id="tk_note_btn" props={content: "Add internal note", variant: "default"} style="height:auto; width:auto; padding:9px 20px"/></Container>
+                  <Container id="tk_reply_cell" style="height:auto; width:auto"><Button id="tk_reply_btn" props={content: "Reply to customer", variant: "primary"} style="height:auto; width:auto; padding:9px 24px"/></Container>
                 </FlexContainer>
               </Container>
             </FlexContainer>
@@ -122,20 +128,20 @@
     </FlexContainer>
 
     <script>
-      # 工具页无数据逻辑；动作为声明式反馈
+      # Utility page has no data logic; the buttons are declarative feedback only
       @tk_reply_btn = {
-        events: { reply: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "已打开回复编辑器（演示）"}) } }
+        events: { reply: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "Reply editor opened (demo)"}) } }
       };
       @tk_transfer_btn = {
-        events: { transfer: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "转派需选择目标坐席（演示）"}) } }
+        events: { transfer: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "Transfer needs a receiving agent (demo)"}) } }
       };
       @tk_close_btn = {
-        events: { close: { trigger: "onClick", action: feedback.show({type: "message", subtype: "warning", message: "关闭前请确认已回复客户（演示）"}) } }
+        events: { close: { trigger: "onClick", action: feedback.show({type: "message", subtype: "warning", message: "Confirm the customer was answered before closing (demo)"}) } }
       };
     </script>
 
     <styles>
-      # 0. 画布与顶栏
+      # 0. Canvas and header
       @tk_root = { background: #f5f7fa; }
       @tk_header = { background: #ffffff; :scope { border-bottom: 1px solid rgba(148, 163, 184, 0.16); box-shadow: 0 1px 8px rgba(15, 23, 42, 0.03); } }
       @tk_logo = { color: #0891b2; font-size: 22px; }
@@ -144,17 +150,19 @@
       @tk_avatar = { background-color: #0891b2; color: #ffffff; font-size: 13px; }
       @tk_user_name = { color: #334155; font-size: 14px; font-weight: 600; }
 
-      # 1. 队列
+      # 1. Queue
       @tk_queue_card = { background: #ffffff; border-radius: 14px; box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04); }
       @tk_queue_title = { color: #0f172a; font-size: 16px; font-weight: 800; }
       @tk_queue_note = { color: #94a3b8; font-size: 12px; }
       @tk_item_tpl = { background: #f8fafc; border-radius: 12px; :scope { border: 1px solid #eef2f7; transition: transform 0.18s ease, box-shadow 0.18s ease; } :scope:hover { transform: translateX(2px); box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06); } }
       @tk_item_no = { color: #94a3b8; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
       @tk_item_status = { background-color: #ecfeff; color: #0e7490; font-size: 11px; font-weight: 700; border-radius: 999px; }
+      # 14px title / 12px meta: an English ticket title is ~2x the CJK one at the same size; at 328px
+      # of item box the longest ("Sub-account can't see the order list", 190px) still holds one line.
       @tk_item_title = { color: #0f172a; font-size: 14px; font-weight: 700; }
       @tk_item_meta = { color: #94a3b8; font-size: 12px; }
 
-      # 2. 详情
+      # 2. Detail
       @tk_detail_card = { background: #ffffff; border-radius: 14px; box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04); }
       @tk_detail_no = { color: #0891b2; font-size: 13px; font-weight: 700; letter-spacing: 1px; }
       @tk_detail_title = { color: #0f172a; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.35; }
@@ -181,7 +189,9 @@
       }
       @tk_desc_cell = { background: #f8fafc; border-radius: 12px; :scope { border: 1px solid #eef2f7; } }
       @tk_desc_title = { color: #0f172a; font-size: 15px; font-weight: 800; }
-      @tk_desc_text = { color: #334155; font-size: 14px; line-height: 2; }
+      # Latin gets 1.7 leading (CJK needed 2.0): the English description runs to the same two lines
+      # in the 752px block, and the looser leading only padded the card.
+      @tk_desc_text = { color: #334155; font-size: 14px; line-height: 1.7; }
       @tk_note_btn = {
         color: #334155;
         background: #ffffff;
@@ -205,4 +215,37 @@
 </App>
 ```
 
-> 制作要点：队列-详情主从（左 380px 数据驱动 List + 右伸缩详情）；详情三段式（摘要头 / Descriptions 字段 / Timeline 处理记录 / 描述块）；关闭类动作只做入口（执行走确认流纪律）。
+> Craft notes: queue-to-detail master-detail (a 380px data-driven List on the left, a fluid detail
+> pane on the right); the detail is a three-part stack (summary header / Descriptions fields /
+> Timeline of handling entries / description block); close-type actions only provide the entry point
+> (execution goes through the confirmation flow).
+
+## Production notes
+
+**Geometry re-tuned for Latin type (2026-09-25).** The Chinese source is typeset for CJK metrics —
+square glyphs, and a ticket title that happens to land on one line at 26px. Latin at the same size
+runs about twice as wide per word, and this page has one hard box (the title rail) plus one block
+where the line count is the whole design (the description).
+
+| Element | Chinese source | English version | Why |
+| --- | --- | --- | --- |
+| `tk_detail_title_cell` | `width:300px` | **`width:440px`** | the Chinese title 导出报表在 Safari 下乱码 is ~300px at 26px and just fits the authored rail; "Report export garbled in Safari" measures **383px**, so the rail had to grow or the hero title would break onto a second line. 440px still leaves air before the 216px action cluster inside the 788px detail column |
+| `tk_desc_text` leading | `2` | **`1.7`** | Latin does not need CJK leading; the English description still lands on **two lines** (measured: 750px block, longest line 731px) — the same count as the Chinese, just in a shorter block |
+| queue item `title` / `meta` | 14px / 12px | 14px / 12px (kept) | the item box is 328px; the longest English title ("Sub-account can't see the order list") is ~190px, so the queue keeps its 380px rail and six-row rhythm |
+| `tk_detail_head_left_col` | `width:auto` | unchanged | the column is sized by the widest child — the title rail above — so the number / tag rows follow it without further change |
+
+**No structural changes.** The queue item renders number / title / customer, exactly as the Chinese
+version does, and the `time` field in the `dataSource` stays a data-axis demo value rather than a new
+binding. Nothing was deleted either: this scene has no Chinese-only construct — the two idioms that
+*look* Chinese-only (the `企业微信` channel tag and the GBK root cause) are handled by rewording, not
+by dropping nodes.
+
+**Copy policy**: not a literal translation. Chinese-specific framing is rewritten to international
+equivalents: `栖木科技` → Perch Technologies, `企业微信` (WeChat Work) → a vendor-neutral "In-app chat"
+channel, and the Latin-1/GBK root cause is restated as an encoding mismatch ("Safari reads a
+BOM-less UTF-8 CSV as Latin-1") because GBK is not a meaningful encoding to a global audience.
+Customer identities are shared with `biz-crm` where the Chinese versions share them
+(青禾食品集团 · 沈知远 → Evergreen Foods Group · Marcus Reed), so the two templates read as one world.
+
+**Node ids are identical to the Chinese version** — the two documents are the same scene, so tooling
+can address either one by the same selectors.

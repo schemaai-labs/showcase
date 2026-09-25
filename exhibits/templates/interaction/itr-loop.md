@@ -1,33 +1,39 @@
-# 交互闭环（行内编辑 + 危险确认） — 「云笺笔记」
+# Interaction loops (inline edit + destructive confirm) — "Paperlane Notes"
 
-> 模板定位（交互 / 动效 tab，P2）：事件驱动的两个经典闭环——**行内编辑**（直接操作：draft 草稿态 + 显式存/弃）与**危险操作确认**（浮层 + 输入对象名二次确认 + 结果回传）。
-> 场景需求：做一页笔记管理演示：一条笔记支持就地改标题（编辑 → 草稿输入 → 保存/取消，未保存前原文不受影响）；「删除此笔记」走确认浮层（展示影响面 + 输入原名「周报草稿」方可提交 + 取消/确认都回传结果）；确认后主页面置为已删除态。状态全放 owner（绑 `{{}}` 只做路径引用，成对布尔标志）。
+> Template role (interaction / motion tab, P2): two classic event-driven loops — **inline editing**
+> (direct manipulation: draft state plus an explicit save / discard) and **destructive-action
+> confirmation** (overlay + type-the-object-name gate + result passed back).
+> Scenario: a note-management demo. A note's title can be edited in place (edit → draft input →
+> save/cancel; the original is untouched until you save). "Delete note" goes through a confirmation
+> overlay that states the impact, only submits once the original name is typed, and reports its
+> result either way; on confirm the page switches to the deleted state. All state lives on the owner
+> (bindings are path references only, and the boolean flags come in pairs).
 
 ```lang
-<App dsl-version="0.3" name="云笺笔记 · 交互闭环演示">
-  <!-- ══════════════ 主页面 ══════════════ -->
-  <Page id="loop_home" name="笔记" route="/">
+<App dsl-version="0.3" name="Paperlane Notes · Interaction Loops">
+  <!-- ══════════════ Main page ══════════════ -->
+  <Page id="loop_home" name="Notes" route="/">
     <FlexContainer id="loop_page" props={direction: "column"} style="width:100%; min-height:100vh; height:auto; align-items:center">
       <FlexContainer id="loop_col" props={direction: "column"} style="height:auto; width:100%; max-width:760px; align-items:stretch; gap:18px; padding:56px 32px 72px">
 
-        <!-- 页头 -->
+        <!-- Page header -->
         <Container id="loop_head_cell" style="height:auto; width:100%">
           <FlexContainer id="loop_head_col" props={direction: "column"} style="height:auto; width:100%; align-items:flex-start; gap:6px">
-            <Container id="loop_title_cell" style="height:auto; width:auto"><Text id="loop_title" props={content: "云笺笔记 · 交互闭环", tagName: "h1"}/></Container>
-            <Container id="loop_sub_cell" style="height:auto; width:auto"><Text id="loop_sub" props={content: "就地编辑（草稿态，未保存前原文不变）；删除走确认浮层（输入原名方可提交）。", tagName: "p"}/></Container>
+            <Container id="loop_title_cell" style="height:auto; width:auto"><Text id="loop_title" props={content: "Paperlane Notes · Interaction Loops", tagName: "h1"}/></Container>
+            <Container id="loop_sub_cell" style="height:auto; width:auto"><Text id="loop_sub" props={content: "Edit in place — nothing changes until you save. Deleting asks for the note name first.", tagName: "p"}/></Container>
           </FlexContainer>
         </Container>
 
-        <!-- 笔记卡（owner：value / draft / editing / idle / present / deleted） -->
+        <!-- Note card (owner: value / draft / editing / idle / present / deleted) -->
         <Container id="loop_note_card" style="height:auto; width:100%">
           <FlexContainer id="loop_note_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:16px; padding:24px 26px">
 
-            <!-- 已删除态 -->
+            <!-- Deleted state -->
             <Container id="loop_deleted_cell" style="height:auto; width:100%">
-              <Text id="loop_deleted_text" props={content: "该笔记已删除（浮层确认回传 confirmed = true；此态可刷新恢复演示数据）", visible: "{{DOM.loop_note_card.data.deleted}}"} style="height:auto; width:100%; padding:14px 16px"/>
+              <Text id="loop_deleted_text" props={content: "Note deleted — the overlay returned confirmed = true. Refresh to restore the demo data.", visible: "{{DOM.loop_note_card.data.deleted}}"} style="height:auto; width:100%; padding:14px 16px"/>
             </Container>
 
-            <!-- 标题行（显示态 / 编辑态成对切显） -->
+            <!-- Title row (view / edit states swap in pairs) -->
             <Container id="loop_row_cell" style="height:auto; width:100%">
               <FlexContainer id="loop_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; gap:14px">
                 <Container id="loop_value_cell" style="height:auto; width:auto; flex-grow:1">
@@ -36,35 +42,35 @@
                 <Container id="loop_input_cell" style="height:auto; width:100%; flex-grow:1">
                   <Input id="loop_input" props={value: "{{DOM.loop_note_card.data.draft}}", visible: "{{DOM.loop_note_card.data.editing}}"} style="height:auto; width:100%"/>
                 </Container>
-                <Container id="loop_edit_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_edit_btn" props={content: "编辑", variant: "default", visible: "{{DOM.loop_note_card.data.idle}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
-                <Container id="loop_save_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_save_btn" props={content: "保存", variant: "primary", visible: "{{DOM.loop_note_card.data.editing}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
-                <Container id="loop_cancel_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_cancel_btn" props={content: "取消", variant: "default", visible: "{{DOM.loop_note_card.data.editing}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
+                <Container id="loop_edit_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_edit_btn" props={content: "Edit", variant: "default", visible: "{{DOM.loop_note_card.data.idle}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
+                <Container id="loop_save_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_save_btn" props={content: "Save", variant: "primary", visible: "{{DOM.loop_note_card.data.editing}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
+                <Container id="loop_cancel_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_cancel_btn" props={content: "Cancel", variant: "default", visible: "{{DOM.loop_note_card.data.editing}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
               </FlexContainer>
             </Container>
 
-            <!-- 元信息 + 危险入口 -->
+            <!-- Meta + destructive entry point -->
             <Container id="loop_meta_row_cell" style="height:auto; width:100%; padding-top:2px">
               <FlexContainer id="loop_meta_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; justify-content:space-between">
-                <Container id="loop_meta_cell" style="height:auto; width:auto"><Text id="loop_meta" props={content: "最后编辑：今天 14:20 · 归入「工作」", tagName: "span"}/></Container>
-                <Container id="loop_delete_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_delete_btn" props={content: "删除此笔记", variant: "danger", visible: "{{DOM.loop_note_card.data.present}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
+                <Container id="loop_meta_cell" style="height:auto; width:auto"><Text id="loop_meta" props={content: "Last edited today 14:20 · filed under Work", tagName: "span"}/></Container>
+                <Container id="loop_delete_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_delete_btn" props={content: "Delete note", variant: "danger", visible: "{{DOM.loop_note_card.data.present}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
               </FlexContainer>
             </Container>
           </FlexContainer>
         </Container>
 
-        <!-- 说明卡 -->
+        <!-- Notes card -->
         <Container id="loop_tip_card" style="height:auto; width:100%">
           <FlexContainer id="loop_tip_col" props={direction: "column"} style="height:auto; width:100%; align-items:flex-start; gap:8px; padding:18px 22px">
-            <Container id="loop_tip_title_cell" style="height:auto; width:auto"><Text id="loop_tip_title" props={content: "闭环要点", tagName: "h3"}/></Container>
-            <Container id="loop_tip_1_cell" style="height:auto; width:100%"><Text id="loop_tip_1" props={content: "· 编辑 = value 复制进 draft 并翻转成对标志（editing / idle）；取消只切态，原文零影响", tagName: "span"} style="height:auto; width:100%"/></Container>
-            <Container id="loop_tip_2_cell" style="height:auto; width:100%"><Text id="loop_tip_2" props={content: "· 删除先开浮层（overlay.open，sendData 传对象名），不直接执行", tagName: "span"} style="height:auto; width:100%"/></Container>
-            <Container id="loop_tip_3_cell" style="height:auto; width:100%"><Text id="loop_tip_3" props={content: "· 浮层结果经 onOverlayClose(result) 回传主页 root，确认后才置已删除态", tagName: "span"} style="height:auto; width:100%"/></Container>
+            <Container id="loop_tip_title_cell" style="height:auto; width:auto"><Text id="loop_tip_title" props={content: "What makes the loop hold", tagName: "h3"}/></Container>
+            <Container id="loop_tip_1_cell" style="height:auto; width:100%"><Text id="loop_tip_1" props={content: "· Edit copies value into draft and flips the paired flags (editing / idle); Cancel only swaps the state back", tagName: "span"} style="height:auto; width:100%"/></Container>
+            <Container id="loop_tip_2_cell" style="height:auto; width:100%"><Text id="loop_tip_2" props={content: "· Delete opens the overlay first (overlay.open, sendData carries the note name) — never runs directly", tagName: "span"} style="height:auto; width:100%"/></Container>
+            <Container id="loop_tip_3_cell" style="height:auto; width:100%"><Text id="loop_tip_3" props={content: "· The result returns via onOverlayClose(result) to the page root; only then is the note deleted", tagName: "span"} style="height:auto; width:100%"/></Container>
           </FlexContainer>
         </Container>
       </FlexContainer>
     </FlexContainer>
     <script>
-      # 行内编辑（value/draft + 成对标志 editing/idle）
+      # Inline editing (value/draft + the paired flags editing/idle)
       @loop_edit_btn = {
         events: { startEdit: { trigger: "onClick", code: "DOM.loop_note_card.data.draft = DOM.loop_note_card.data.value; DOM.loop_note_card.data.editing = true; DOM.loop_note_card.data.idle = false" } }
       }
@@ -74,77 +80,79 @@
       @loop_cancel_btn = {
         events: { cancelEdit: { trigger: "onClick", code: "DOM.loop_note_card.data.editing = false; DOM.loop_note_card.data.idle = true; DOM.loop_note_card.data.draft = DOM.loop_note_card.data.value" } }
       }
-      # 危险操作：开确认浮层（page 按页面 name 解析；sendData 传对象名——确认短语与原名一致）
+      # Destructive action: open the confirm overlay (page resolves by page name; sendData carries the object name — the confirmation phrase matches it)
       @loop_delete_btn = {
-        events: { askDelete: { trigger: "onClick", action: overlay.open({page: "确认删除", mode: "modal", sendData: {name: "周报草稿"}}) } }
+        events: { askDelete: { trigger: "onClick", action: overlay.open({page: "Delete note", mode: "modal", sendData: {name: "Weekly draft"}}) } }
       }
-      # owner：行内编辑状态（浮层结果由**子页根** onOverlayClose 跨页写回，见下）
+      # owner: inline-edit state (the overlay result is written back cross-page by the **sub-page root**, see below)
       @loop_note_card = {
-        data: { value: "周报草稿", draft: "周报草稿", editing: false, idle: true, present: true, deleted: false }
+        data: { value: "Weekly draft", draft: "Weekly draft", editing: false, idle: true, present: true, deleted: false }
       }
     </script>
     <styles>
       @loop_page = { background: #f6f7fb; }
-      @loop_title = { color: #0f172a; font-size: 30px; font-weight: 900; letter-spacing: -0.8px; }
-      @loop_sub = { color: #64748b; font-size: 14px; line-height: 1.8; }
+      @loop_title = { color: #0f172a; font-size: 30px; font-weight: 900; letter-spacing: -0.6px; }
+      @loop_sub = { color: #64748b; font-size: 14px; line-height: 1.7; }
       @loop_note_card = { background: #ffffff; border-radius: 16px; box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9); :scope { border: 1px solid #eef2f7; } }
-      @loop_value = { color: #0f172a; font-size: 22px; font-weight: 800; letter-spacing: -0.3px; }
+      @loop_value = { color: #0f172a; font-size: 22px; font-weight: 800; letter-spacing: -0.2px; }
       @loop_meta = { color: #94a3b8; font-size: 13px; }
       @loop_edit_btn = { color: #334155; background: #ffffff; border-radius: 10px; font-size: 13px; font-weight: 600; :scope { border: 1px solid #e2e8f0; transition: border-color 0.2s ease; } :scope:hover { border-color: #94a3b8; } }
       @loop_save_btn = { color: #ffffff; background: #4f46e5; border-radius: 10px; font-size: 13px; font-weight: 700; :scope { transition: background-color 0.2s ease; } :scope:hover { background-color: #4338ca; } }
       @loop_cancel_btn = { color: #334155; background: #ffffff; border-radius: 10px; font-size: 13px; font-weight: 600; :scope { border: 1px solid #e2e8f0; transition: border-color 0.2s ease; } :scope:hover { border-color: #94a3b8; } }
       @loop_delete_btn = { color: #b91c1c; background: #fef2f2; border-radius: 10px; font-size: 13px; font-weight: 700; :scope { border: 1px solid #fecaca; transition: background-color 0.2s ease; } :scope:hover { background-color: #fee2e2; } }
       @loop_deleted_cell = { background: #f0fdf4; border-radius: 12px; :scope { border: 1px solid #bbf7d0; } }
-      @loop_deleted_text = { color: #15803d; font-size: 13px; font-weight: 600; line-height: 1.8; }
+      @loop_deleted_text = { color: #15803d; font-size: 13px; font-weight: 600; line-height: 1.7; }
       @loop_tip_card = { background: #fffbeb; border-radius: 14px; :scope { border: 1px solid #fde68a; } }
       @loop_tip_title = { color: #92400e; font-size: 15px; font-weight: 800; }
-      @loop_tip_1 = { color: #a16207; font-size: 13px; line-height: 1.9; }
-      @loop_tip_2 = { color: #a16207; font-size: 13px; line-height: 1.9; }
-      @loop_tip_3 = { color: #a16207; font-size: 13px; line-height: 1.9; }
+      @loop_tip_1 = { color: #a16207; font-size: 13px; line-height: 1.7; }
+      @loop_tip_2 = { color: #a16207; font-size: 13px; line-height: 1.7; }
+      @loop_tip_3 = { color: #a16207; font-size: 13px; line-height: 1.7; }
     </styles>
   </Page>
 
-  <!-- ══════════════ 确认浮层（sub-page） ══════════════ -->
-  <Page id="loop_confirm" name="确认删除" subpage>
+  <!-- ══════════════ Confirmation overlay (sub-page) ══════════════ -->
+  <Page id="loop_confirm" name="Delete note" subpage>
     <FlexContainer id="loop_confirm_root" props={direction: "column"} style="width:100%; height:auto">
       <FlexContainer id="loop_confirm_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:14px; padding:26px 26px 22px">
         <Container id="loop_confirm_title_cell" style="height:auto; width:100%">
-          <Text id="loop_confirm_title" props={content: "删除笔记「周报草稿」？", tagName: "h3"} style="height:auto; width:100%"/>
+          <Text id="loop_confirm_title" props={content: "Delete the note “Weekly draft”?", tagName: "h3"} style="height:auto; width:100%"/>
         </Container>
         <Container id="loop_confirm_impact_cell" style="height:auto; width:100%">
-          <Text id="loop_confirm_impact" props={content: "将删除该笔记及其全部历史版本；此操作不可撤销，也无法恢复。", tagName: "p"} style="height:auto; width:100%"/>
+          <Text id="loop_confirm_impact" props={content: "This removes the note and every past revision. The action cannot be undone or recovered.", tagName: "p"} style="height:auto; width:100%"/>
         </Container>
         <Container id="loop_confirm_hint_cell" style="height:auto; width:100%">
-          <Text id="loop_confirm_hint" props={content: "请输入笔记名称「周报草稿」以确认：", tagName: "span"} style="height:auto; width:100%"/>
+          <Text id="loop_confirm_hint" props={content: "Type the note name “Weekly draft” to confirm:", tagName: "span"} style="height:auto; width:100%"/>
         </Container>
         <Container id="loop_confirm_input_cell" style="height:auto; width:100%">
-          <Input id="loop_confirm_input" props={value: "{{DOM.loop_confirm_root.data.confirm_text}}", placeholder: "周报草稿"} style="height:auto; width:100%"/>
+          <Input id="loop_confirm_input" props={value: "{{DOM.loop_confirm_root.data.confirm_text}}", placeholder: "Weekly draft"} style="height:auto; width:100%"/>
         </Container>
         <Container id="loop_confirm_error_cell" style="height:auto; width:100%">
-          <Text id="loop_confirm_error" props={content: "名称不一致，确认按钮保持禁用。", visible: "{{DOM.loop_confirm_root.data.name_mismatch}}"} style="height:auto; width:100%"/>
+          <Text id="loop_confirm_error" props={content: "The name does not match — the confirm button stays disabled.", visible: "{{DOM.loop_confirm_root.data.name_mismatch}}"} style="height:auto; width:100%"/>
         </Container>
         <Container id="loop_confirm_actions_cell" style="height:auto; width:100%; justify-content:flex-end; gap:12px">
-          <Container id="loop_confirm_cancel_cell" style="height:auto; width:auto"><Button id="loop_confirm_cancel" props={content: "取消", variant: "default"} style="height:auto; width:auto; padding:9px 22px"/></Container>
-          <Container id="loop_confirm_ok_ready_cell" props={visible: "{{DOM.loop_confirm_root.data.phrase_ok}}"} style="height:auto; width:auto"><Button id="loop_confirm_ok_ready" props={content: "确认删除", variant: "danger"} style="height:auto; width:auto; padding:9px 24px"/></Container>
-          <Container id="loop_confirm_ok_blocked_cell" props={visible: "{{DOM.loop_confirm_root.data.name_mismatch}}"} style="height:auto; width:auto"><Button id="loop_confirm_ok_blocked" props={content: "确认删除", variant: "danger", disabled: true} style="height:auto; width:auto; padding:9px 24px"/></Container>
+          <Container id="loop_confirm_cancel_cell" style="height:auto; width:auto"><Button id="loop_confirm_cancel" props={content: "Cancel", variant: "default"} style="height:auto; width:auto; padding:9px 22px"/></Container>
+          <Container id="loop_confirm_ok_ready_cell" props={visible: "{{DOM.loop_confirm_root.data.phrase_ok}}"} style="height:auto; width:auto"><Button id="loop_confirm_ok_ready" props={content: "Delete note", variant: "danger"} style="height:auto; width:auto; padding:9px 24px"/></Container>
+          <Container id="loop_confirm_ok_blocked_cell" props={visible: "{{DOM.loop_confirm_root.data.name_mismatch}}"} style="height:auto; width:auto"><Button id="loop_confirm_ok_blocked" props={content: "Delete note", variant: "danger", disabled: true} style="height:auto; width:auto; padding:9px 24px"/></Container>
         </Container>
       </FlexContainer>
     </FlexContainer>
     <script>
-      # 页根：接收 sendData（原值；名称比对的判断在事件代码里做——绑定禁表达式）
-      # 闸门 UI 用**成对可见标志**互换两个静态按钮（phrase_ok / name_mismatch）：
-      # disabled 的「字面量布尔」不参与重解析，规避浮层内绑定重解析的已知隐患
-      # （见 roadmap/template-library.md §13 台账）。
+      # Page root: receives sendData (the original values; the name comparison happens in the event code — bindings must not carry expressions)
+      # The gate UI swaps two static buttons via **paired visibility flags** (phrase_ok / name_mismatch):
+      # a `disabled` **literal boolean** does not take part in re-resolution, which avoids the known
+      # binding re-resolution hazard inside overlays (see roadmap/template-library.md §13).
       @loop_confirm_root = {
-        data: { confirm_text: "", required_phrase: "周报草稿", name_mismatch: true, phrase_ok: false },
+        data: { confirm_text: "", required_phrase: "Weekly draft", name_mismatch: true, phrase_ok: false },
         events: {
           initFromSendData: { trigger: "onOverlayInit", input: "data", code: "DOM.loop_confirm_root.data.required_phrase = data.name" },
-          # 结果回传：子页根在实例移除前收到 closeResult，**跨页写回主页面 owner**
-          commitResult: { trigger: "onOverlayClose", input: "event", code: "if (event && event.confirmed) { 笔记.loop_note_card.data.deleted = true; 笔记.loop_note_card.data.present = false; }" }
+          # Result hand-back: the sub-page root receives closeResult before the instance is removed and
+          # **writes back across pages** to the main page owner
+          commitResult: { trigger: "onOverlayClose", input: "event", code: "if (event && event.confirmed) { Notes.loop_note_card.data.deleted = true; Notes.loop_note_card.data.present = false; }" }
         }
       }
-      # 输入即验：onChange 代码直算比对与闸门标志，与文本在单次事件内一并写回数据
-      # （不走 onUpdate 派生——见 §13 台账「迟到陈旧执行覆盖」记录）
+      # Validate on input: the onChange code compares directly and flips the gate flags, writing text
+      # and flags to data in a single event (no onUpdate derivation — see §13
+      # "late stale execution overwrites" in the ledger).
       @loop_confirm_input = {
         events: {
           verifyPhrase: { trigger: "onChange", input: "event", code: "var v = event && event.target ? event.target.value : event; DOM.loop_confirm_root.data.confirm_text = v; DOM.loop_confirm_root.data.name_mismatch = v !== DOM.loop_confirm_root.data.required_phrase; DOM.loop_confirm_root.data.phrase_ok = v === DOM.loop_confirm_root.data.required_phrase" }
@@ -159,8 +167,8 @@
     </script>
     <styles>
       @loop_confirm_root = { background: #ffffff; }
-      @loop_confirm_title = { color: #0f172a; font-size: 19px; font-weight: 900; letter-spacing: -0.3px; }
-      @loop_confirm_impact = { color: #b91c1c; font-size: 13px; line-height: 1.8; }
+      @loop_confirm_title = { color: #0f172a; font-size: 19px; font-weight: 900; letter-spacing: -0.2px; }
+      @loop_confirm_impact = { color: #b91c1c; font-size: 13px; line-height: 1.7; }
       @loop_confirm_hint = { color: #475569; font-size: 13px; }
       @loop_confirm_error = { color: #dc2626; font-size: 12px; font-weight: 600; }
       @loop_confirm_cancel = { color: #334155; background: #ffffff; border-radius: 10px; font-size: 13px; font-weight: 600; :scope { border: 1px solid #e2e8f0; } :scope:hover { border-color: #94a3b8; } }
@@ -171,4 +179,40 @@
 </App>
 ```
 
-> 制作要点：两闭环纪律——行内编辑状态归 owner（draft + **成对标志** editing/idle，绑定禁表达式）；危险操作**不直连执行**（overlay.open + sendData 传对象名 → 子页 `onOverlayInit` 注入 → **onChange 事件代码直算**比对与闸门标志（判断在事件代码里做）→ 闸门 UI 用**成对可见标志**互换两个静态按钮（`phrase_ok` / `name_mismatch`，规避浮层内 `disabled` 绑定重解析隐患）→ `overlay.close({result})` → 主页 root `onOverlayClose` 按 `result.confirmed` 置态）。
+> Production notes: the two-loop discipline — inline-edit state belongs to the owner (draft + **paired
+> flags** editing/idle, no expressions in bindings); a destructive action is **never wired straight to
+> execution** (overlay.open + sendData carrying the object name → the sub-page `onOverlayInit` injects
+> it → the **onChange event code computes** the comparison and the gate flags directly (the decision
+> lives in event code) → the gate UI swaps two static buttons via **paired visibility flags**
+> (`phrase_ok` / `name_mismatch`, sidestepping the `disabled`-binding re-resolution hazard inside
+> overlays) → `overlay.close({result})` → the main page root sets the state from `result.confirmed`).
+
+## Production notes
+
+**Same scene, re-set for Latin type (2026-09-25).** This template is mostly UI chrome rather than
+display type, so the geometry work was small — but one thing was not optional.
+
+**The validation literal is part of the behaviour, not the copy.** The Chinese version gates the
+destructive submit on typing the note name `周报草稿`; that string appears in four places that must
+agree — `sendData.name`, the `required_phrase` seed, the input placeholder, and the hint text. All
+four are now `Weekly draft`. **The English document is therefore only passable with the English
+phrase** — E2E and the confirm flow must type `Weekly draft`, not the Chinese name.
+
+Geometry and type:
+
+| Element | Chinese source | English version | Why |
+| --- | --- | --- | --- |
+| Page title | 30px | 30px | "Paperlane Notes · Interaction Loops" is ~34 glyphs; measured 513px inside a 696px column, so it still holds one line |
+| Body copy leading | 1.8 / 1.9 | **1.7** | Latin does not need CJK leading; used on the subtitle, the deleted banner and the three tip lines |
+| Tip lines | 13px | 13px | copy trimmed to fit one line each inside the 716px tip card (~110 glyphs) instead of growing the card to six lines |
+| Note title / meta / buttons | 22px / 13px / 13px | unchanged | Latin button labels (Edit, Save, Cancel, Delete note) are *shorter* than the Chinese ones, so the button row only gets tighter |
+| `letter-spacing` | −0.8px / −0.3px | **−0.6px / −0.2px** | Latin capitals already carry their own sidebearings; the CJK tracking was too tight here |
+
+**Copy policy**: not a literal translation. `云笺笔记` → Paperlane Notes; `周报草稿` → "Weekly draft";
+`编辑 / 保存 / 取消 / 删除此笔记` → "Edit / Save / Cancel / Delete note"; the overlay page name
+`确认删除` → "Delete note" (the `overlay.open({page})` argument was updated with it).
+
+**One structural rename.** The main page's `name` is the alias used for cross-page write-back in event
+code (`笔记.loop_note_card.data…`), so it became `Notes` and that code line follows. Node **ids** are
+identical to the Chinese version, so tooling and E2E can address either document with the same
+selectors.

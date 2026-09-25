@@ -1,86 +1,91 @@
-# 数据表格管理页（CRUD 列表） — 「明湖生鲜」商品管理
+# Data Table Admin Page (CRUD list) — "Minghu Fresh" product catalog
 
-> 模板定位（产品 / 应用 tab · SaaS 工具）：后台管理最通用的 CRUD 列表形态——页头动作 + 筛选卡 + 数据表格 + 分页。
-> 场景需求：给连锁生鲜品牌做商品管理页：顶部导航，内容区依次是页头（标题 + 导出 / 新建动作）、筛选卡（关键词输入 + 分类下拉 + 状态下拉 + 查询 / 重置）、商品表格（8 行：商品名称 / SKU / 分类 / 售价 / 库存 / 状态 / 更新时间）与右下分页。浅灰画布白卡、整页零动效（工具页纪律），静态数据零 API。
+> Template role (product / app tab · SaaS tools): the most common back-office list shape — page
+> header actions + filter card + data table + pagination.
+> Scenario: a product catalog for a grocery chain: a top navigation bar, then a page header (title +
+> export / create actions), a filter card (keyword input + category select + status select + search /
+> reset), the product table (8 rows: name / SKU / category / price / stock / status / last updated)
+> and pagination at the bottom right. Light grey canvas with white cards, zero motion on the whole
+> page (utility-page discipline), static data, no API calls.
 
 ```lang
-<App dsl-version="0.3" name="明湖生鲜 · 商品管理">
-  <Page id="goods_admin" name="商品管理" route="/goods">
+<App dsl-version="0.3" name="Minghu Fresh · Product Admin">
+  <Page id="goods_admin" name="Product Admin" route="/goods">
     <FlexContainer id="crud_root" props={direction: "column"} style="width:100%; min-height:100vh; height:auto">
 
-      <!-- ─── 1. 顶栏 ─── -->
+      <!-- ─── 1. Top bar ─── -->
       <Container id="crud_header" style="flex-shrink:0; flex-grow:0; height:64px; width:100%">
         <FlexContainer id="crud_header_row" props={direction: "row"} style="height:100%; width:100%; justify-content:space-between; align-items:center; padding:0px 24px">
           <Container id="crud_brand_cell" style="height:auto; width:auto; flex-shrink:0">
             <FlexContainer id="crud_brand_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:10px">
               <Container id="crud_logo_cell" style="height:auto; width:auto"><Icon id="crud_logo" props={iconName: "ShoppingBasket", iconSource: "lucide"}/></Container>
-              <Container id="crud_brand_text_cell" style="height:auto; width:auto"><Text id="crud_brand" props={content: "明湖生鲜 · 商品管理", tagName: "span"}/></Container>
+              <Container id="crud_brand_text_cell" style="height:auto; width:auto"><Text id="crud_brand" props={content: "Minghu Fresh · Product Admin", tagName: "span"}/></Container>
             </FlexContainer>
           </Container>
           <Container id="crud_user_cell" style="height:auto; width:auto; flex-shrink:0">
             <FlexContainer id="crud_user_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:14px">
               <Container id="crud_bell_cell" style="height:auto; width:auto"><Icon id="crud_bell" props={iconName: "Bell", iconSource: "lucide"}/></Container>
-              <Container id="crud_avatar_cell" style="height:auto; width:auto"><Avatar id="crud_avatar" props={text: "湖", shape: "circle"} style="height:32px; width:32px"/></Container>
-              <Container id="crud_user_name_cell" style="height:auto; width:auto"><Text id="crud_user_name" props={content: "林选品", tagName: "span"}/></Container>
+              <Container id="crud_avatar_cell" style="height:auto; width:auto"><Avatar id="crud_avatar" props={text: "L", shape: "circle"} style="height:32px; width:32px"/></Container>
+              <Container id="crud_user_name_cell" style="height:auto; width:auto"><Text id="crud_user_name" props={content: "Lin Wu", tagName: "span"}/></Container>
             </FlexContainer>
           </Container>
         </FlexContainer>
       </Container>
 
-      <!-- ─── 2. 内容区 ─── -->
+      <!-- ─── 2. Content ─── -->
       <Container id="crud_body" style="flex-grow:1; height:auto; width:100%; padding:20px 24px 36px">
         <FlexContainer id="crud_body_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:16px">
 
-          <!-- 页头：标题 + 动作 -->
+          <!-- Page header: title + actions -->
           <Container id="crud_pagehead_cell" style="height:auto; width:100%">
             <FlexContainer id="crud_pagehead_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; justify-content:space-between">
               <Container id="crud_pagehead_left_cell" style="height:auto; width:auto">
                 <FlexContainer id="crud_pagehead_left_col" props={direction: "column"} style="height:auto; width:auto; align-items:flex-start; gap:4px">
-                  <Container id="crud_title_cell" style="height:auto; width:auto"><Text id="crud_title" props={content: "商品列表", tagName: "h1"}/></Container>
-                  <Container id="crud_subtitle_cell" style="height:auto; width:auto"><Text id="crud_subtitle" props={content: "共 128 个在售商品 · 库存预警 6 个", tagName: "span"}/></Container>
+                  <Container id="crud_title_cell" style="height:auto; width:auto"><Text id="crud_title" props={content: "Products", tagName: "h1"}/></Container>
+                  <Container id="crud_subtitle_cell" style="height:auto; width:auto"><Text id="crud_subtitle" props={content: "128 products live · 6 low on stock", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="crud_pagehead_actions_cell" style="height:auto; width:auto; flex-shrink:0">
                 <FlexContainer id="crud_pagehead_actions_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:12px">
-                  <Container id="crud_export_cell" style="height:auto; width:auto"><Button id="crud_export_btn" props={content: "导出 CSV", variant: "default"} style="height:auto; width:auto; padding:8px 18px"/></Container>
-                  <Container id="crud_create_cell" style="height:auto; width:auto"><Button id="crud_create_btn" props={content: "新建商品", variant: "primary"} style="height:auto; width:auto; padding:8px 20px"/></Container>
+                  <Container id="crud_export_cell" style="height:auto; width:auto"><Button id="crud_export_btn" props={content: "Export CSV", variant: "default"} style="height:auto; width:auto; padding:8px 18px"/></Container>
+                  <Container id="crud_create_cell" style="height:auto; width:auto"><Button id="crud_create_btn" props={content: "New product", variant: "primary"} style="height:auto; width:auto; padding:8px 20px"/></Container>
                 </FlexContainer>
               </Container>
             </FlexContainer>
           </Container>
 
-          <!-- 筛选卡 -->
+          <!-- Filter card -->
           <Container id="crud_filter_card" style="height:auto; width:100%">
             <FlexContainer id="crud_filter_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; gap:14px; padding:18px 20px">
               <Container id="crud_filter_kw_cell" style="height:auto; width:280px; flex-shrink:0">
-                <Input id="crud_filter_kw" props={placeholder: "商品名称 / SKU"} style="height:auto; width:100%"/>
+                <Input id="crud_filter_kw" props={placeholder: "Product name / SKU"} style="height:auto; width:100%"/>
               </Container>
-              <Container id="crud_filter_cat_cell" style="height:auto; width:160px; flex-shrink:0">
-                <Select id="crud_filter_cat" props={options: [{label: "全部分类", value: "all"}, {label: "时令果蔬", value: "fruit"}, {label: "肉禽蛋品", value: "meat"}, {label: "水产海鲜", value: "seafood"}, {label: "乳品烘焙", value: "dairy"}], placeholder: "全部分类"} style="height:auto; width:100%"/>
+              <Container id="crud_filter_cat_cell" style="height:auto; width:170px; flex-shrink:0">
+                <Select id="crud_filter_cat" props={options: [{label: "All categories", value: "all"}, {label: "Produce", value: "fruit"}, {label: "Meat & eggs", value: "meat"}, {label: "Seafood", value: "seafood"}, {label: "Dairy & bakery", value: "dairy"}], placeholder: "All categories"} style="height:auto; width:100%"/>
               </Container>
               <Container id="crud_filter_status_cell" style="height:auto; width:150px; flex-shrink:0">
-                <Select id="crud_filter_status" props={options: [{label: "全部状态", value: "all"}, {label: "在售", value: "on"}, {label: "库存预警", value: "low"}, {label: "已下架", value: "off"}], placeholder: "全部状态"} style="height:auto; width:100%"/>
+                <Select id="crud_filter_status" props={options: [{label: "All statuses", value: "all"}, {label: "Live", value: "on"}, {label: "Low stock", value: "low"}, {label: "Delisted", value: "off"}], placeholder: "All statuses"} style="height:auto; width:100%"/>
               </Container>
               <Container id="crud_filter_search_cell" style="height:auto; width:auto; flex-shrink:0">
-                <Button id="crud_filter_search" props={content: "查询", variant: "primary"} style="height:auto; width:auto; padding:8px 22px"/>
+                <Button id="crud_filter_search" props={content: "Search", variant: "primary"} style="height:auto; width:auto; padding:8px 22px"/>
               </Container>
               <Container id="crud_filter_reset_cell" style="height:auto; width:auto; flex-shrink:0">
-                <Button id="crud_filter_reset" props={content: "重置", variant: "default"} style="height:auto; width:auto; padding:8px 22px"/>
+                <Button id="crud_filter_reset" props={content: "Reset", variant: "default"} style="height:auto; width:auto; padding:8px 22px"/>
               </Container>
             </FlexContainer>
           </Container>
 
-          <!-- 表格卡 -->
+          <!-- Table card -->
           <Container id="crud_table_card" style="height:auto; width:100%">
             <FlexContainer id="crud_table_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:14px; padding:18px 20px">
               <Container id="crud_table_head_cell" style="height:auto; width:100%">
                 <FlexContainer id="crud_table_head_row" props={direction: "row"} style="height:auto; width:100%; align-items:baseline; justify-content:space-between">
-                  <Container id="crud_table_title_cell" style="height:auto; width:auto"><Text id="crud_table_title" props={content: "商品数据", tagName: "h3"}/></Container>
-                  <Container id="crud_table_note_cell" style="height:auto; width:auto"><Text id="crud_table_note" props={content: "数据每 10 分钟同步一次", tagName: "span"}/></Container>
+                  <Container id="crud_table_title_cell" style="height:auto; width:auto"><Text id="crud_table_title" props={content: "Product data", tagName: "h3"}/></Container>
+                  <Container id="crud_table_note_cell" style="height:auto; width:auto"><Text id="crud_table_note" props={content: "Synced every 10 minutes", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="crud_table_body_cell" style="height:auto; width:100%">
-                <Table id="crud_table" props={columns: [{title: "商品名称", dataIndex: "name", key: "name", width: "240px"}, {title: "SKU", dataIndex: "sku", key: "sku", width: "150px"}, {title: "分类", dataIndex: "category", key: "category", width: "110px"}, {title: "售价", dataIndex: "price", key: "price", width: "100px"}, {title: "库存", dataIndex: "stock", key: "stock", width: "100px"}, {title: "状态", dataIndex: "status", key: "status", width: "120px"}, {title: "更新时间", dataIndex: "updatedAt", key: "updatedAt", width: "170px"}], dataSource: [{id: 1, name: "阳山水蜜桃 4 枚装", sku: "MH-FR-0921", category: "时令果蔬", price: "¥39.8", stock: "1,204", status: "在售", updatedAt: "2026-09-14 09:20"}, {id: 2, name: "有机鲜牛奶 950ml", sku: "MH-DY-1102", category: "乳品烘焙", price: "¥15.9", stock: "836", status: "在售", updatedAt: "2026-09-14 08:45"}, {id: 3, name: "挪威三文鱼中段 300g", sku: "MH-SF-0308", category: "水产海鲜", price: "¥89.0", stock: "42", status: "库存预警", updatedAt: "2026-09-14 08:10"}, {id: 4, name: "土鸡蛋 30 枚礼盒", sku: "MH-EG-0705", category: "肉禽蛋品", price: "¥45.9", stock: "528", status: "在售", updatedAt: "2026-09-13 21:36"}, {id: 5, name: "云南蓝莓 125g ×2", sku: "MH-FR-0917", category: "时令果蔬", price: "¥29.9", stock: "0", status: "已下架", updatedAt: "2026-09-13 19:02"}, {id: 6, name: "谷饲牛腱子 500g", sku: "MH-MT-0502", category: "肉禽蛋品", price: "¥69.0", stock: "188", status: "在售", updatedAt: "2026-09-13 17:48"}, {id: 7, name: "丹麦风味吐司 400g", sku: "MH-BK-1201", category: "乳品烘焙", price: "¥12.9", stock: "19", status: "库存预警", updatedAt: "2026-09-13 16:22"}, {id: 8, name: "舟山带鱼段 500g", sku: "MH-SF-0404", category: "水产海鲜", price: "¥35.8", stock: "264", status: "在售", updatedAt: "2026-09-13 15:05"}], rowKey: "id", size: "middle"} style="height:auto; width:100%"/>
+                <Table id="crud_table" props={columns: [{title: "Product", dataIndex: "name", key: "name", width: "220px"}, {title: "SKU", dataIndex: "sku", key: "sku", width: "140px"}, {title: "Category", dataIndex: "category", key: "category", width: "140px"}, {title: "Price", dataIndex: "price", key: "price", width: "90px"}, {title: "Stock", dataIndex: "stock", key: "stock", width: "90px"}, {title: "Status", dataIndex: "status", key: "status", width: "120px"}, {title: "Updated", dataIndex: "updatedAt", key: "updatedAt", width: "160px"}], dataSource: [{id: 1, name: "Yangshan Peaches, 4-pack", sku: "MH-FR-0921", category: "Produce", price: "$9.80", stock: "1,204", status: "Live", updatedAt: "2026-09-14 09:20"}, {id: 2, name: "Organic Whole Milk 950ml", sku: "MH-DY-1102", category: "Dairy & bakery", price: "$4.50", stock: "836", status: "Live", updatedAt: "2026-09-14 08:45"}, {id: 3, name: "Norwegian Salmon Fillet 300g", sku: "MH-SF-0308", category: "Seafood", price: "$13.90", stock: "42", status: "Low stock", updatedAt: "2026-09-14 08:10"}, {id: 4, name: "Free-range Eggs, 30-pack", sku: "MH-EG-0705", category: "Meat & eggs", price: "$7.90", stock: "528", status: "Live", updatedAt: "2026-09-13 21:36"}, {id: 5, name: "Yunnan Blueberries 125g ×2", sku: "MH-FR-0917", category: "Produce", price: "$6.50", stock: "0", status: "Delisted", updatedAt: "2026-09-13 19:02"}, {id: 6, name: "Grain-fed Beef Shank 500g", sku: "MH-MT-0502", category: "Meat & eggs", price: "$11.50", stock: "188", status: "Live", updatedAt: "2026-09-13 17:48"}, {id: 7, name: "Danish-style Toast 400g", sku: "MH-BK-1201", category: "Dairy & bakery", price: "$3.20", stock: "19", status: "Low stock", updatedAt: "2026-09-13 16:22"}, {id: 8, name: "Zhoushan Hairtail Steaks 500g", sku: "MH-SF-0404", category: "Seafood", price: "$8.40", stock: "264", status: "Live", updatedAt: "2026-09-13 15:05"}], rowKey: "id", size: "middle"} style="height:auto; width:100%"/>
               </Container>
               <Container id="crud_pager_cell" style="height:auto; width:100%; justify-content:flex-end">
                 <Pagination id="crud_pager" props={current: 1, total: 128, pageSize: 10, showSizeChanger: true, pageSizeOptions: [10, 20, 50], align: "end"} style="height:auto; width:auto"/>
@@ -92,23 +97,23 @@
     </FlexContainer>
 
     <script>
-      # 工具页无数据逻辑（静态演示数据）；动作按钮为声明式反馈
+      # Utility page has no data logic (static demo data); the action buttons are declarative feedback
       @crud_create_btn = {
-        events: { createGoods: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "已打开新建商品表单（演示）"}) } }
+        events: { createGoods: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "New product form opened (demo)"}) } }
       };
       @crud_export_btn = {
-        events: { exportList: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "导出任务已创建：商品列表_2026-09-14.csv"}) } }
+        events: { exportList: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "Export queued: product-list_2026-09-14.csv"}) } }
       };
       @crud_filter_search = {
-        events: { searchGoods: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "已按筛选条件查询：找到 8 条结果（演示）"}) } }
+        events: { searchGoods: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "Filters applied: 8 results (demo)"}) } }
       };
       @crud_filter_reset = {
-        events: { resetFilter: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "筛选条件已重置"}) } }
+        events: { resetFilter: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "Filters reset"}) } }
       };
     </script>
 
     <styles>
-      # 0. 画布与卡片
+      # 0. Canvas and cards
       @crud_root = { background: #f5f7fa; }
       @crud_header = { background: #ffffff; :scope { border-bottom: 1px solid rgba(148, 163, 184, 0.16); box-shadow: 0 1px 8px rgba(15, 23, 42, 0.03); } }
       @crud_logo = { color: #16a34a; font-size: 22px; }
@@ -163,4 +168,37 @@
 </App>
 ```
 
-> 制作要点：CRUD 列表 = 页头动作 + 筛选 + 表格 + 分页四段式；工具页**零动效**（交互纪律）；表格/下拉/分页全部 canonical 组件；静态数据零 API。
+> Craft notes: a CRUD list is four blocks in one column — page header actions + filters + table +
+> pagination; a utility page ships with **zero motion** (interaction discipline); table / select /
+> pagination are all canonical components; static data, no API.
+
+## Production notes
+
+**Geometry re-tuned for Latin type (2026-09-25).** CJK glyphs are square and set without word
+spacing, so the same nominal sizes run wider in English; a dense table is where that bites first —
+every header cell now holds a whole word rather than 2–4 CJK chars.
+
+| Element | Chinese source | English version | Why |
+| --- | --- | --- | --- |
+| Table `Product` | 240px | **220px** | longest name ("Norwegian Salmon Fillet 300g", 28 glyphs) still fits on one line at 14px |
+| Table `SKU` | 150px | **140px** | codes are Latin in both versions; the surplus went to `Category` |
+| Table `Category` | 110px | **140px** | "Dairy & bakery" is 14 glyphs against 4 CJK chars — at 110px it wrapped to two lines |
+| Table `Price` / `Stock` | 100px each | **90px each** | `$13.90` / `1,204` are shorter than 售价 / 库存 headers plus their padding |
+| Table `Updated` | 170px | **160px** | `2026-09-14 09:20` is narrower than the CJK header that sat above it |
+| Filter category select | 160px | **170px** | "All categories" + the dropdown arrow need ~10px more than 全部分类 |
+| Page title | 商品列表 | "Products" | the English page title is one word; the subtitle carries the counts (128 live · 6 low on stock) |
+| `crud_title` / `crud_brand` / body copy | 24px / 17px / 13px | unchanged | short Latin labels; sizes were already comfortable |
+
+Everything else — the card radii, shadows, 64px header, button paddings and the pagination options —
+is language-neutral and unchanged.
+
+**Copy policy**: not a literal translation. Chinese retail framing is rewritten to international
+equivalents: `明湖生鲜` → Minghu Fresh, product names converted to everyday English grocery lines
+(Yangshan peaches, Zhoushan hairtail kept as the real regional products they are), and the currency
+restated from `¥` to `$` with plausible shelf prices. Status vocabulary became `Live` / `Low stock` /
+`Delisted` (在售 / 库存预警 / 已下架), the category set shrank `时令果蔬` to the idiomatic American
+"Produce", and the demo toast strings were rewritten rather than transliterated (including the export
+file name, now `product-list_...csv`).
+
+**Node ids are identical to the Chinese version** — the two documents are the same scene, so tooling
+(the capability E2E, the thumbnail pipeline) can address either one by the same selectors.

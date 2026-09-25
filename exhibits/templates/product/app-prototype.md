@@ -1,30 +1,36 @@
-# 可点击原型（多页流程） — 「云扉协同」登录 → 工作台 → 详情
+# Clickable prototype (multi-page flow) — "Cloudgate" sign-in → workspace → project detail
 
-> 模板定位（产品 / 应用 tab · 原型，P2）：可点击原型——三页跳转链（登录 → 工作台 → 项目详情），页面间 `nav.to` 路由；卡片整体可点（container onClick）。
-> 场景需求：给虚构协同产品做流程原型：① 登录页（居中卡片：邮箱 / 密码 / 登录按钮）；② 工作台（问候行 + 三张可点统计卡 + 最近项目列表）；③ 项目详情（返回 / 项目标题状态 / 进度条 / 成员 / 任务清单 / 更新进度）。重点是**跳转链路可点走通**，内容从简。
+> Template role (product / app tab · prototype, P2): a clickable prototype — a three-screen link chain
+> (sign-in → workspace → project detail) routed with `nav.to`; whole cards are clickable
+> (container onClick).
+> Scenario: a flow prototype for a fictional collaboration product: ① sign-in (a centred card with
+> email / password / submit); ② workspace (a greeting line + three clickable stat cards + a recent
+> projects list); ③ project detail (back / title + status / progress bar / members / task list /
+> update progress). What matters is that **the link chain actually clicks through**; the content is
+> deliberately thin — a prototype is not a finished page.
 
 ```lang
-<App dsl-version="0.3" name="云扉协同 · 可点击原型">
-  <!-- ══════════════ 1. 登录页 ══════════════ -->
-  <Page id="login" name="登录" route="/">
+<App dsl-version="0.3" name="Cloudgate · Clickable Prototype">
+  <!-- ══════════════ 1. Sign-in ══════════════ -->
+  <Page id="login" name="Sign in" route="/">
     <FlexContainer id="pt_login_root" props={direction: "column"} style="width:100%; min-height:100vh; height:auto; align-items:center; justify-content:center">
       <FlexContainer id="pt_login_frame" props={direction: "column"} style="height:auto; width:100%; align-items:center; justify-content:center; padding:48px 24px; position:relative">
       <Container id="pt_login_card" style="height:auto; width:100%; max-width:420px; flex-shrink:0">
         <FlexContainer id="pt_login_col" props={direction: "column"} style="height:auto; width:100%; align-items:center; gap:20px; padding:40px 36px">
           <Container id="pt_login_logo_cell" style="height:auto; width:auto"><Icon id="pt_login_logo" props={iconName: "Layers", iconSource: "lucide"}/></Container>
-          <Container id="pt_login_title_cell" style="height:auto; width:100%"><Text id="pt_login_title" props={content: "欢迎回来", tagName: "h1"} style="height:auto; width:100%"/></Container>
-          <Container id="pt_login_sub_cell" style="height:auto; width:100%"><Text id="pt_login_sub" props={content: "登录云扉协同，继续你团队的协作空间。", tagName: "p"} style="height:auto; width:100%"/></Container>
+          <Container id="pt_login_title_cell" style="height:auto; width:100%"><Text id="pt_login_title" props={content: "Welcome back", tagName: "h1"} style="height:auto; width:100%"/></Container>
+          <Container id="pt_login_sub_cell" style="height:auto; width:100%"><Text id="pt_login_sub" props={content: "Sign in to Cloudgate and pick up where your team left off.", tagName: "p"} style="height:auto; width:100%"/></Container>
           <Container id="pt_login_email_cell" style="height:auto; width:100%">
-            <Input id="pt_login_email" props={placeholder: "工作邮箱"} style="height:auto; width:100%"/>
+            <Input id="pt_login_email" props={placeholder: "Work email"} style="height:auto; width:100%"/>
           </Container>
           <Container id="pt_login_password_cell" style="height:auto; width:100%">
-            <Input id="pt_login_password" props={placeholder: "密码"} style="height:auto; width:100%"/>
+            <Input id="pt_login_password" props={placeholder: "Password"} style="height:auto; width:100%"/>
           </Container>
           <Container id="pt_login_submit_cell" style="height:auto; width:100%; padding-top:4px">
-            <Button id="pt_login_submit" props={content: "登录并进入工作台", variant: "primary"} style="height:auto; width:100%; padding:12px 0px"/>
+            <Button id="pt_login_submit" props={content: "Sign in to workspace", variant: "primary"} style="height:auto; width:100%; padding:12px 0px"/>
           </Container>
           <Container id="pt_login_hint_cell" style="height:auto; width:100%">
-            <Text id="pt_login_hint" props={content: "演示原型：点击登录即可进入下一页", tagName: "span"} style="height:auto; width:100%"/>
+            <Text id="pt_login_hint" props={content: "Demo prototype — click Sign in to continue.", tagName: "span"} style="height:auto; width:100%"/>
           </Container>
         </FlexContainer>
       </Container>
@@ -50,7 +56,7 @@
       @pt_login_card = { background: #ffffff; border-radius: 20px; box-shadow: 0 24px 60px rgba(30, 41, 59, 0.14); }
       @pt_login_logo = { color: #6366f1; font-size: 40px; }
       @pt_login_title = { color: #0f172a; font-size: 30px; font-weight: 900; letter-spacing: -0.8px; text-align: center; }
-      @pt_login_sub = { color: #64748b; font-size: 14px; line-height: 1.8; text-align: center; }
+      @pt_login_sub = { color: #64748b; font-size: 14px; line-height: 1.7; text-align: center; }
       @pt_login_submit = {
         color: #ffffff;
         background: #6366f1;
@@ -64,18 +70,18 @@
     </styles>
   </Page>
 
-  <!-- ══════════════ 2. 工作台 ══════════════ -->
-  <Page id="home" name="工作台" route="/home">
+  <!-- ══════════════ 2. Workspace ══════════════ -->
+  <Page id="home" name="Workspace" route="/home">
     <FlexContainer id="pt_home_root" props={direction: "column"} style="width:100%; min-height:100vh; height:auto">
       <Container id="pt_home_header" style="flex-shrink:0; flex-grow:0; height:64px; width:100%">
         <FlexContainer id="pt_home_header_row" props={direction: "row"} style="height:100%; width:100%; align-items:center; justify-content:space-between; padding:0px 24px">
           <Container id="pt_home_brand_cell" style="height:auto; width:auto">
             <FlexContainer id="pt_home_brand_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:9px">
               <Container id="pt_home_brand_icon_cell" style="height:auto; width:auto"><Icon id="pt_home_brand_icon" props={iconName: "Layers", iconSource: "lucide"}/></Container>
-              <Container id="pt_home_brand_text_cell" style="height:auto; width:auto"><Text id="pt_home_brand_text" props={content: "云扉协同", tagName: "span"}/></Container>
+              <Container id="pt_home_brand_text_cell" style="height:auto; width:auto"><Text id="pt_home_brand_text" props={content: "Cloudgate", tagName: "span"}/></Container>
             </FlexContainer>
           </Container>
-          <Container id="pt_home_avatar_cell" style="height:auto; width:auto"><Avatar id="pt_home_avatar" props={text: "澈", shape: "circle"} style="height:34px; width:34px"/></Container>
+          <Container id="pt_home_avatar_cell" style="height:auto; width:auto"><Avatar id="pt_home_avatar" props={text: "A", shape: "circle"} style="height:34px; width:34px"/></Container>
         </FlexContainer>
       </Container>
 
@@ -83,78 +89,78 @@
         <FlexContainer id="pt_home_col" props={direction: "column"} style="height:auto; width:100%; max-width:980px; margin-left:auto; margin-right:auto; align-items:stretch; gap:18px">
           <Container id="pt_home_greet_cell" style="height:auto; width:100%">
             <FlexContainer id="pt_home_greet_col" props={direction: "column"} style="height:auto; width:100%; align-items:flex-start; gap:4px">
-              <Container id="pt_home_greet_title_cell" style="height:auto; width:auto"><Text id="pt_home_greet_title" props={content: "下午好，阿澈", tagName: "h2"}/></Container>
-              <Container id="pt_home_greet_sub_cell" style="height:auto; width:auto"><Text id="pt_home_greet_sub" props={content: "今天有 2 项交付到期，1 个项目等待你的评审。", tagName: "p"}/></Container>
+              <Container id="pt_home_greet_title_cell" style="height:auto; width:auto"><Text id="pt_home_greet_title" props={content: "Good afternoon, Alex", tagName: "h2"}/></Container>
+              <Container id="pt_home_greet_sub_cell" style="height:auto; width:auto"><Text id="pt_home_greet_sub" props={content: "Two deliverables are due today, and one project is waiting on your review.", tagName: "p"}/></Container>
             </FlexContainer>
           </Container>
 
-          <!-- 可点统计卡（→ 项目详情） -->
+          <!-- Clickable stat cards (→ project detail) -->
           <Container id="pt_home_stats_row_cell" style="height:auto; width:100%">
             <FlexContainer id="pt_home_stats_row" props={direction: "row"} style="height:auto; width:100%; align-items:stretch; gap:16px">
               <Container id="pt_stat_projects_card" style="flex-basis:0; flex-grow:1; height:auto; width:100%">
                 <FlexContainer id="pt_stat_projects_col" props={direction: "column"} style="height:auto; width:100%; align-items:flex-start; gap:8px; padding:20px 22px">
-                  <Container id="pt_stat_projects_label_cell" style="height:auto; width:100%"><Text id="pt_stat_projects_label" props={content: "进行中项目", tagName: "span"}/></Container>
+                  <Container id="pt_stat_projects_label_cell" style="height:auto; width:100%"><Text id="pt_stat_projects_label" props={content: "Active projects", tagName: "span"}/></Container>
                   <Container id="pt_stat_projects_value_cell" style="height:auto; width:100%"><Text id="pt_stat_projects_value" props={content: "4", tagName: "h2"}/></Container>
-                  <Container id="pt_stat_projects_note_cell" style="height:auto; width:100%"><Text id="pt_stat_projects_note" props={content: "本周新增 1 个", tagName: "span"}/></Container>
+                  <Container id="pt_stat_projects_note_cell" style="height:auto; width:100%"><Text id="pt_stat_projects_note" props={content: "1 started this week", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_stat_delivery_card" style="flex-basis:0; flex-grow:1; height:auto; width:100%">
                 <FlexContainer id="pt_stat_delivery_col" props={direction: "column"} style="height:auto; width:100%; align-items:flex-start; gap:8px; padding:20px 22px">
-                  <Container id="pt_stat_delivery_label_cell" style="height:auto; width:100%"><Text id="pt_stat_delivery_label" props={content: "本周交付", tagName: "span"}/></Container>
+                  <Container id="pt_stat_delivery_label_cell" style="height:auto; width:100%"><Text id="pt_stat_delivery_label" props={content: "Due this week", tagName: "span"}/></Container>
                   <Container id="pt_stat_delivery_value_cell" style="height:auto; width:100%"><Text id="pt_stat_delivery_value" props={content: "2", tagName: "h2"}/></Container>
-                  <Container id="pt_stat_delivery_note_cell" style="height:auto; width:100%"><Text id="pt_stat_delivery_note" props={content: "均为周五前截止", tagName: "span"}/></Container>
+                  <Container id="pt_stat_delivery_note_cell" style="height:auto; width:100%"><Text id="pt_stat_delivery_note" props={content: "Both close by Friday", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_stat_review_card" style="flex-basis:0; flex-grow:1; height:auto; width:100%">
                 <FlexContainer id="pt_stat_review_col" props={direction: "column"} style="height:auto; width:100%; align-items:flex-start; gap:8px; padding:20px 22px">
-                  <Container id="pt_stat_review_label_cell" style="height:auto; width:100%"><Text id="pt_stat_review_label" props={content: "待我评审", tagName: "span"}/></Container>
+                  <Container id="pt_stat_review_label_cell" style="height:auto; width:100%"><Text id="pt_stat_review_label" props={content: "Awaiting review", tagName: "span"}/></Container>
                   <Container id="pt_stat_review_value_cell" style="height:auto; width:100%"><Text id="pt_stat_review_value" props={content: "6", tagName: "h2"}/></Container>
-                  <Container id="pt_stat_review_note_cell" style="height:auto; width:100%"><Text id="pt_stat_review_note" props={content: "含 1 条加急", tagName: "span"}/></Container>
+                  <Container id="pt_stat_review_note_cell" style="height:auto; width:100%"><Text id="pt_stat_review_note" props={content: "1 marked urgent", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
             </FlexContainer>
           </Container>
 
-          <!-- 最近项目 -->
+          <!-- Recent projects -->
           <Container id="pt_home_recent_card" style="height:auto; width:100%">
             <FlexContainer id="pt_home_recent_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:14px; padding:22px 24px">
               <Container id="pt_home_recent_title_cell" style="height:auto; width:100%">
                 <FlexContainer id="pt_home_recent_title_row" props={direction: "row"} style="height:auto; width:100%; align-items:baseline; justify-content:space-between">
-                  <Container id="pt_home_recent_title_text_cell" style="height:auto; width:auto"><Text id="pt_home_recent_title" props={content: "最近项目", tagName: "h3"}/></Container>
-                  <Container id="pt_home_recent_hint_cell" style="height:auto; width:auto"><Text id="pt_home_recent_hint" props={content: "点击任意行进入项目详情", tagName: "span"}/></Container>
+                  <Container id="pt_home_recent_title_text_cell" style="height:auto; width:auto"><Text id="pt_home_recent_title" props={content: "Recent projects", tagName: "h3"}/></Container>
+                  <Container id="pt_home_recent_hint_cell" style="height:auto; width:auto"><Text id="pt_home_recent_hint" props={content: "Open any row for details", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_recent_1_cell" style="height:auto; width:100%">
                 <FlexContainer id="pt_recent_1_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; justify-content:space-between; padding:14px 16px">
                   <Container id="pt_recent_1_text_cell" style="height:auto; width:auto">
                     <FlexContainer id="pt_recent_1_text_col" props={direction: "column"} style="height:auto; width:auto; align-items:flex-start; gap:4px">
-                      <Container id="pt_recent_1_name_cell" style="height:auto; width:auto"><Text id="pt_recent_1_name" props={content: "移动端 3.0 改版", tagName: "span"}/></Container>
-                      <Container id="pt_recent_1_meta_cell" style="height:auto; width:auto"><Text id="pt_recent_1_meta" props={content: "6 个任务进行中 · 更新于 2 小时前", tagName: "span"}/></Container>
+                      <Container id="pt_recent_1_name_cell" style="height:auto; width:auto"><Text id="pt_recent_1_name" props={content: "Mobile 3.0 Redesign", tagName: "span"}/></Container>
+                      <Container id="pt_recent_1_meta_cell" style="height:auto; width:auto"><Text id="pt_recent_1_meta" props={content: "6 tasks in flight · updated 2 hours ago", tagName: "span"}/></Container>
                     </FlexContainer>
                   </Container>
-                  <Container id="pt_recent_1_tag_cell" style="height:auto; width:auto"><Tag id="pt_recent_1_tag" props={text: "进行中", color: "blue"}/></Container>
+                  <Container id="pt_recent_1_tag_cell" style="height:auto; width:auto"><Tag id="pt_recent_1_tag" props={text: "In progress", color: "blue"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_recent_2_cell" style="height:auto; width:100%">
                 <FlexContainer id="pt_recent_2_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; justify-content:space-between; padding:14px 16px">
                   <Container id="pt_recent_2_text_cell" style="height:auto; width:auto">
                     <FlexContainer id="pt_recent_2_text_col" props={direction: "column"} style="height:auto; width:auto; align-items:flex-start; gap:4px">
-                      <Container id="pt_recent_2_name_cell" style="height:auto; width:auto"><Text id="pt_recent_2_name" props={content: "数据看板 2.0", tagName: "span"}/></Container>
-                      <Container id="pt_recent_2_meta_cell" style="height:auto; width:auto"><Text id="pt_recent_2_meta" props={content: "等待评审 · 更新于昨天", tagName: "span"}/></Container>
+                      <Container id="pt_recent_2_name_cell" style="height:auto; width:auto"><Text id="pt_recent_2_name" props={content: "Analytics Dashboard 2.0", tagName: "span"}/></Container>
+                      <Container id="pt_recent_2_meta_cell" style="height:auto; width:auto"><Text id="pt_recent_2_meta" props={content: "Awaiting review · updated yesterday", tagName: "span"}/></Container>
                     </FlexContainer>
                   </Container>
-                  <Container id="pt_recent_2_tag_cell" style="height:auto; width:auto"><Tag id="pt_recent_2_tag" props={text: "待评审", color: "gold"}/></Container>
+                  <Container id="pt_recent_2_tag_cell" style="height:auto; width:auto"><Tag id="pt_recent_2_tag" props={text: "In review", color: "gold"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_recent_3_cell" style="height:auto; width:100%">
                 <FlexContainer id="pt_recent_3_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; justify-content:space-between; padding:14px 16px">
                   <Container id="pt_recent_3_text_cell" style="height:auto; width:auto">
                     <FlexContainer id="pt_recent_3_text_col" props={direction: "column"} style="height:auto; width:auto; align-items:flex-start; gap:4px">
-                      <Container id="pt_recent_3_name_cell" style="height:auto; width:auto"><Text id="pt_recent_3_name" props={content: "帮助中心迁移", tagName: "span"}/></Container>
-                      <Container id="pt_recent_3_meta_cell" style="height:auto; width:auto"><Text id="pt_recent_3_meta" props={content: "已完成 · 归档于 9 月 8 日", tagName: "span"}/></Container>
+                      <Container id="pt_recent_3_name_cell" style="height:auto; width:auto"><Text id="pt_recent_3_name" props={content: "Help Center Migration", tagName: "span"}/></Container>
+                      <Container id="pt_recent_3_meta_cell" style="height:auto; width:auto"><Text id="pt_recent_3_meta" props={content: "Done · archived 8 Sep", tagName: "span"}/></Container>
                     </FlexContainer>
                   </Container>
-                  <Container id="pt_recent_3_tag_cell" style="height:auto; width:auto"><Tag id="pt_recent_3_tag" props={text: "已完成", color: "green"}/></Container>
+                  <Container id="pt_recent_3_tag_cell" style="height:auto; width:auto"><Tag id="pt_recent_3_tag" props={text: "Done", color: "green"}/></Container>
                 </FlexContainer>
               </Container>
             </FlexContainer>
@@ -163,7 +169,7 @@
       </Container>
     </FlexContainer>
     <script>
-      # 原型跳转链：统计卡 / 项目行 → 详情页
+      # Prototype link chain: stat card / project row → detail page
       @pt_stat_projects_card = { events: { openDetail: { trigger: "onClick", action: nav.to("/detail") } } };
       @pt_recent_1_cell = { events: { openDetail: { trigger: "onClick", action: nav.to("/detail") } } };
     </script>
@@ -205,8 +211,8 @@
     </styles>
   </Page>
 
-  <!-- ══════════════ 3. 项目详情 ══════════════ -->
-  <Page id="detail" name="项目详情" route="/detail">
+  <!-- ══════════════ 3. Project detail ══════════════ -->
+  <Page id="detail" name="Project detail" route="/detail">
     <FlexContainer id="pt_detail_root" props={direction: "column"} style="width:100%; min-height:100vh; height:auto">
       <Container id="pt_detail_body" style="flex-grow:1; height:auto; width:100%; padding:28px 24px 56px">
         <FlexContainer id="pt_detail_col" props={direction: "column"} style="height:auto; width:100%; max-width:860px; margin-left:auto; margin-right:auto; align-items:stretch; gap:18px">
@@ -214,7 +220,7 @@
           <Container id="pt_detail_back_cell" style="height:auto; width:auto">
             <FlexContainer id="pt_detail_back_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:6px">
               <Container id="pt_detail_back_icon_cell" style="height:auto; width:auto"><Icon id="pt_detail_back_icon" props={iconName: "ChevronLeft", iconSource: "lucide"}/></Container>
-              <Container id="pt_detail_back_text_cell" style="height:auto; width:auto"><Text id="pt_detail_back_text" props={content: "返回工作台", tagName: "span"}/></Container>
+              <Container id="pt_detail_back_text_cell" style="height:auto; width:auto"><Text id="pt_detail_back_text" props={content: "Back to workspace", tagName: "span"}/></Container>
             </FlexContainer>
           </Container>
 
@@ -222,27 +228,27 @@
             <FlexContainer id="pt_detail_head_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; justify-content:space-between">
               <Container id="pt_detail_head_left_cell" style="height:auto; width:auto">
                 <FlexContainer id="pt_detail_head_left_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:12px">
-                  <Container id="pt_detail_title_cell" style="height:auto; width:auto"><Text id="pt_detail_title" props={content: "移动端 3.0 改版", tagName: "h1"}/></Container>
-                  <Container id="pt_detail_tag_cell" style="height:auto; width:auto"><Tag id="pt_detail_tag" props={text: "进行中", color: "blue"}/></Container>
+                  <Container id="pt_detail_title_cell" style="height:auto; width:auto"><Text id="pt_detail_title" props={content: "Mobile 3.0 Redesign", tagName: "h1"}/></Container>
+                  <Container id="pt_detail_tag_cell" style="height:auto; width:auto"><Tag id="pt_detail_tag" props={text: "In progress", color: "blue"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_detail_members_cell" style="height:auto; width:auto">
                 <FlexContainer id="pt_detail_members_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:6px">
-                  <Container id="pt_detail_member_1_cell" style="height:auto; width:auto"><Avatar id="pt_detail_member_1" props={text: "澈", shape: "circle"} style="height:30px; width:30px"/></Container>
-                  <Container id="pt_detail_member_2_cell" style="height:auto; width:auto"><Avatar id="pt_detail_member_2" props={text: "满", shape: "circle"} style="height:30px; width:30px"/></Container>
-                  <Container id="pt_detail_member_3_cell" style="height:auto; width:auto"><Avatar id="pt_detail_member_3" props={text: "远", shape: "circle"} style="height:30px; width:30px"/></Container>
+                  <Container id="pt_detail_member_1_cell" style="height:auto; width:auto"><Avatar id="pt_detail_member_1" props={text: "A", shape: "circle"} style="height:30px; width:30px"/></Container>
+                  <Container id="pt_detail_member_2_cell" style="height:auto; width:auto"><Avatar id="pt_detail_member_2" props={text: "M", shape: "circle"} style="height:30px; width:30px"/></Container>
+                  <Container id="pt_detail_member_3_cell" style="height:auto; width:auto"><Avatar id="pt_detail_member_3" props={text: "R", shape: "circle"} style="height:30px; width:30px"/></Container>
                 </FlexContainer>
               </Container>
             </FlexContainer>
           </Container>
 
-          <!-- 进度卡 -->
+          <!-- Progress card -->
           <Container id="pt_detail_progress_card" style="height:auto; width:100%">
             <FlexContainer id="pt_detail_progress_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:12px; padding:22px 24px">
               <Container id="pt_detail_progress_head_cell" style="height:auto; width:100%">
                 <FlexContainer id="pt_detail_progress_head_row" props={direction: "row"} style="height:auto; width:100%; align-items:baseline; justify-content:space-between">
-                  <Container id="pt_detail_progress_label_cell" style="height:auto; width:auto"><Text id="pt_detail_progress_label" props={content: "整体进度", tagName: "h3"}/></Container>
-                  <Container id="pt_detail_progress_value_cell" style="height:auto; width:auto"><Text id="pt_detail_progress_value" props={content: "62% · 距交付还有 9 天", tagName: "span"}/></Container>
+                  <Container id="pt_detail_progress_label_cell" style="height:auto; width:auto"><Text id="pt_detail_progress_label" props={content: "Overall progress", tagName: "h3"}/></Container>
+                  <Container id="pt_detail_progress_value_cell" style="height:auto; width:auto"><Text id="pt_detail_progress_value" props={content: "62% · 9 days to delivery", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_detail_progress_track_cell" style="height:10px; width:100%">
@@ -251,32 +257,32 @@
             </FlexContainer>
           </Container>
 
-          <!-- 任务清单 -->
+          <!-- Task list -->
           <Container id="pt_detail_tasks_card" style="height:auto; width:100%">
             <FlexContainer id="pt_detail_tasks_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:14px; padding:22px 24px">
-              <Container id="pt_detail_tasks_title_cell" style="height:auto; width:100%"><Text id="pt_detail_tasks_title" props={content: "任务清单", tagName: "h3"}/></Container>
+              <Container id="pt_detail_tasks_title_cell" style="height:auto; width:100%"><Text id="pt_detail_tasks_title" props={content: "Task list", tagName: "h3"}/></Container>
               <Container id="pt_task_1_cell" style="height:auto; width:100%">
                 <FlexContainer id="pt_task_1_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; gap:12px">
                   <Container id="pt_task_1_icon_cell" style="height:auto; width:auto"><Icon id="pt_task_1_icon" props={iconName: "CircleCheck", iconSource: "lucide"}/></Container>
-                  <Container id="pt_task_1_text_cell" style="height:auto; width:auto"><Text id="pt_task_1_text" props={content: "首页信息架构评审（已完成）", tagName: "span"}/></Container>
+                  <Container id="pt_task_1_text_cell" style="height:auto; width:auto"><Text id="pt_task_1_text" props={content: "Home IA review (done)", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_task_2_cell" style="height:auto; width:100%">
                 <FlexContainer id="pt_task_2_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; gap:12px">
                   <Container id="pt_task_2_icon_cell" style="height:auto; width:auto"><Icon id="pt_task_2_icon" props={iconName: "CircleCheck", iconSource: "lucide"}/></Container>
-                  <Container id="pt_task_2_text_cell" style="height:auto; width:auto"><Text id="pt_task_2_text" props={content: "设计令牌迁移到 v2.4（已完成）", tagName: "span"}/></Container>
+                  <Container id="pt_task_2_text_cell" style="height:auto; width:auto"><Text id="pt_task_2_text" props={content: "Design tokens migrated to v2.4 (done)", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_task_3_cell" style="height:auto; width:100%">
                 <FlexContainer id="pt_task_3_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; gap:12px">
                   <Container id="pt_task_3_icon_cell" style="height:auto; width:auto"><Icon id="pt_task_3_icon" props={iconName: "CircleEllipsis", iconSource: "lucide"}/></Container>
-                  <Container id="pt_task_3_text_cell" style="height:auto; width:auto"><Text id="pt_task_3_text" props={content: "离线模式联调（进行中 · 苏晴）", tagName: "span"}/></Container>
+                  <Container id="pt_task_3_text_cell" style="height:auto; width:auto"><Text id="pt_task_3_text" props={content: "Offline mode integration (in progress · Sophie Su)", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
               <Container id="pt_task_4_cell" style="height:auto; width:100%">
                 <FlexContainer id="pt_task_4_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; gap:12px">
                   <Container id="pt_task_4_icon_cell" style="height:auto; width:auto"><Icon id="pt_task_4_icon" props={iconName: "Circle", iconSource: "lucide"}/></Container>
-                  <Container id="pt_task_4_text_cell" style="height:auto; width:auto"><Text id="pt_task_4_text" props={content: "性能优化专项（未开始 · 陆远）", tagName: "span"}/></Container>
+                  <Container id="pt_task_4_text_cell" style="height:auto; width:auto"><Text id="pt_task_4_text" props={content: "Performance workstream (not started · Ryan Lu)", tagName: "span"}/></Container>
                 </FlexContainer>
               </Container>
             </FlexContainer>
@@ -284,8 +290,8 @@
 
           <Container id="pt_detail_actions_cell" style="height:auto; width:100%; justify-content:flex-end">
             <FlexContainer id="pt_detail_actions_row" props={direction: "row"} style="height:auto; width:auto; align-items:center; gap:12px">
-              <Container id="pt_detail_back_btn_cell" style="height:auto; width:auto"><Button id="pt_detail_back_btn" props={content: "回到工作台", variant: "default"} style="height:auto; width:auto; padding:9px 22px"/></Container>
-              <Container id="pt_detail_update_cell" style="height:auto; width:auto"><Button id="pt_detail_update_btn" props={content: "更新进度", variant: "primary"} style="height:auto; width:auto; padding:9px 24px"/></Container>
+              <Container id="pt_detail_back_btn_cell" style="height:auto; width:auto"><Button id="pt_detail_back_btn" props={content: "Back to workspace", variant: "default"} style="height:auto; width:auto; padding:9px 22px"/></Container>
+              <Container id="pt_detail_update_cell" style="height:auto; width:auto"><Button id="pt_detail_update_btn" props={content: "Update progress", variant: "primary"} style="height:auto; width:auto; padding:9px 24px"/></Container>
             </FlexContainer>
           </Container>
         </FlexContainer>
@@ -295,7 +301,7 @@
       @pt_detail_back_cell = { events: { goBack: { trigger: "onClick", action: nav.to("/home") } } };
       @pt_detail_back_btn = { events: { goBack: { trigger: "onClick", action: nav.to("/home") } } };
       @pt_detail_update_btn = {
-        events: { update: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "进度已更新为 62%（演示）"}) } }
+        events: { update: { trigger: "onClick", action: feedback.show({type: "message", subtype: "success", message: "Progress updated to 62% (demo)"}) } }
       };
     </script>
     <styles>
@@ -345,4 +351,50 @@
 </App>
 ```
 
-> 制作要点：可点击原型的核心是**跳转链**（登录按钮 → 工作台；统计卡/项目行/返回 → 详情）；容器级 onClick（`nav.to`）承载整卡可点；其余内容从简（原型不是成品页）。
+> Craft notes: the core of a clickable prototype is the **link chain** (submit → workspace; stat card /
+> project row / back → project detail); container-level onClick (`nav.to`) is what makes a whole card
+> clickable; everything else stays thin — a prototype is not a finished page.
+
+## Production notes
+
+**Geometry re-tuned for Latin type (2026-09-25).** This template is a *fluid* layout (no fixed board),
+so the re-typesetting work sits in the two places where English is genuinely longer than Chinese: the
+sign-in card (a hard 420px box) and the single-line labels that share a row with something else.
+
+| Element | Chinese source | English version | Why |
+| --- | --- | --- | --- |
+| `pt_login_sub` | `line-height: 1.8` | **1.7** | "Sign in to Cloudgate and pick up where your team left off." is ~57 Latin glyphs against 22 CJK chars, so it wraps to two lines in the 348px card measure; CJK leading is not needed for Latin |
+| `pt_login_title` | 30px / `-0.8px` | 30px / `-0.8px` (kept) | "Welcome back" is ~180px of ink in a 348px box — no reason to shrink it; mild negative tracking is already the right setting for heavy Latin display type (same call as `app-dashboard` / `app-settings`) |
+| stat card labels | 13px | 13px (kept) | "Active projects" / "Awaiting review" are ~108px in a 272px card measure; the English names were kept to two words so they still sit on one line over the 34px figures |
+| recent-row meta | 12px | 12px (kept) | "6 tasks in flight · updated 2 hours ago" is ~236px against the 900px row measure — it never approaches the status tag |
+| detail task lines | 14px | 14px (kept) | even the longest ("Performance workstream (not started · Ryan Lu)", ~330px with the icon) has ~480px of headroom in the 812px card |
+| `pt_detail_progress_value` | `62% · 距交付还有 9 天` | `62% · 9 days to delivery` | re-expressed so the whole status stays one line; the `62%` figure itself and the bar's `width:62%` are unchanged |
+
+Everything else — the fluid column measures (420 / 980 / 860px), card radii, shadows, gaps, tag
+colours, the three pages' `route`s and every `nav.to` target (`/`, `/home`, `/detail`) — is
+language-neutral and untouched.
+
+**Copy policy**: not a literal translation, and not a literal transliteration either. The fictional
+brand `云扉协同` becomes **Cloudgate**; `阿澈` → **Alex** and the member chars `澈 / 满 / 远` become the
+initials **A / M / R** (the avatar convention `app-dashboard` already uses — a two-glyph CJK name does
+not survive as a single Latin letter, so the initial is carried instead), with `苏晴` → **Sophie Su**
+and `陆远` → **Ryan Lu** on the task lines. `移动端 3.0 改版` → "Mobile 3.0 Redesign",
+`数据看板 2.0` → "Analytics Dashboard 2.0", `帮助中心迁移` → "Help Center Migration";
+`归档于 9 月 8 日` → "archived 8 Sep" (day-month order, no year, as a UI timestamp). The two
+`nav.to` events and the `feedback.show` message are translated but functionally identical.
+
+**Verified in the running app, not assumed.** The link chain was clicked through end to end: the
+sign-in button → `#/home`; a click **inside the stat card's padding** (a point 14px in from its
+corner, deliberately not on a child element) → `#/detail`; the back row → `#/home`; the first recent
+row → `#/detail`; and "Update progress" raises the success toast reading "Progress updated to 62%
+(demo)". A leaf-level scan of all three pages (5 / 30 / 12 text nodes) finds no overflow and exactly
+one intended wrap — `pt_login_sub`, the sentence that takes two lines in the 348px card measure. Every
+other English label stays on one line, including the longest ("Performance workstream (not started ·
+Ryan Lu)").
+
+**No structural refactor was needed.** Nothing in the Chinese document is a CJK-only construct (no
+big-glyph + Latin-gloss pairing, no fullwidth punctuation), so every node id survives unchanged and
+the two documents are the same scene — tooling (the thumbnail pipeline, the showcase preview) can
+address either one by the same selectors. With comments stripped, the two lang blocks differ in 48
+lines: 47 of copy plus the single `@pt_login_sub` leading change above. The three `route`s, both
+`nav.to` targets and the `feedback.show` payload are functionally identical.
