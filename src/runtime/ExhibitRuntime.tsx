@@ -69,7 +69,7 @@ const RuntimeBridge: React.FC<{ payload: PreviewInitPayload }> = ({ payload }) =
       <ShowcaseHostAdapters />
       <ToastHost />
       <div className="flex h-screen flex-col bg-ink-950">
-        <PreviewToolbar />
+        {/* <PreviewToolbar /> */}
         <div className="flex min-h-0 flex-1 flex-col bg-ink-950">
           <CanvasSurface />
         </div>
