@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/schemaai-labs/showcase.git"
   },
-  "homepage": "https://schemaai-labs.github.io/showcase",
+  "homepage": "https://schemaai-labs.github.io/",
   "scripts": {
     "sync:exhibits": "node scripts/sync-exhibits.mjs",
     "predev": "pnpm sync:exhibits",
