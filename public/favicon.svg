@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="SchemaAI">
+  <rect width="32" height="32" rx="7" fill="#0b0f19" />
+  <g fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round">
+    <path d="M16 11.7v3.4M16 15.1l-6.4 5.2M16 15.1l6.4 5.2" />
+  </g>
+  <g fill="#38bdf8">
+    <circle cx="16" cy="8.5" r="3.2" />
+    <circle cx="8.5" cy="22.5" r="3.2" />
+    <circle cx="23.5" cy="22.5" r="3.2" />
+  </g>
+</svg>
