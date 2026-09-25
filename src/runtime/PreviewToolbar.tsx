@@ -1,8 +1,10 @@
 /**
- * PreviewToolbar — 预览页顶栏：返回画廊 / 展品信息 / 页签（多页）/ 设备宽度。
+ * PreviewToolbar — preview page top bar: back to gallery / exhibit info / page tabs (multi-page) /
+ * device width.
  *
- * 页签切换走 PreviewRuntimeProvider 的 switchPage（= 平台的多页路由：hash 承载
- * routePath）；设备宽度走 setDeviceWidth（画板定宽，桌面 1280 / 移动 390）。
+ * Page tabs go through PreviewRuntimeProvider's switchPage (= the platform's multi-page routing:
+ * the hash carries routePath); device width goes through setDeviceWidth (fixed artboard width:
+ * desktop 1280 / mobile 390).
  */
 
 import React from 'react';
@@ -18,13 +20,16 @@ export const PreviewToolbar: React.FC = () => {
   const width = deviceWidth ?? 1280;
 
   return (
-    <div className="shrink-0 flex items-center gap-4 px-4 h-12 bg-ink-900 text-slate-300 border-b border-white/10">
+    <div
+      data-showcase-toolbar
+      className="shrink-0 flex items-center gap-4 px-4 h-12 bg-ink-900 text-slate-300 border-b border-white/10"
+    >
       <button
         type="button"
         onClick={() => navigate('/')}
         className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-white/5 hover:bg-white/10 text-slate-200 transition-colors"
       >
-        ← 返回画廊
+        ← Back to the gallery
       </button>
 
       <div className="flex items-center gap-2 min-w-0">
@@ -51,8 +56,8 @@ export const PreviewToolbar: React.FC = () => {
 
       <div className="ml-auto flex items-center gap-1 bg-white/5 rounded-md p-0.5">
         {[
-          { label: '桌面 1280', value: 1280 },
-          { label: '移动 390', value: 390 },
+          { label: 'Desktop 1280', value: 1280 },
+          { label: 'Mobile 390', value: 390 },
         ].map((option) => (
           <button
             key={option.value}
@@ -71,7 +76,7 @@ export const PreviewToolbar: React.FC = () => {
   );
 };
 
-/** 画板视口宽度（PreviewRuntimeProvider 的 deviceWidth 消费面）。 */
+/** Artboard viewport width (consumer of PreviewRuntimeProvider's deviceWidth). */
 export function useArtboardWidth(): number {
   const { deviceWidth } = usePreviewRuntime();
   return deviceWidth ?? 1280;

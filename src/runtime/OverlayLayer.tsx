@@ -1,14 +1,16 @@
 /**
- * OverlayLayer — 浮层宿主（overlay.open / overlay.close 的渲染面与生命周期）。
+ * OverlayLayer — the overlay host (render surface and lifecycle for overlay.open / overlay.close).
  *
- * 语义对齐编辑器（system-architecture §6.3，apps/studio-web ModalLayer 同规）：
- * - `onOverlayInit(data)`：实例挂载后**跑一次**，eventArg = 页面级原值（sendData，
- *   不是 { data } 包装）；
- * - `onOverlayClose(result)`：实例移除**前跑一次**——遮罩点击 / 关闭按钮 / 代码
- *   `overlay.close` 走同一条两阶段路径（标记 closing → 跑 handler → 移除）；
- * - 实例树（modal.overlayTree）承载浮层内受控写回，避免并发浮层互相污染。
+ * Semantics align with the editor (system-architecture §6.3, same rule as apps/studio-web ModalLayer):
+ * - `onOverlayInit(data)`: runs **once** after the instance mounts, eventArg = the page-level raw
+ *   value (sendData, not wrapped in { data });
+ * - `onOverlayClose(result)`: runs **once** before the instance is removed — backdrop click / close
+ *   button / code `overlay.close` all take the same two-phase path (mark closing → run handler → remove);
+ * - The instance tree (modal.overlayTree) carries controlled write-back inside the overlay, keeping
+ *   concurrent overlays from polluting each other.
  *
- * 壳为展示站自绘（modal 居中 / drawer 侧滑 + 遮罩），不依赖编辑器组件。
+ * The shell is drawn by the showcase itself (modal centered / drawer sliding in + backdrop), with no
+ * dependency on editor components.
  */
 
 import React, { useCallback, useEffect, useRef } from 'react';
@@ -48,7 +50,7 @@ export const OverlayLayer: React.FC = () => {
   const { state, actions } = useShowcaseStore();
   const initedRef = useRef<Set<string>>(new Set());
 
-  // onOverlayInit —— 每实例一次（挂载后；对实例树执行）
+  // onOverlayInit — once per instance (after mount; executed against the instance tree)
   useEffect(() => {
     for (const modal of state.modals) {
       if (modal.closing) continue;
@@ -61,7 +63,7 @@ export const OverlayLayer: React.FC = () => {
     }
   }, [state, actions]);
 
-  // onOverlayClose —— 两阶段关闭（跑 handler → 移除）
+  // onOverlayClose — two-phase close (run handler → remove)
   useEffect(() => {
     for (const modal of selectOverlayCloseActions(state.modals)) {
       actions.markModalCloseRun(modal.id);
@@ -121,14 +123,14 @@ export const OverlayLayer: React.FC = () => {
               >
                 <button
                   type="button"
-                  aria-label="关闭"
+                  aria-label="Close"
                   className="absolute top-3 right-4 text-slate-400 hover:text-slate-700 text-xl leading-none"
                   onClick={() => closeTop(modal)}
                 >
                   ×
                 </button>
                 {tree ? (
-                  // 浮层实例面：绑定解析 / 写回都落实例树（{@link ShowcaseSurface}）
+                  // Overlay instance surface: binding resolution / write-back both land on the instance tree ({@link ShowcaseSurface})
                   <ShowcaseSurfaceProvider
                     value={{ tree, pageId: modal.pageId, modalId: modal.id }}
                   >
@@ -139,7 +141,7 @@ export const OverlayLayer: React.FC = () => {
                     />
                   </ShowcaseSurfaceProvider>
                 ) : (
-                  <div className="p-6 text-sm text-slate-500">浮层目标为空</div>
+                  <div className="p-6 text-sm text-slate-500">Overlay target is empty</div>
                 )}
               </div>
             </div>

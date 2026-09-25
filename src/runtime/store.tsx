@@ -1,21 +1,21 @@
 /**
- * store — 展示站运行时状态（编辑器 store 的最小替代）。
+ * store — the showcase runtime state (a minimal replacement for the editor store).
  *
- * 实现 @schemaai/renderer-react 的 PreviewRuntimeEditorState / Actions 契约
- * （PreviewRuntimeProvider 注入面），同时充当：
- * - BindingContext 源（{{}} 绑定解析）；
- * - runtime-host 的 HostRuntimeActions（事件代码沙箱写回）；
- * - 浮层实例宿主（modals + updateModalTree，对齐 editor store 语义）。
+ * Implements @schemaai/renderer-react's PreviewRuntimeEditorState / Actions contract (the
+ * PreviewRuntimeProvider injection surface) while also serving as:
+ * - the BindingContext source ({{}} binding resolution);
+ * - runtime-host's HostRuntimeActions (event-code sandbox write-back);
+ * - the overlay instance host (modals + updateModalTree, aligned with editor store semantics).
  *
- * 写回语义对齐 editor-react 的 UPDATE_NODE 归约：props/style/data 浅合并
- * （显式 replace 标志时整体替换）——showcase 是同一运行时的第二宿主，
- * 语义不另立一套。
+ * Write-back semantics follow editor-react's UPDATE_NODE reducer: shallow merge of props/style/data
+ * (full replacement when the explicit replace flag is set) — the showcase is a second host of the
+ * same runtime, so semantics are not forked.
  */
 
 import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
 import type { ModalInstance, NodeSchema, Page, Variable } from '@schemaai/schema';
 
-// ─── 状态与写回 ───────────────────────────────────────────────────────────
+// ─── State and write-back ───────────────────────────────────────────────────
 
 export interface NodeUpdatePayload {
   props?: Record<string, unknown>;
@@ -73,13 +73,13 @@ export function useShowcaseStore(): ShowcaseStoreValue {
   return value;
 }
 
-// ─── 渲染面上下文（浮层实例）──────────────────────────────────────────────
+// ─── Surface context (overlay instances) ────────────────────────────────────
 
 /**
- * 渲染面：页面画布（缺省）或浮层实例面。
- * 浮层内的**绑定解析**与**写回**都必须落实例树 / 实例写回通道——否则
- * `{{DOM.<子页节点>.data.x}}` 会在主页面树里找不到节点（studio-web 用
- * editor surface 表达同一语义）。
+ * Surface: the page canvas (default) or an overlay instance surface.
+ * Binding resolution and write-back inside an overlay must land on the instance tree / instance
+ * write-back channel — otherwise `{{DOM.<sub-page node>.data.x}}` fails to find the node in the
+ * main page tree (studio-web expresses the same semantics via the editor surface).
  */
 export interface ShowcaseSurface {
   tree: NodeSchema;
@@ -95,7 +95,7 @@ export function useShowcaseSurface(): ShowcaseSurface | null {
   return useContext(ShowcaseSurfaceContext);
 }
 
-// ─── 树写回 ───────────────────────────────────────────────────────────────
+// ─── Tree write-back ────────────────────────────────────────────────────────
 
 function applyNodePatch(node: NodeSchema, patch: NodeUpdatePayload): NodeSchema {
   const next: NodeSchema = { ...node };
@@ -148,7 +148,7 @@ export const ShowcaseStoreProvider: React.FC<React.PropsWithChildren> = ({ child
     modals: [],
   });
 
-  /** 稳定引用：适配器/沙箱闭包永远读到最新状态（不需因 state 变化重注册）。 */
+  /** Stable reference: adapter/sandbox closures always read the latest state (no re-registration on state changes). */
   const stateRef = useRef(state);
   stateRef.current = state;
 
@@ -229,13 +229,13 @@ export const ShowcaseStoreProvider: React.FC<React.PropsWithChildren> = ({ child
   return <ShowcaseStoreContext.Provider value={value}>{children}</ShowcaseStoreContext.Provider>;
 };
 
-/** 当前活动页树（无页 → undefined）。 */
+/** The current active page (undefined when there are no pages). */
 export function useActivePage(): Page | undefined {
   const { state } = useShowcaseStore();
   return state.pages.find((page) => page.id === state.activePageId) ?? state.pages[0];
 }
 
-/** 便捷：某页树内的节点查找（供适配器使用，不触发订阅）。 */
+/** Convenience: node lookup within a page tree (used by adapters, without subscribing). */
 export function findNodeInPages(pages: Page[], nodeIdOrName: string): NodeSchema | undefined {
   const search = (node: NodeSchema): NodeSchema | undefined => {
     if (node.id === nodeIdOrName || node.name === nodeIdOrName) return node;

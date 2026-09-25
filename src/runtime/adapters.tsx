@@ -1,13 +1,14 @@
 /**
- * adapters — 展示站宿主适配器（能力 → 副作用实现），**单点注册**。
+ * adapters — showcase host adapters (capability → side-effect implementation), **registered once**.
  *
- * 与编辑器（apps/studio-web Renderer.tsx）的差异：那里每个节点注册自己的
- * 适配器闭包（含 elementRef，用于 navScroll 以本节点为起点的回顶）；展示站
- * 在应用层注册一次（避免大模板下 N 份 getter 合并），回顶起点用
- * 「最近交互节点」（ShowcaseNode 在 pointerdown 时登记）→ 无交互时回落画板。
+ * Differences from the editor (apps/studio-web Renderer.tsx): there every node registers its own
+ * adapter closure (including elementRef, so navScroll scrolls to top from that node); the showcase
+ * registers once at the app layer (avoiding N merged getters on large templates), and the
+ * scroll-to-top origin is the "most recently interacted node" (registered by ShowcaseNode on
+ * pointerdown) → falling back to the artboard when there has been no interaction.
  *
- * 覆盖能力：feedback / nav.to / nav.scroll / motion 全族 / data.query /
- * data.refresh / data.setState / overlay.open / overlay.close / platform.clipboard。
+ * Capabilities covered: feedback / nav.to / nav.scroll / the whole motion family / data.query /
+ * data.refresh / data.setState / overlay.open / overlay.close / platform.clipboard.
  */
 
 import React, { useEffect, useMemo, useRef } from 'react';
@@ -31,22 +32,22 @@ import { findNodeInPages, useShowcaseStore } from './store.js';
 import { executeQueryMock } from './query.js';
 import { pushToast } from './toast.js';
 
-// ─── 交互节点登记（navScroll 回顶起点）─────────────────────────────────────
+// ─── Active node registration (navScroll scroll-to-top origin) ───────────────
 
 let lastInteractedElement: HTMLElement | null = null;
 
-/** ShowcaseNode 在 pointerdown 时登记（模块级：不触发 React 重渲染）。 */
+/** Registered by ShowcaseNode on pointerdown (module-level: avoids React re-renders). */
 export function setActiveNodeElement(element: HTMLElement | null): void {
   lastInteractedElement = element;
 }
 
-// ─── 目标解析（与编辑器同规：节点 name → 画板元素）─────────────────────────
+// ─── Target resolution (same rule as the editor: node name → artboard element)
 
 function artboardScope(): ParentNode {
   return document.querySelector('[data-rb-artboard="true"]') ?? document;
 }
 
-/** 节点名（或 id）→ 渲染面元素（未建模 / 未渲染 → 跳过并 warn）。 */
+/** Node name (or id) → rendered element (not modeled / not rendered → skip and warn). */
 function resolveTargets(pages: Page[], names: string[]): Element[] {
   const scope = artboardScope();
   const elements: Element[] = [];
@@ -67,7 +68,7 @@ function readTargetNames(targets: unknown): string[] {
   return Array.isArray(targets) ? targets.map((t) => String(t)).filter((t) => t.length > 0) : [];
 }
 
-// ─── 浮层实例构建（对齐 editor-react 的 overlay 契约）──────────────────────
+// ─── Overlay instance construction (aligned with editor-react's overlay contract)
 
 function buildModalInstance(
   pages: Page[],
@@ -83,13 +84,13 @@ function buildModalInstance(
   const pageName = String(payload.page ?? '').trim();
   const target = pages.find((p) => p.name === pageName || p.id === pageName);
   if (!target) {
-    return { error: `overlay.open: page '${pageName}' 未建模（可用页面：${pages.map((p) => p.name).join(' / ')}）` };
+    return { error: `overlay.open: page '${pageName}' is not modeled (available pages: ${pages.map((p) => p.name).join(' / ')})` };
   }
   let targetNodeId: string | undefined;
   if (payload.targetNode) {
     const node = findNodeInPages([target], String(payload.targetNode));
     if (!node) {
-      return { error: `overlay.open: targetNode '${payload.targetNode}' 在页面 '${pageName}' 中不存在` };
+      return { error: `overlay.open: targetNode '${payload.targetNode}' does not exist on page '${pageName}'` };
     }
     targetNodeId = node.id;
   }
@@ -110,7 +111,7 @@ function buildModalInstance(
   };
 }
 
-// ─── 适配器注册（单点）─────────────────────────────────────────────────────
+// ─── Adapter registration (single point) ─────────────────────────────────────
 
 export const ShowcaseHostAdapters: React.FC = () => {
   const { state, actions } = useShowcaseStore();
@@ -146,7 +147,7 @@ export const ShowcaseHostAdapters: React.FC = () => {
         return undefined;
       }
       const host = hostCapability();
-      // A2 asyncState 自动派生（loading → ready/error，写 owner 节点 data.asyncState）
+      // A2 asyncState derivation (loading → ready/error, written to the owner node's data.asyncState)
       const ownerNode = query.ownerId
         ? current.pages.map((p) => findNodeInPages([p], query.ownerId as string)).find(Boolean)
         : undefined;
@@ -179,7 +180,7 @@ export const ShowcaseHostAdapters: React.FC = () => {
           window.open(target, '_blank', 'noopener');
           return;
         }
-        console.warn(`[nav.to] 路由 '${target}' 未建模（展示站只支持展品内页面切换）`);
+        console.warn(`[nav.to] route '${target}' is not modeled (the showcase only supports page switching within an exhibit)`);
       },
       navScroll: async (payload) => {
         const target = typeof payload?.target === 'string' ? payload.target.trim() : '';
@@ -210,7 +211,7 @@ export const ShowcaseHostAdapters: React.FC = () => {
           ? resolveTargets(stateRef.current.pages, [payload.source])[0]
           : undefined;
         const { attachScrollProgress } = await import('@schemaai/motion');
-        // payload 来自能力契约（字段宽松）→ 执行器要求具体类型：适配器边界收敛
+        // payload comes from the capability contract (loose fields) → the executor demands concrete types: narrow at the adapter boundary
         return attachScrollProgress(elements, { ...payload, sourceEl } as never);
       },
       motionParallax: async (payload) => {
@@ -269,11 +270,11 @@ export const ShowcaseHostAdapters: React.FC = () => {
       dataSetState: ({ path, value }) => {
         const parsed = parseSetStatePath(String(path ?? ''));
         if (!parsed) {
-          console.warn(`[data.setState] invalid path '${path}'（期望 DOM.<nodeId>.(data|Rendered_data|General_data).<key>）`);
+          console.warn(`[data.setState] invalid path '${path}' (expected DOM.<nodeId>.(data|Rendered_data|General_data).<key>)`);
           return;
         }
         if (!SET_STATE_ALLOWED_SECTIONS.has(parsed.section)) {
-          console.warn(`[data.setState] section '${parsed.section}' 不可写（仅 data / Rendered_data / General_data）`);
+          console.warn(`[data.setState] section '${parsed.section}' is not writable (only data / Rendered_data / General_data)`);
           return;
         }
         const node = findNodeInPages(stateRef.current.pages, parsed.nodeId);

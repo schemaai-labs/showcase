@@ -1,14 +1,14 @@
 /**
- * ExhibitRuntime — 展品运行面（Lang DSL → 编译 → 渲染 + 完整能力宿主）。
+ * ExhibitRuntime — the exhibit runtime surface (Lang DSL → compile → render + full capability host).
  *
- * 链路（就是平台的核心渲染链路，无编辑器形态）：
- *   展品 lang 文本
- *     → parseLangDocument + compileLangDocument（@schemaai/lang-compiler）
- *     → PreviewRuntimeProvider（runtime-core 状态 + hash 路由）
- *     → ShowcaseStoreProvider（宿主 store，注入 editorState/editorActions）
- *     → ShowcaseHostAdapters（能力适配器单点注册）
- *     → ShowcaseCanvas（画板 + ShowcaseNode 递归渲染）
- *     → OverlayLayer（浮层）+ ToastHost（feedback）
+ * Pipeline (the platform's core rendering pipeline, without the editor form):
+ *   exhibit lang text
+ *     → parseLangDocument + compileLangDocument (@schemaai/lang-compiler)
+ *     → PreviewRuntimeProvider (runtime-core state + hash routing)
+ *     → ShowcaseStoreProvider (host store, injecting editorState/editorActions)
+ *     → ShowcaseHostAdapters (single-point capability adapter registration)
+ *     → ShowcaseCanvas (artboard + recursive ShowcaseNode rendering)
+ *     → OverlayLayer (overlays) + ToastHost (feedback)
  */
 
 import React, { useEffect, useMemo, useState } from 'react';
@@ -24,7 +24,7 @@ import { OverlayLayer } from './OverlayLayer.js';
 import { ToastHost } from './toast.js';
 import { PreviewToolbar, useArtboardWidth } from './PreviewToolbar.js';
 
-// ─── 编译（DSL 文本 → 页面树）─────────────────────────────────────────────
+// ─── Compilation (DSL text → page tree) ──────────────────────────────────────
 
 function compileExhibit(lang: string): PreviewInitPayload {
   const document = parseLangDocument(lang);
@@ -38,13 +38,13 @@ function compileExhibit(lang: string): PreviewInitPayload {
     tenantContext: {
       tenantId: 'showcase',
       apiBaseUrl: '',
-      i18nLocale: 'zh-CN',
+      i18nLocale: 'en-US',
       featureFlags: {},
     },
   } as PreviewInitPayload;
 }
 
-// ─── 运行面 ───────────────────────────────────────────────────────────────
+// ─── Runtime surface ────────────────────────────────────────────────────────
 
 const RuntimeBridge: React.FC<{ payload: PreviewInitPayload }> = ({ payload }) => {
   const { state, actions } = useShowcaseStore();
@@ -84,7 +84,7 @@ const CanvasSurface: React.FC = () => {
   const artboardWidth = useArtboardWidth();
   const page = state.pages.find((p) => p.id === state.activePageId) ?? state.pages[0];
   if (!page) {
-    return <div className="flex-1 grid place-items-center text-slate-500 text-sm">页面为空</div>;
+    return <div className="flex-1 grid place-items-center text-slate-500 text-sm">Empty page</div>;
   }
   return (
     <div className="flex min-h-0 flex-1 overflow-hidden bg-slate-300/60">
@@ -115,7 +115,7 @@ export const ExhibitRuntime: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => 
       .catch((err: unknown) => {
         if (cancelled) return;
         const message = err instanceof Error ? err.message : String(err);
-        console.error(`[showcase] 展品 ${entry.id} 编译失败：`, err);
+        console.error(`[showcase] failed to compile exhibit ${entry.id}:`, err);
         setError(message);
       });
     return () => {
@@ -127,7 +127,7 @@ export const ExhibitRuntime: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => 
     return (
       <div className="flex-1 grid place-items-center bg-ink-900">
         <div className="max-w-xl p-6 rounded-xl border border-rose-500/30 bg-rose-500/5 text-rose-200">
-          <p className="font-semibold mb-2">展品编译失败：{entry.id}</p>
+          <p className="font-semibold mb-2">Exhibit compilation failed: {entry.id}</p>
           <pre className="text-xs whitespace-pre-wrap text-rose-300/80">{error}</pre>
         </div>
       </div>
@@ -136,7 +136,7 @@ export const ExhibitRuntime: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => 
   if (!payload) {
     return (
       <div className="flex-1 grid place-items-center bg-ink-900 text-slate-400 text-sm">
-        正在编译展品 DSL…
+        Compiling exhibit DSL…
       </div>
     );
   }

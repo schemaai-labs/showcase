@@ -1,5 +1,5 @@
 /**
- * App — 展示站根（两页路由）。
+ * App — showcase root (two-page router).
  */
 
 import React from 'react';
@@ -18,13 +18,13 @@ export const App: React.FC = () => {
     return (
       <div className="min-h-screen grid place-items-center bg-ink-900 text-slate-300">
         <div className="text-center">
-          <p className="text-lg font-semibold mb-2">页面不存在</p>
+          <p className="text-lg font-semibold mb-2">Page not found</p>
           <button
             type="button"
             className="text-sm text-accent-400 hover:text-accent-500"
             onClick={() => navigate('/')}
           >
-            ← 回到模板画廊
+            ← Back to the gallery
           </button>
         </div>
       </div>

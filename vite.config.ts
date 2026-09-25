@@ -1,14 +1,15 @@
 /**
- * showcase Vite configuration — 平台能力展示站（独立子项目）。
+ * showcase Vite configuration — the platform capability showcase (a standalone sub-project).
  *
- * 与 studio-web 的差异（有意为之）：
- * - 单入口（index.html），无 importmap、无后端代理——展品数据在构建期静态打包
- *   （scripts/sync-exhibits.mjs），产物是纯静态站；
- * - 端口 3010（studio-web 占 3000）；
- * - SPA history fallback（默认 appType: 'spa'）：/preview/<id> 深链可直达。
+ * Deliberate differences from studio-web:
+ * - single entry (index.html), no importmap, no backend proxy — exhibit data is bundled
+ *   statically at build time (scripts/sync-exhibits.mjs), producing a purely static site;
+ * - port 3010 (studio-web owns 3000);
+ * - SPA history fallback (default appType: 'spa'): /preview/<id> deep links work directly.
  *
- * 注意：本应用的页面路由走 **path**（pushState），不要用 hash——
- * PreviewRuntimeProvider 独占 window.location.hash 做模板内多页路由。
+ * Note: page routing in this app uses **path** (pushState), not hash —
+ * PreviewRuntimeProvider takes exclusive ownership of window.location.hash for in-template
+ * multi-page routing.
  */
 
 import path from 'path';

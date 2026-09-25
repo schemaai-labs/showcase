@@ -1,9 +1,9 @@
 /**
- * toast — feedback.show 的展示站宿主实现（自研轻提示）。
+ * toast — the showcase host implementation of feedback.show (a small homegrown toast).
  *
- * 不用 antd：React 19 + antd 5.16 的静态 message 静默失效是平台已知坑
- * （见 docs/architecture 相关记录）；展示站本来也不引 antd。
- * 视觉与语义对齐 feedback.show（message / notification 两型 + 4 个 subtype + duration）。
+ * Not using antd: the silent failure of antd 5.16's static message under React 19 is a known
+ * platform trap (see the docs/architecture notes); the showcase does not depend on antd anyway.
+ * Visuals and semantics align with feedback.show (message / notification types + 4 subtypes + duration).
  */
 
 import React, { useEffect, useState } from 'react';
@@ -31,7 +31,7 @@ function emit() {
   for (const listener of listeners) listener(items);
 }
 
-/** 推送一条轻提示（feedback 适配器调用）。 */
+/** Push a toast (called by the feedback adapter). */
 export function pushToast(payload: ToastPayload): void {
   const item: ToastItem = { ...payload, id: (seq += 1) };
   items = [...items, item];
@@ -48,10 +48,10 @@ export function dismissToast(id: number): void {
 }
 
 const SUBTYPE_STYLE: Record<ToastSubtype, { ring: string; dot: string; label: string }> = {
-  success: { ring: 'border-emerald-500/40', dot: 'bg-emerald-400', label: '成功' },
-  info: { ring: 'border-sky-500/40', dot: 'bg-sky-400', label: '提示' },
-  warning: { ring: 'border-amber-500/40', dot: 'bg-amber-400', label: '警告' },
-  error: { ring: 'border-rose-500/40', dot: 'bg-rose-400', label: '错误' },
+  success: { ring: 'border-emerald-500/40', dot: 'bg-emerald-400', label: 'Success' },
+  info: { ring: 'border-sky-500/40', dot: 'bg-sky-400', label: 'Info' },
+  warning: { ring: 'border-amber-500/40', dot: 'bg-amber-400', label: 'Warning' },
+  error: { ring: 'border-rose-500/40', dot: 'bg-rose-400', label: 'Error' },
 };
 
 export const ToastHost: React.FC = () => {

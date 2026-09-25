@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "SchemaAI 能力展示站：模板画廊 → 预览页（Lang DSL → 编译 → 渲染的核心链路 + 完整能力宿主，无编辑器 / 无后端）",
+  "description": "SchemaAI capability showcase: template gallery to preview page — the core Lang DSL to compile to render pipeline plus the full runtime capability host, with no editor and no backend",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

@@ -1,18 +1,18 @@
 /**
- * ShowcaseNode — 展示站最小节点渲染器（平台渲染链路的直接形态）。
+ * ShowcaseNode — the showcase's minimal node renderer (the platform rendering pipeline, bare).
  *
- * 移植自 apps/studio-web/src/widgets/editor-workspace/ui/Renderer.tsx 的运行时
- * 骨架，**剖去编辑器形态**：无拖拽/框选/尺寸手柄/缩略面/编辑器 surface——
- * 保留的是平台渲染链路本身：
+ * Ported from the runtime skeleton of apps/studio-web/src/widgets/editor-workspace/ui/Renderer.tsx,
+ * **stripped of the editor form**: no drag / marquee / resize handles / thumbnail surface / editor
+ * surface — what remains is the platform rendering pipeline itself:
  *
- *   createBindingResolver（{{}} 绑定）
- *     → createControlledHandlers（受控写回 + 事件执行）
- *     → createLogicProps（组件事件 props 装配）
- *     → resolveCoreRuntimeProps（树遍历 / updateNode 注入）
- *     → useRuntimeNodeAssembly（props/style 装配 + 素材 URL 解析 + 可见性）
- *     → useRuntimeEventLifecycle（onMount / onUpdate / onListen 生命周期）
- *     → assembleLayoutStyles（布局域 / 壳拆分 / scoped-css）
- *     → RenderNodeFrame（wrapper + data-node-id + 组件）
+ *   createBindingResolver ({{}} bindings)
+ *     → createControlledHandlers (controlled write-back + event execution)
+ *     → createLogicProps (component event props assembly)
+ *     → resolveCoreRuntimeProps (tree traversal / updateNode injection)
+ *     → useRuntimeNodeAssembly (props/style assembly + asset URL resolution + visibility)
+ *     → useRuntimeEventLifecycle (onMount / onUpdate / onListen lifecycle)
+ *     → assembleLayoutStyles (layout domains / shell splitting / scoped-css)
+ *     → RenderNodeFrame (wrapper + data-node-id + component)
  */
 
 import React, { useCallback, useMemo, useRef } from 'react';
@@ -68,7 +68,7 @@ class NodeErrorBoundary extends React.Component<
     if (this.state.error) {
       return (
         <div className="p-2 text-[11px] text-amber-300/90 border border-amber-400/30 rounded bg-amber-500/10">
-          组件 {this.props.nodeType} 渲染失败：{this.state.error.message}
+          Component {this.props.nodeType} failed to render: {this.state.error.message}
         </div>
       );
     }
@@ -87,7 +87,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
   const surface = useShowcaseSurface();
   const meta = CANONICAL_COMPONENT_META[node.type as keyof typeof CANONICAL_COMPONENT_META];
   const activePage = state.pages.find((p) => p.id === state.activePageId) ?? state.pages[0];
-  // 渲染面（浮层实例）优先：绑定解析与写回都落实例树 / 实例通道
+  // Surface (overlay instance) takes precedence: binding resolution and write-back both land on the instance tree / instance channel
   const tree = surface?.tree ?? activePage?.tree;
   const pageStrategy = activePage?.layoutStrategy ?? 'free';
   const runtimeActions = useMemo(
@@ -106,7 +106,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
     [surface?.modalId, actions],
   );
 
-  /** 执行面状态视图：本面树 + 活动页（与编辑器 runtimeState 同形）。 */
+  /** Execution-surface state view: this surface's tree + the active page (same shape as the editor's runtimeState). */
   const runtimeState = useMemo(
     () => ({
       ...state,
@@ -115,7 +115,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
     }),
     [state, tree, node, surface?.pageId, activePage?.id],
   );
-  /** 编辑器拖拽选中抑制窗口（预览面无拖拽，恒 0 —— 满足契约、行为不参与）。 */
+  /** Editor drag-selection suppression window (the preview surface has no drag, always 0 — contract satisfied, behavior unused). */
   const suppressSelectionRef = useRef<number>(0);
 
   const elementRef = useRef<HTMLDivElement | null>(null);
@@ -147,7 +147,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
     [node],
   );
 
-  // 1. {{}} 绑定解析（canonical resolver in @schemaai/runtime-core）
+  // 1. {{}} binding resolution (canonical resolver in @schemaai/runtime-core)
   const bindingCtx = useMemo(
     () => ({
       scope,
@@ -165,7 +165,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
     [bindingCtx],
   );
 
-  // 2. 受控处理器（受控写回 + 事件执行；runtimeBridge 写回 store）
+  // 2. Controlled handlers (controlled write-back + event execution; runtimeBridge writes back to the store)
   const controlledCtx: ControlledContext = useMemo(
     () => ({
       isPreview: IS_PREVIEW,
@@ -200,7 +200,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
     handleEditChange,
   } = useMemo(() => createControlledHandlers(controlledCtx), [controlledCtx]);
 
-  // 3. 事件 props 装配（onClick/onChange/onOk… 由 meta.eventBindings 驱动）
+  // 3. Event props assembly (onClick/onChange/onOk… driven by meta.eventBindings)
   const logicProps = useMemo(
     () =>
       createLogicProps({
@@ -245,7 +245,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
     [node.type, runtimeActions.updateNode, renderRuntimeNode],
   );
 
-  // 4. props / style 装配 + 素材 URL 解析 + 可见性
+  // 4. props / style assembly + asset URL resolution + visibility
   const {
     resolvedProps,
     resolvedStyle,
@@ -265,7 +265,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
     isPreview: IS_PREVIEW,
   });
 
-  // 5. 事件生命周期（onMount / onUpdate / onUnmount / onListen）
+  // 5. Event lifecycle (onMount / onUpdate / onUnmount / onListen)
   useRuntimeEventLifecycle({
     node,
     isPreview: IS_PREVIEW,
@@ -280,7 +280,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
     prevPropsRef,
   });
 
-  // 6. 布局样式装配（布局域 / 容器壳拆分 / scoped-css）
+  // 6. Layout style assembly (layout domains / container shell splitting / scoped-css)
   const isFlexChild = parentChildrenLayout === 'flex';
   const layoutCtx: StyleAssemblyContext = useMemo(
     () => ({
@@ -295,7 +295,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
       activePageLayoutStrategy: pageStrategy,
       resolvedStyle,
       resolvedProps,
-      // 展示站 = 预览面（与编辑器预览一致）：关闭 % 高度 px 解析（避免钉值跳动）
+      // The showcase is a preview surface (matching the editor preview): % height → px resolution is off (avoids pinned-value jitter)
       resolvedPercentHeight: null,
       customCssRaw: (node.props as Record<string, unknown> | undefined)?.__rb_customCss as string | undefined,
     }),
@@ -320,7 +320,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
   if (!meta) {
     return (
       <div className="p-2 text-[11px] text-rose-300 border border-rose-400/30 rounded bg-rose-500/10">
-        未知组件类型：{node.type}
+        Unknown component type: {node.type}
       </div>
     );
   }
@@ -345,7 +345,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
           acceptsChildren={Boolean(meta.acceptsChildren)}
           missingRendererFallback={
             <>
-              缺渲染器：<span className="font-mono">{missingRendererType ?? node.type}</span>（插件组件需先加载插件）
+              Missing renderer: <span className="font-mono">{missingRendererType ?? node.type}</span> (plugin components require the plugin to be loaded first)
             </>
           }
           missingRendererClassName="w-full h-full p-2 text-[11px] text-amber-300/90 border border-amber-400/30 rounded bg-amber-500/10"
@@ -367,7 +367,7 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
   );
 };
 
-/** 页面画布：三层结构（定高视口 → 滚动区 → 画板）——sticky / 滚动能力的成立前提。 */
+/** Page canvas: three layers (fixed-height viewport → scroll region → artboard) — the precondition for sticky / scroll capabilities. */
 export const ShowcaseCanvas: React.FC<{ pageTree: NodeSchema; layoutStrategy?: string }> = ({
   pageTree,
   layoutStrategy = 'free',

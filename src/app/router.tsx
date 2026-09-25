@@ -1,13 +1,13 @@
 /**
- * router — 展示站最小 path 路由（~/40 行，不引 react-router）。
+ * router — the showcase's minimal path router (~40 lines, no react-router).
  *
- * 两个页面：
- *   /                 模板画廊
- *   /preview/<id>     展品预览页
+ * Two routes:
+ *   /                 template gallery
+ *   /preview/<id>     exhibit preview page
  *
- * **必须用 path（pushState），不要用 hash**：PreviewRuntimeProvider 独占
- * window.location.hash 作为「模板内多页」的 routePath 载体
- * （packages/renderer-react/src/preview/runtime-provider.tsx 挂 hashchange）。
+ * **Path routing (pushState) is mandatory, not hash**: PreviewRuntimeProvider takes exclusive
+ * ownership of window.location.hash as the routePath carrier for "multi-page inside a template"
+ * (packages/renderer-react/src/preview/runtime-provider.tsx hooks hashchange).
  */
 
 import { useEffect, useState } from 'react';
@@ -38,7 +38,7 @@ export function navigate(to: string): void {
   window.dispatchEvent(new PopStateEvent('popstate'));
 }
 
-/** 预览页 URL（画廊卡片入口）。 */
+/** Preview page URL (the gallery card entry point). */
 export function previewPath(exhibitId: string): string {
   return `/preview/${encodeURIComponent(exhibitId)}`;
 }

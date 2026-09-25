@@ -1,8 +1,8 @@
 /**
- * GalleryPage — 模板画廊（/）。
+ * GalleryPage — the template gallery (`/`).
  *
- * 结构：头部 → 四主题 tab → 模板卡网格（sty- 风格系列置顶 + 「风格」角标）。
- * 数据全部来自构建期目录（src/generated/catalog.json）。
+ * Layout: header → four theme tabs → responsive card grid (style series pinned first,
+ * badged as such). All data comes from the build-time catalog (src/generated/catalog.json).
  */
 
 import React, { useMemo, useState } from 'react';
@@ -11,10 +11,10 @@ import { navigate, previewPath } from '../app/router.js';
 import { CATALOG, templatesByTab, type ExhibitEntry } from '../exhibits/catalog.js';
 
 const CAPABILITY_LABEL: Record<string, string> = {
-  motion: '动效',
-  drag: '拖拽',
-  data: '数据',
-  export: '导出',
+  motion: 'Motion',
+  drag: 'Drag',
+  data: 'Data',
+  export: 'Export',
 };
 
 const CAPABILITY_STYLE: Record<string, string> = {
@@ -40,18 +40,32 @@ const TemplateCard: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => (
           className="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-300"
         />
       ) : (
-        <div className="w-full h-full grid place-items-center text-slate-600 text-xs">无缩略图</div>
+        <div className="w-full h-full grid place-items-center text-slate-600 text-xs">
+          No thumbnail
+        </div>
       )}
       {entry.style ? (
         <span className="absolute top-2 left-2 text-[10px] px-1.5 py-0.5 rounded bg-fuchsia-500/85 text-white font-medium">
-          风格系列
+          Style series
         </span>
       ) : null}
-      {entry.pages && entry.pages > 1 ? (
-        <span className="absolute top-2 right-2 text-[10px] px-1.5 py-0.5 rounded bg-black/60 text-slate-200">
-          {entry.pages} 页
-        </span>
-      ) : null}
+      <div className="absolute top-2 right-2 flex items-center gap-1">
+        {/* Translation rollout: templates still rendering from their Chinese source are badged,
+            so visitors know before opening one. Drop this once every template has an English body. */}
+        {entry.lang === 'zh' ? (
+          <span
+            title="Not translated yet — this template renders in Chinese"
+            className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/85 text-ink-900 font-medium"
+          >
+            中文
+          </span>
+        ) : null}
+        {entry.pages && entry.pages > 1 ? (
+          <span className="text-[10px] px-1.5 py-0.5 rounded bg-black/60 text-slate-200">
+            {entry.pages} pages
+          </span>
+        ) : null}
+      </div>
     </div>
     <div className="p-3.5 flex flex-col gap-2 flex-1">
       <div className="text-sm font-semibold text-slate-100 leading-snug">{entry.title}</div>
@@ -68,7 +82,7 @@ const TemplateCard: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => (
           </span>
         ))}
         <span className="ml-auto text-[10px] text-slate-500 group-hover:text-accent-400 transition-colors">
-          预览 →
+          Preview →
         </span>
       </div>
     </div>
@@ -86,15 +100,16 @@ export const GalleryPage: React.FC = () => {
       <header className="px-8 pt-10 pb-6 border-b border-white/5">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex items-baseline gap-3">
-            <h1 className="text-2xl font-bold text-white tracking-tight">schemaAI 模板画廊</h1>
+            <h1 className="text-2xl font-bold text-white tracking-tight">SchemaAI Template Gallery</h1>
             <span className="text-xs text-slate-500">
-              {CATALOG.templates.length} 个模板 · 零后端静态渲染
+              {CATALOG.templates.length} templates · static render, zero backend
             </span>
           </div>
           <p className="mt-2 text-[13px] text-slate-400 leading-relaxed max-w-3xl">
-            这里没有编辑器、没有登录、没有应用管理——只有平台的核心渲染链路：
-            <span className="text-slate-300"> Lang DSL → 编译 → 渲染</span>，外加完整的运行时能力
-            （动效编排 / 页内滚动 / 浮层 / 拖拽 / 事件代码）。点开任一模板即为真实运行结果。
+            No editor, no sign-in, no app management — just the engine&apos;s core rendering
+            pipeline: <span className="text-slate-300">Lang DSL → compile → render</span>, with the
+            full runtime capability set behind it (motion choreography, in-page scrolling, overlays,
+            drag and drop, event code). Open any template and it is really running.
           </p>
         </div>
       </header>
@@ -117,7 +132,8 @@ export const GalleryPage: React.FC = () => {
             </button>
           ))}
           <span className="ml-2 text-[11px] text-slate-500">
-            {tab?.label} · {templates.length} 个{styleCount > 0 ? `（风格系列 ${styleCount} 个置顶）` : ''}
+            {tab?.label} · {templates.length} templates
+            {styleCount > 0 ? ` (${styleCount} style pieces pinned)` : ''}
           </span>
         </div>
 
@@ -130,7 +146,8 @@ export const GalleryPage: React.FC = () => {
 
       <footer className="px-8 py-8 text-[11px] text-slate-600 border-t border-white/5">
         <div className="max-w-[1400px] mx-auto">
-          展品真源：packages/ai-knowledge/resources · 渲染：@schemaai/renderer-react + lang-compiler + runtime-host
+          Templates sourced from packages/ai-knowledge/resources · rendered by
+          @schemaai/renderer-react + lang-compiler + runtime-host
         </div>
       </footer>
     </div>

@@ -1,8 +1,9 @@
 /**
- * PreviewPage — 展品预览页（/preview/<id>）。
+ * PreviewPage — exhibit preview (`/preview/<id>`).
  *
- * 无编辑器形态：直接把展品的 Lang DSL 编译成页面树并用平台渲染链路渲染；
- * 能力（motion / nav / data / overlay / 事件代码沙箱）由 runtime 宿主承接。
+ * No editor: compile the exhibit's Lang DSL into a page tree and render it through the
+ * platform pipeline. Capabilities (motion / nav / data / overlay / event-code sandbox)
+ * are provided by the runtime host.
  */
 
 import React from 'react';
@@ -18,14 +19,16 @@ export const PreviewPage: React.FC<{ exhibitId: string }> = ({ exhibitId }) => {
     return (
       <div className="min-h-screen grid place-items-center bg-ink-900 text-slate-300">
         <div className="text-center space-y-3">
-          <p className="text-lg font-semibold">展品不存在：{exhibitId}</p>
-          <p className="text-xs text-slate-500">展品清单由构建期同步生成（sync:exhibits）</p>
+          <p className="text-lg font-semibold">No such exhibit: {exhibitId}</p>
+          <p className="text-xs text-slate-500">
+            The exhibit catalog is generated at build time (sync:exhibits)
+          </p>
           <button
             type="button"
             className="text-sm text-accent-400 hover:text-accent-500"
             onClick={() => navigate('/')}
           >
-            ← 回到模板画廊
+            ← Back to the gallery
           </button>
         </div>
       </div>

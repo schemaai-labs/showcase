@@ -1,86 +1,92 @@
 # SchemaAI Showcase
 
-> **SchemaAI** is a schema-driven low-code engine — every component and platform capability is expressed as schema.
-> This repository is its capability showcase: a template gallery and a preview runtime, with the product shell (editor, auth, backend) stripped away.
+**English** ｜ [简体中文](./README.zh-CN.md)
 
-SchemaAI 是一个 **schema-driven 低代码引擎**。本仓是它的**能力展示站**——剥去编辑器、登录与应用管理等产品形态，只保留最核心的渲染链路：**Lang DSL → 编译 → 渲染**。
+---
 
-**在线演示** → https://schemaai-labs.github.io/
+**SchemaAI** is a schema-driven low-code engine — every component and platform capability is expressed as schema. This repository is its capability showcase: the product shell (editor, sign-in, app management) stripped away, leaving only the core rendering pipeline — **Lang DSL → compile → render**.
 
-画廊里的每个模板都是**真跑起来的应用**，不是录屏也不是截图：动效、导航、浮层、拖拽、事件代码沙箱全部真实执行。
+**Live demo** → https://schemaai-labs.github.io/
 
-## 展示什么
+Every template in the gallery is **a real app that actually runs** — not a recording, not a screenshot. Motion, navigation, overlays, drag and drop, and the event-code sandbox all execute for real.
 
-47 个模板，四个主题：
+> **A note on language**: the showcase is in English for an international audience. The 47 template bodies are being translated in batches; templates not yet translated carry a `中文` badge in the gallery.
 
-| 主题 | 内容 |
+## What's inside
+
+47 templates across four themes:
+
+| Theme | Contents |
 | --- | --- |
-| 营销 / 增长 | 落地页、大促专题、投放物料、作品集…… |
-| 产品 / 应用 | 数据看板、后台骨架、设置页、看板应用…… |
-| 内容 / 品牌 | 品牌叙事、编辑排版、摄影集…… |
-| 交互 / 动效 | 滚动叙事、翻转卡片、看板拖拽…… |
+| Marketing / Growth | Landing pages, campaign pages, ad creative, portfolios… |
+| Product / App | Dashboards, admin skeletons, settings, kanban apps… |
+| Content / Brand | Brand storytelling, editorial layout, photography… |
+| Interaction / Motion | Scroll narratives, flip cards, kanban drag and drop… |
 
-其中 19 个是 `sty-` 风格系列（包豪斯、孟菲斯、奢华极简、时尚大片、低多边形 3D……），在画廊里置顶。
+19 of them are the `sty-` style series (Bauhaus, Memphis, quiet luxury, editorial fashion, low-poly 3D…), pinned to the top of the gallery.
 
-**能力实证**（每条都有真浏览器断言覆盖）：
+**Capabilities proven here** (each one has a real-browser assertion behind it):
 
-- **动效** —— 入场编排、数字滚动、视差、滚动进度指示、打字机、磁吸与光标跟随、3D 模型查看
-- **交互** —— 多页 `nav.to`、页内 `nav.scroll` 定位与回顶、浮层（父子页传参 + 跨页写回）、看板跨列拖拽
-- **数据** —— 查询执行器与 `{{}}` 绑定（本仓用本地 mock 传输；真实传输在后端侧）
-- **事件代码沙箱** —— 模板里的事件是**真实执行的代码**，带命名空间白名单与超时
+- **Motion** — entrance choreography, number counters, parallax, scroll-progress indicators, typewriter, magnetic and cursor-follow effects, 3D model viewing
+- **Interaction** — multi-page `nav.to`, in-page `nav.scroll` anchoring and back-to-top, overlays (parent/child payloads + cross-page write-back), kanban cross-column drag
+- **Data** — the query executor and `{{}}` bindings (this repo ships a local mock transport; the real transport lives on the backend)
+- **Event-code sandbox** — the events inside templates are **code that really executes**, with a namespace allowlist and timeouts
 
-## 跑起来
+## Running it
 
 ```bash
 pnpm install
 pnpm dev          # → http://localhost:3010
-pnpm build        # 纯静态产物（dist/），零后端
-pnpm test:e2e     # 真浏览器能力实证（需先起 dev）
+pnpm build        # static output only (dist/), no backend
+pnpm test:e2e     # real-browser capability proof (start dev first)
 ```
 
-要求 Node 22+、pnpm 10+。首次跑 E2E 需要下载浏览器（playwright 已**锁定版本**，浏览器与版本一一对应）：
+Requires Node 22+ and pnpm 10+. The first E2E run needs a browser download — playwright is **version-pinned**, and browsers are tied one-to-one to it:
 
 ```bash
 pnpm exec playwright install chromium
 ```
 
-## 引擎在哪里
+## Where the engine lives
 
-本仓只有展示站外壳。引擎是 npm 上的 `@schemaai/*` 包：
+This repo holds only the showcase shell. The engine is the `@schemaai/*` packages on npm:
 
-| 包 | 作用 | 分发形态 |
+| Package | Role | Distribution |
 | --- | --- | --- |
-| `@schemaai/schema` | 契约层：类型、能力注册表、校验 | Apache-2.0，**含源码** |
-| `@schemaai/registry` | 契约层：组件描述符、知识单元 | Apache-2.0，**含源码** |
-| `@schemaai/lang-compiler` | Lang DSL 编译器（parse / compile / serialize / import） | Apache-2.0，**含源码** |
-| `@schemaai/runtime-core` | 框架无关运行时：绑定解析、事件、查询执行 | 专有（编译产物） |
-| `@schemaai/motion` | 动效执行器：声明式 spec + 触发控制器 | 专有（编译产物） |
-| `@schemaai/renderer-react` | React 渲染器与组件实现 | 专有（编译产物） |
-| `@schemaai/runtime-host` | 宿主执行层：动作分派、代码沙箱、浮层生命周期 | 专有（编译产物） |
+| `@schemaai/schema` | Contracts: types, capability registry, validation | Apache-2.0, **source included** |
+| `@schemaai/registry` | Contracts: component descriptors, knowledge units | Apache-2.0, **source included** |
+| `@schemaai/lang-compiler` | Lang DSL compiler (parse / compile / serialize / import) | Apache-2.0, **source included** |
+| `@schemaai/runtime-core` | Framework-agnostic runtime: binding resolution, events, query execution | Proprietary (compiled) |
+| `@schemaai/motion` | Motion executor: declarative spec + trigger controllers | Proprietary (compiled) |
+| `@schemaai/renderer-react` | React renderer and component implementations | Proprietary (compiled) |
+| `@schemaai/runtime-host` | Host execution layer: action dispatch, code sandbox, overlay lifecycle | Proprietary (compiled) |
 
-协议层三包以 Apache-2.0 开源并提供 TypeScript 源码；引擎四包以编译产物分发，许可条款见各包 `LICENSE`（允许作为依赖使用，禁止反向工程与再分发）。
+The three contract-layer packages are open source under Apache-2.0 and ship their TypeScript sources. The four engine packages ship compiled output; see each package's `LICENSE` — use as a dependency is permitted, reverse engineering and redistribution are not.
 
-## 目录
+## Layout
 
 ```text
 src/
-  app/            路由（path 路由；hash 归 PreviewRuntimeProvider 做模板内多页）
-  pages/          GalleryPage（画廊）/ PreviewPage（预览）
-  runtime/        展示站宿主：store、节点渲染器、能力适配器、浮层层、查询执行器
-  exhibits/       展品目录 + Lang DSL 懒加载
-exhibits/         模板资产（md + 缩略图）与清单 —— **上游生成物**
-assets-src/       演示素材（图片 / 视频 / glb），构建期复制进 public/
-scripts/          构建期同步（exhibits → generated/ + public/）
-tests/            真浏览器能力实证
+  app/            routing (path-based; the hash belongs to PreviewRuntimeProvider for in-template pages)
+  pages/          GalleryPage / PreviewPage
+  runtime/        the showcase host: store, node renderer, capability adapters, overlay layer, query executor
+  exhibits/       exhibit catalog + lazy Lang DSL loading
+exhibits/         template assets (md + thumbnails) and the manifest — **an upstream artifact**
+assets-src/       demo assets (images / video / glb), copied into public/ at build time
+scripts/          build-time sync (exhibits → generated/ + public/)
+tests/            real-browser capability proof
 ```
 
-`src/generated/` 与 `public/exhibits/` 是构建期派生数据（未纳入版本控制），`pnpm dev` / `pnpm build` 会自动重建。
+`src/generated/` and `public/exhibits/` are build-time derived data (not tracked); `pnpm dev` and `pnpm build` rebuild them automatically.
 
-## 模板从哪里来
+## Where the templates come from
 
-`exhibits/` 是**上游生成物**——由 SchemaAI monorepo 从模板真源同步而来，本仓不自持模板。想加/改模板请到上游改；本仓内的 `exhibits/` 请勿手改。
+`exhibits/` is an **upstream artifact** — the SchemaAI monorepo syncs it from the template source of truth. This repo does not own the templates. To add or change one, do it upstream; please don't hand-edit `exhibits/` here.
 
-## 协议
+## License
 
-[Apache-2.0](./LICENSE) —— 覆盖本仓源码与 `exhibits/` 内的模板资产。
-`@schemaai/*` 引擎包另有各自的许可条款，见上表。
+[Apache-2.0](./LICENSE) — covering this repo's source and the template assets under `exhibits/`.
+
+Demo assets under `assets-src/` are AI-generated and provided as sample material for the templates — see [CREDITS.md](./CREDITS.md).
+
+The `@schemaai/*` engine packages carry their own terms, listed in the table above.

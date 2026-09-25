@@ -1,53 +1,56 @@
 {
-  "$comment": "生成物 —— 由 monorepo 的 scripts/sync-showcase-exhibits.mjs 从 packages/ai-knowledge 真源复制，请勿手改。",
-  "generatedAt": "2026-09-25T04:27:59.402Z",
+  "$comment": "生成物 —— 由 monorepo 的 scripts/sync-showcase-exhibits.mjs 生成，请勿手改。 元数据已投影为英文；lang 字段标记该模板正文实际用的语言（过渡期中文回退）。",
+  "generatedAt": "2026-09-25T06:45:28.332Z",
   "tabs": [
     {
       "id": "marketing",
-      "label": "营销 / 增长"
+      "label": "Marketing / Growth",
+      "groups": []
     },
     {
       "id": "product",
-      "label": "产品 / 应用",
+      "label": "Product / App",
       "groups": [
         {
           "id": "saas",
-          "label": "SaaS 工具"
+          "label": "SaaS Tools"
         },
         {
           "id": "biz",
-          "label": "业务系统"
+          "label": "Business Systems"
         },
         {
           "id": "mobile",
-          "label": "移动端"
+          "label": "Mobile"
         },
         {
           "id": "design",
-          "label": "设计系统"
+          "label": "Design Systems"
         }
       ]
     },
     {
       "id": "content",
-      "label": "内容 / 品牌"
+      "label": "Content / Brand",
+      "groups": []
     },
     {
       "id": "interaction",
-      "label": "交互 / 动效"
+      "label": "Interaction / Motion",
+      "groups": []
     }
   ],
   "templates": [
     {
       "id": "mkt-landing",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "SaaS 产品官网 / 落地页",
-      "summary": "转化导向的单页官网：首屏入场编排 + 数字滚动、能力卡视图揭示、三档定价与 FAQ——开箱即用的营销起点。",
+      "group": null,
+      "title": "SaaS Product Landing Page",
+      "summary": "Conversion-focused single-page site: hero entrance choreography and number counters, capability cards revealed on scroll, three pricing tiers and an FAQ — a marketing starting point you can ship as-is.",
       "tags": [
-        "落地页",
-        "官网",
-        "转化"
+        "landing page",
+        "website",
+        "conversion"
       ],
       "pages": 1,
       "capabilities": [
@@ -55,36 +58,37 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "app-dashboard",
-      "kind": "app-template",
       "tab": "product",
       "group": "saas",
-      "title": "数据看板（经营驾驶舱）",
-      "summary": "工具类看板标准骨架：KPI 行 + 真实图表（折线 / 环形）+ 明细表，浅灰画布白卡风格、零动效工具页纪律。",
+      "title": "Analytics Dashboard",
+      "summary": "The standard tool-page skeleton: a KPI row, real charts (line and donut), and a detail table — light grey canvas, white cards, and a strict no-animation discipline for utility screens.",
       "tags": [
-        "看板",
-        "图表",
-        "管理后台"
+        "dashboard",
+        "charts",
+        "admin"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "en",
+      "thumbLang": "en"
     },
     {
       "id": "mkt-campaign",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "活动专题页（大促 / 节日）",
-      "summary": "限时大促专题：暖色节日氛围 + 数字滚动 + 优惠券领取 + 爆款清单与售罄进度 + 规则折叠。",
+      "group": null,
+      "title": "Campaign Landing Page",
+      "summary": "A limited-time campaign page: warm seasonal palette, number counters, coupon claim, a bestseller list with sell-through progress, and collapsible rules.",
       "tags": [
-        "活动页",
-        "大促",
-        "专题"
+        "campaign",
+        "promotion",
+        "seasonal"
       ],
       "pages": 1,
       "capabilities": [
@@ -92,37 +96,37 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "app-crud",
-      "kind": "app-template",
       "tab": "product",
       "group": "saas",
-      "title": "数据表格管理页（CRUD）",
-      "summary": "后台最通用列表形态：页头动作 + 筛选卡（关键词 / 分类 / 状态）+ 数据表格 + 分页。",
+      "title": "CRUD Table Page",
+      "summary": "The most common back-office list shape: page-header actions, a filter card (keyword, category, status), a data table, and pagination.",
       "tags": [
-        "表格",
-        "列表",
-        "管理页"
+        "table",
+        "list",
+        "admin"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "biz-crm",
-      "kind": "app-template",
       "tab": "product",
       "group": "biz",
-      "title": "CRM 客户管理（列表 + 详情）",
-      "summary": "主从式业务页：数据驱动的客户列表（循环渲染）+ 客户档案（字段 / 跟进时间线 / 备注）。",
+      "title": "CRM Customer Management",
+      "summary": "A master-detail business page: a data-driven customer list (loop-rendered) beside a customer profile with fields, a follow-up timeline, and notes.",
       "tags": [
-        "CRM",
-        "客户",
-        "主从"
+        "crm",
+        "customers",
+        "master-detail"
       ],
       "pages": 1,
       "capabilities": [
@@ -130,19 +134,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "mob-app",
-      "kind": "app-template",
       "tab": "product",
       "group": "mobile",
-      "title": "移动端应用（引导 → 首页 → 详情）",
-      "summary": "三页移动端骨架：引导页入场编排、首页目标卡与课程列表、底部标签栏、课程详情吸底行动栏。",
+      "title": "Mobile App Flow",
+      "summary": "A three-screen mobile skeleton: an onboarding page with entrance choreography, a home screen with goal cards and a course list, a bottom tab bar, and a sticky action bar on the course detail screen.",
       "tags": [
-        "移动端",
-        "App",
-        "多页"
+        "mobile",
+        "app",
+        "multi-page"
       ],
       "pages": 3,
       "capabilities": [
@@ -151,18 +155,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "ctn-report",
-      "kind": "app-template",
       "tab": "content",
-      "title": "文档 / 报告（数据报告）",
-      "summary": "长文档报告：阅读进度条 + 关键指标 + 图表（趋势 / 构成）+ 章节排版 + 明细表 + 方法论说明。",
+      "group": null,
+      "title": "Data Report Document",
+      "summary": "A long-form report: reading-progress bar, headline metrics, charts (trend and composition), chapter typography, a detail table, and a methodology note.",
       "tags": [
-        "报告",
-        "文档",
-        "数据"
+        "report",
+        "document",
+        "data"
       ],
       "pages": 1,
       "capabilities": [
@@ -170,18 +175,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "itr-scroll",
-      "kind": "app-template",
       "tab": "interaction",
-      "title": "滚动叙事长页",
-      "summary": "首屏一次性入场 + 折叠线下分带 scrub（节奏档位 soft/standard/emphasis）：深色产品叙事页。",
+      "group": null,
+      "title": "Scroll Narrative Page",
+      "summary": "A one-shot hero entrance plus banded scrub animation below the fold (rhythm gears: soft, standard, emphasis) — a dark product-narrative page.",
       "tags": [
-        "滚动叙事",
-        "动效",
-        "长页"
+        "scroll narrative",
+        "motion",
+        "long page"
       ],
       "pages": 1,
       "capabilities": [
@@ -189,18 +195,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "itr-kanban",
-      "kind": "app-template",
       "tab": "interaction",
-      "title": "看板拖拽（跨列 + 把手）",
-      "summary": "三列数据驱动看板：拖动把手跨列搬运、三态 onChange 回写、列头计数实时联动。",
+      "group": null,
+      "title": "Kanban Drag and Drop",
+      "summary": "A three-column data-driven board: drag by the handle to move cards across columns, write back through the three-state onChange, with live per-column counts.",
       "tags": [
-        "拖拽",
-        "看板",
-        "排序"
+        "drag and drop",
+        "kanban",
+        "sorting"
       ],
       "pages": 1,
       "capabilities": [
@@ -209,18 +216,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "mkt-edm",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "EDM 邮件模板",
-      "summary": "邮件安全单列结构（600px）：品牌栏 + 渐变 Hero + 要点正文 + 满宽 CTA + 合规页脚；导出 HTML 快照与图片双轨。",
+      "group": null,
+      "title": "EDM Email Template",
+      "summary": "An email-safe single-column layout at 600px: brand bar, gradient hero, bulleted body, full-width CTA, and a compliant footer — exportable as either an HTML snapshot or an image.",
       "tags": [
-        "EDM",
-        "邮件",
-        "导出"
+        "edm",
+        "email",
+        "export"
       ],
       "pages": 1,
       "capabilities": [
@@ -228,18 +236,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "mkt-ads",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "应用推广广告（竖版海报）",
-      "summary": "海报级竖版推广素材（9:16 主画幅）：三层夜色背景 + SVG 手绘发光主视觉（飞鸟/羽毛）+ 排印断层 + 绘制胶囊 CTA；导出预设「竖版 9:16」。",
+      "group": null,
+      "title": "App Promo Ad (Portrait Poster)",
+      "summary": "Poster-grade portrait creative in a 9:16 frame: a three-layer night background, an SVG-drawn glowing key visual (birds and feathers), typographic breaks, and a drawn capsule CTA — with a built-in 9:16 export preset.",
       "tags": [
-        "广告",
-        "海报",
-        "导出"
+        "advertising",
+        "poster",
+        "export"
       ],
       "pages": 1,
       "capabilities": [
@@ -247,18 +256,19 @@
       ],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "mkt-social",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "Social 图文封面",
-      "summary": "3:4 竖版笔记封面：珊瑚色大标题（手工断行）+ 编号亮点卡 + 品牌条；导出 3:4 / 1:1。",
+      "group": null,
+      "title": "Social Post Cover",
+      "summary": "A 3:4 portrait post cover: coral display headline with manual line breaks, numbered highlight cards, and a brand bar — exportable at 3:4 or 1:1.",
       "tags": [
-        "社交",
-        "封面",
-        "导出"
+        "social",
+        "cover",
+        "export"
       ],
       "pages": 1,
       "capabilities": [
@@ -266,18 +276,19 @@
       ],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "mkt-poster",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "海报 / 电子邀请函",
-      "summary": "A4 竖版海报构图：题字 + 金色主标题 + 信息行 + 议程 + 二维码报名区；导出 PNG / PDF 两用。",
+      "group": null,
+      "title": "Poster / Digital Invitation",
+      "summary": "An A4 portrait poster composition: inscription, gold display headline, info rows, an agenda, and a QR registration block — exportable as PNG or PDF.",
       "tags": [
-        "海报",
-        "邀请函",
-        "导出"
+        "poster",
+        "invitation",
+        "export"
       ],
       "pages": 1,
       "capabilities": [
@@ -285,37 +296,37 @@
       ],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "app-settings",
-      "kind": "app-template",
       "tab": "product",
       "group": "saas",
-      "title": "设置中心",
-      "summary": "设置页标准形态：左分区导航（menu）+ 基础信息表单 / 通知开关组 / 危险区（转让所有权入口）。",
+      "title": "Settings Center",
+      "summary": "The standard settings layout: left-side section navigation (menu) with a profile form, a notification toggle group, and a danger zone holding the transfer-ownership entry.",
       "tags": [
-        "设置",
-        "表单",
-        "管理页"
+        "settings",
+        "forms",
+        "admin"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "app-wall",
-      "kind": "app-template",
       "tab": "product",
       "group": "saas",
-      "title": "数据大屏（监控墙）",
-      "summary": "深色大屏：线路状态栏 + 四格 KPI（数字滚动）+ 双图表 + 事件流；仅数字滚动一处动效（大屏克制）。",
+      "title": "Data Wall (Monitoring)",
+      "summary": "A dark control-room wall: a route status bar, four KPI tiles with number counters, two charts, and an event stream — number counters are the only motion, keeping the wall restrained.",
       "tags": [
-        "大屏",
-        "监控",
-        "图表"
+        "data wall",
+        "monitoring",
+        "charts"
       ],
       "pages": 1,
       "capabilities": [
@@ -323,19 +334,19 @@
       ],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "biz-ticket",
-      "kind": "app-template",
       "tab": "product",
       "group": "biz",
-      "title": "工单 / 客服台",
-      "summary": "队列-详情主从：数据驱动工单队列（List）+ 工单详情（摘要头 / 字段 / 描述 / 处理时间线 / 动作）。",
+      "title": "Support Ticket Desk",
+      "summary": "A queue-to-detail master-detail layout: a data-driven ticket queue (List) beside a ticket detail view with a summary header, fields, description, handling timeline, and actions.",
       "tags": [
-        "工单",
-        "客服",
-        "主从"
+        "tickets",
+        "support",
+        "master-detail"
       ],
       "pages": 1,
       "capabilities": [
@@ -343,106 +354,109 @@
       ],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "biz-approval",
-      "kind": "app-template",
       "tab": "product",
       "group": "biz",
-      "title": "审批流程",
-      "summary": "审批三件套：发起（steps 进度 + 表单）+ 待办（行内通过 / 驳回）+ 审批记录时间线。",
+      "title": "Approval Workflow",
+      "summary": "The approval trio: submission (a steps indicator plus form), a to-do list with inline approve and reject, and an approval history timeline.",
       "tags": [
-        "审批",
-        "流程",
-        "表单"
+        "approval",
+        "workflow",
+        "forms"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "ds-showcase",
-      "kind": "app-template",
       "tab": "product",
       "group": "design",
-      "title": "设计系统 / 组件库展示",
-      "summary": "设计令牌陈列：色板 / 字阶 / 按钮与标签变体 / 表单控件 / 间距刻度（平台组件的活样例页）。",
+      "title": "Design System Showcase",
+      "summary": "Design tokens on display: color palette, type scale, button and tag variants, form controls, and a spacing scale — a living specimen page for the platform components.",
       "tags": [
-        "设计系统",
-        "规范",
-        "组件库"
+        "design system",
+        "guidelines",
+        "component library"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "app-prototype",
-      "kind": "app-template",
       "tab": "product",
       "group": "saas",
-      "title": "可点击原型（多页流程）",
-      "summary": "三页跳转链（登录 → 工作台 → 项目详情）：整卡可点（container onClick + nav.to），流程原型起点。",
+      "title": "Clickable Prototype",
+      "summary": "A three-screen click-through (sign-in, workspace, project detail) where whole cards are clickable via container onClick plus nav.to — a starting point for flow prototypes.",
       "tags": [
-        "原型",
-        "多页",
-        "流程"
+        "prototype",
+        "multi-page",
+        "flow"
       ],
       "pages": 3,
       "capabilities": [],
       "priority": "P2",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "ctn-deck",
-      "kind": "app-template",
       "tab": "content",
-      "title": "Pitch Deck（多页翻页）",
-      "summary": "五页提案演示（封面 / 洞察 / 方案 / 数据 / 收尾）：每页页码与翻页按钮（nav.to），深浅页交替节奏。",
+      "group": null,
+      "title": "Pitch Deck",
+      "summary": "A five-slide proposal deck (cover, insight, solution, data, closing) with page numbers and previous/next controls on every slide, alternating light and dark rhythm.",
       "tags": [
-        "演示",
-        "提案",
-        "多页"
+        "presentation",
+        "proposal",
+        "multi-page"
       ],
       "pages": 5,
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "ctn-brand",
-      "kind": "app-template",
       "tab": "content",
-      "title": "品牌视觉套件",
-      "summary": "品牌手册：标志规范 / 主辅四色体系 / 字体三档 / 应用示例（名片·信纸·包装）/ 使用禁忌。",
+      "group": null,
+      "title": "Brand Identity Kit",
+      "summary": "A brand manual: logo rules, a four-color primary and secondary system, three type tiers, application examples (business card, letterhead, packaging), and usage restrictions.",
       "tags": [
-        "品牌",
-        "VI",
-        "规范"
+        "brand",
+        "identity",
+        "guidelines"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "itr-pinned",
-      "kind": "app-template",
       "tab": "interaction",
-      "title": "钉住叙事 + 视差 + 叠层",
-      "summary": "滚动叙事进阶三件套：sticky 行程钉住（分段 scrub 换幕）+ 双速率视差光斑 + 纯 CSS 叠层卡。",
+      "group": null,
+      "title": "Pinned Narrative, Parallax and Layers",
+      "summary": "Three advanced scroll-narrative techniques: sticky scroll pinning with banded scene changes, dual-rate parallax light spots, and layered cards built in pure CSS.",
       "tags": [
-        "钉住",
-        "视差",
-        "滚动叙事"
+        "pinning",
+        "parallax",
+        "scroll narrative"
       ],
       "pages": 1,
       "capabilities": [
@@ -450,18 +464,19 @@
       ],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "itr-value",
-      "kind": "app-template",
       "tab": "interaction",
-      "title": "值插值（打字机 + 数字滚动）",
-      "summary": "首屏打字机逐字揭示 + 三组指标数字滚动；默认文本 / 默认数字即终帧（降级面完整）。",
+      "group": null,
+      "title": "Value Interpolation",
+      "summary": "A hero that types itself out character by character plus three metric groups counting up — the default text and numbers are the final frame, so the degraded view is already complete.",
       "tags": [
-        "打字机",
-        "数字滚动",
-        "动效"
+        "typewriter",
+        "counters",
+        "motion"
       ],
       "pages": 1,
       "capabilities": [
@@ -469,18 +484,19 @@
       ],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "itr-pointer",
-      "kind": "app-template",
       "tab": "interaction",
-      "title": "指针特效（磁吸 + 跟随光标）",
-      "summary": "磁吸购票 CTA（一屏一处）+ 装饰光斑阻尼跟随（pointer-events 穿透、内容之下）；触屏静置。",
+      "group": null,
+      "title": "Pointer Effects",
+      "summary": "A magnetic ticket CTA (one per screen) plus a damped spotlight that follows the cursor, passing pointer events through and sitting beneath the content — inert on touch devices.",
       "tags": [
-        "磁吸",
-        "光标",
-        "动效"
+        "magnetic",
+        "cursor",
+        "motion"
       ],
       "pages": 1,
       "capabilities": [
@@ -488,18 +504,19 @@
       ],
       "priority": "P1",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "itr-loop",
-      "kind": "app-template",
       "tab": "interaction",
-      "title": "交互闭环（行内编辑 + 危险确认）",
-      "summary": "事件驱动双闭环：行内编辑（draft 草稿态 + 成对标志）+ 删除确认浮层（输入原名方可提交、结果回传）。",
+      "group": null,
+      "title": "Interaction Loops",
+      "summary": "Two event-driven loops: inline editing with a draft state and paired flags, and a delete-confirmation overlay that only submits once the original name is typed, passing the result back across pages.",
       "tags": [
-        "行内编辑",
-        "确认流",
-        "事件轨"
+        "inline edit",
+        "confirmation",
+        "events"
       ],
       "pages": 2,
       "capabilities": [
@@ -507,18 +524,19 @@
       ],
       "priority": "P2",
       "status": "built",
-      "updated": "2026-09-14"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-lineart",
-      "kind": "app-template",
       "tab": "content",
-      "title": "线描插画风（独立插画工作室）",
-      "summary": "纸白底 + 单色墨线：细描边 SVG 插画（无填充只走线）、大字距素净排印、细线作品框与自述带——插画即内容。",
+      "group": null,
+      "title": "Line Art (Illustration Studio)",
+      "summary": "Paper-white ground with monochrome ink lines: thin-stroke SVG illustrations (outline only, no fill), airy wide-tracked typography, hairline work frames, and a statement band — the illustration is the content.",
       "tags": [
-        "线描",
-        "视觉风格",
-        "插画工作室"
+        "line art",
+        "visual style",
+        "illustration studio"
       ],
       "pages": 1,
       "capabilities": [
@@ -526,18 +544,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-type-lab",
-      "kind": "app-template",
       "tab": "content",
-      "title": "实验字体风（字体设计工作室）",
-      "summary": "文字即图形：三层叠压实心 / 描边 / 反白实验标题、极端字距、字族展示卡与字符集平铺带，荧光黄绿点睛。",
+      "group": null,
+      "title": "Experimental Type (Type Foundry)",
+      "summary": "Type as graphic: three stacked experimental headlines (solid, outlined, knocked out), extreme tracking, typeface specimen cards, a tiled glyph set, and fluorescent yellow-green accents.",
       "tags": [
-        "实验字体",
-        "视觉风格",
-        "字体发布"
+        "experimental type",
+        "visual style",
+        "type foundry"
       ],
       "pages": 1,
       "capabilities": [
@@ -545,18 +564,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-clay",
-      "kind": "app-template",
       "tab": "content",
-      "title": "粘土拟物风（手作软陶工作室）",
-      "summary": "奶油底 + 糖果色软块：双影立体（外投影 + 内高光）、40px 级大圆角、捏出来的软形状插画与软圆课程卡。",
+      "group": null,
+      "title": "Claymorphism (Pottery Studio)",
+      "summary": "Cream ground with candy-colored soft blocks: double-shadow volume (outer drop shadow plus inner highlight), 40px-radius corners, hand-pinched soft-shape illustrations, and rounded course cards.",
       "tags": [
-        "粘土拟物",
-        "视觉风格",
-        "手作工作室"
+        "claymorphism",
+        "visual style",
+        "craft studio"
       ],
       "pages": 1,
       "capabilities": [
@@ -564,18 +584,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-lamp-illust",
-      "kind": "app-template",
       "tab": "content",
-      "title": "灯具插画风（夜晚生活品牌）",
-      "summary": "深夜蓝紫底 + 暖黄光晕：手绘灯插画（台灯 / 吊灯 / 落地灯，灯罩下带光池）、「一晚上的光」叙事与线下空间。",
+      "group": null,
+      "title": "Lamp Illustration (Night Brand)",
+      "summary": "A midnight blue-purple ground with warm yellow halos: hand-drawn lamps (desk, pendant, floor) each casting a pool of light, an \"evening of light\" narrative, and a physical space section.",
       "tags": [
-        "灯具插画",
-        "视觉风格",
-        "夜晚生活"
+        "lamp illustration",
+        "visual style",
+        "nightlife brand"
       ],
       "pages": 1,
       "capabilities": [
@@ -583,18 +604,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-organic",
-      "kind": "app-template",
       "tab": "content",
-      "title": "有机曲线风（肢体工作室）",
-      "summary": "雾青 / 灰粉柔和渐变 + 连续流动的巨幅曲线与 blob：非对称圆润版面、动线插画与呼吸感留白。",
+      "group": null,
+      "title": "Organic Curves (Movement Studio)",
+      "summary": "Soft misty blue and dusty pink gradients with large continuous flowing curves and blobs: asymmetric rounded layouts, movement-line illustrations, and generous breathing room.",
       "tags": [
-        "有机曲线",
-        "视觉风格",
-        "肢体工作室"
+        "organic curves",
+        "visual style",
+        "movement studio"
       ],
       "pages": 1,
       "capabilities": [
@@ -602,19 +624,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-material",
-      "kind": "app-template",
       "tab": "product",
       "group": "saas",
-      "title": "材料设计风（任务管理产品页）",
-      "summary": "Material Design 3 语汇：色调调色板分层（surface → primary-container）、大圆角与高程阴影、导航轨 + 任务列表 + FAB 的真实界面模拟。",
+      "title": "Material Design (Task App)",
+      "summary": "Material Design 3 vocabulary: tonal palette layering from surface to primary-container, large radii and elevation shadows, and a faithful product mock-up with a navigation rail, task list, and FAB.",
       "tags": [
-        "材料设计",
-        "视觉风格",
-        "SaaS 产品页"
+        "material design",
+        "visual style",
+        "saas product"
       ],
       "pages": 1,
       "capabilities": [
@@ -622,19 +644,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-datadash",
-      "kind": "app-template",
       "tab": "product",
       "group": "saas",
-      "title": "数据看板风（NOC 监控大屏）",
-      "summary": "近黑蓝画布 + 荧光数据色 + 等宽数字：KPI 五连（含迷你趋势）／折线区 + 负载环形／事件流表——图表全部手写 SVG，适合大屏值班。",
+      "title": "Data Dashboard (NOC Wall)",
+      "summary": "Near-black blue canvas with fluorescent data colors and monospaced numerals: five KPI tiles with mini trends, a line-chart area, load donuts, and an event-stream table — every chart hand-drawn in SVG, built for shift-room wall displays.",
       "tags": [
-        "数据看板",
-        "视觉风格",
-        "监控大屏"
+        "data dashboard",
+        "visual style",
+        "noc wall"
       ],
       "pages": 1,
       "capabilities": [
@@ -642,19 +664,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-terminal",
-      "kind": "app-template",
       "tab": "product",
       "group": "saas",
-      "title": "程序员终端风（CLI 工具落地页）",
-      "summary": "终端配色 + 等宽字体 + 提示符行与光标：终端窗口首屏（安装命令 + 真实输出）、man 风格参数表、性能基准对照与 QUICKSTART 分步。",
+      "title": "Terminal Aesthetic (CLI Landing)",
+      "summary": "Terminal palette, monospaced type, prompt lines and a cursor: a hero built as a terminal window with the install command and real output, a man-page style flag table, benchmark comparisons, and step-by-step quickstart.",
       "tags": [
-        "终端",
-        "视觉风格",
-        "开发者工具"
+        "terminal",
+        "visual style",
+        "developer tools"
       ],
       "pages": 1,
       "capabilities": [
@@ -662,18 +684,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-nature",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "自然生态风（宠物天然粮品牌）",
-      "summary": "苔绿 / 燕麦 / 陶土大地色系 + 有机弧带与圆角柔影：左文右图首屏（素材库照片）、成分三栏与可持续数字带、按月订购双卡。",
+      "group": null,
+      "title": "Natural Palette (Pet Food Brand)",
+      "summary": "Moss green, oat, and terracotta earth tones with organic arcs and soft-cornered shadows: a split hero with library photography, a three-column ingredients section, a sustainability number band, and two monthly subscription cards.",
       "tags": [
-        "自然生态",
-        "视觉风格",
-        "宠物品牌"
+        "natural palette",
+        "visual style",
+        "pet brand"
       ],
       "pages": 1,
       "capabilities": [
@@ -681,18 +704,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-luxe",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "奢华极简风（高级珠宝私享会）",
-      "summary": "近黑底 + 香槟金细线 + 极细字重大行距：居中题字首屏、系列细线条目、主作品大幅照片（金细框 + 玻璃题注）、私享服务三栏。",
+      "group": null,
+      "title": "Quiet Luxury (Fine Jewellery)",
+      "summary": "Near-black ground with champagne-gold hairlines and very light weights at wide leading: a centered inscription hero, hairline collection entries, a large hero piece in a thin gold frame with a glass caption, and a three-column private service section.",
       "tags": [
-        "奢华极简",
-        "视觉风格",
-        "高级珠宝"
+        "quiet luxury",
+        "visual style",
+        "fine jewellery"
       ],
       "pages": 1,
       "capabilities": [
@@ -700,18 +724,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-fashion",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "时尚大片风（年度企划特辑）",
-      "summary": "黑 / 白 / 酸性红 + 超大刊头排印：全幅封面压题、编号 LOOK 条目、短片放映区（video 组件 + 素材海报图）与订阅 CTA。",
+      "group": null,
+      "title": "Editorial Fashion",
+      "summary": "Black, white, and acid red with oversized masthead typography: a full-bleed cover with overlaid title, numbered LOOK entries, a film screening section using the video component with a poster frame, and a subscribe CTA.",
       "tags": [
-        "时尚大片",
-        "视觉风格",
-        "刊物特辑"
+        "editorial fashion",
+        "visual style",
+        "magazine"
       ],
       "pages": 1,
       "capabilities": [
@@ -719,18 +744,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-scroll-narrative",
-      "kind": "app-template",
       "tab": "interaction",
-      "title": "叙事滚动风（城市的一天）",
-      "summary": "滚动驱动的章节叙事：阅读进度条（motion.progress）+ 三章 scrub（motion.scroll rhythm 分档，回退可逆）+ 黄昏山影视差层（motion.parallax）。",
+      "group": null,
+      "title": "Narrative Scroll (A Day in the City)",
+      "summary": "Scroll-driven chaptered storytelling: a reading-progress indicator (motion.progress), three chapters scrubbed with rhythm gears (motion.scroll, fully reversible), and a dusk skyline parallax layer (motion.parallax).",
       "tags": [
-        "叙事滚动",
-        "动效",
-        "纪实影像"
+        "narrative scroll",
+        "motion",
+        "documentary"
       ],
       "pages": 1,
       "capabilities": [
@@ -738,18 +764,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-memphis",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "孟菲斯风（创意热店官网）",
-      "summary": "高饱和撞色 + 粗黑描边 + 波浪圆点图案的 80s 孟菲斯语言：贴纸式卡片、斜向色带、斜切装饰与俏皮不对称构图。",
+      "group": null,
+      "title": "Memphis (Creative Agency)",
+      "summary": "The 1980s Memphis language of saturated clashing colors, heavy black outlines, and wavy dot patterns: sticker-style cards, diagonal color bands, clipped decorations, and playful asymmetric composition.",
       "tags": [
-        "孟菲斯",
-        "视觉风格",
-        "创意机构"
+        "memphis",
+        "visual style",
+        "creative agency"
       ],
       "pages": 1,
       "capabilities": [
@@ -757,18 +784,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-abstract-geo",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "抽象几何风（当代艺术展）",
-      "summary": "暖灰纸底 + 四色大色块与巨幅平面叠压构成：画廊式排印（编号 / 材质尺寸）、策展人语引用带与参观信息表。",
+      "group": null,
+      "title": "Abstract Geometry (Art Exhibition)",
+      "summary": "Warm grey paper ground with four large color blocks and oversized overlapping planes: gallery-style typography with catalogue numbers, materials and dimensions, a curator quote band, and a visitor information table.",
       "tags": [
-        "抽象几何",
-        "视觉风格",
-        "艺术展览"
+        "abstract geometry",
+        "visual style",
+        "art exhibition"
       ],
       "pages": 1,
       "capabilities": [
@@ -776,18 +804,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-split",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "分屏构成风（双面咖啡馆）",
-      "summary": "50:50 昼夜分屏对撞：中缝发光线、左栏 sticky 钉住右栏滚动的行程构图、双面菜单对照与中缝合流 CTA。",
+      "group": null,
+      "title": "Split Screen (Two-Sided Cafe)",
+      "summary": "A 50:50 day-and-night split: a glowing seam down the middle, a journey composition where the left column sticks while the right scrolls, mirrored menus, and a CTA that merges at the seam.",
       "tags": [
-        "分屏",
-        "视觉风格",
-        "双面对照"
+        "split screen",
+        "visual style",
+        "duality"
       ],
       "pages": 1,
       "capabilities": [
@@ -795,18 +824,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-mesh-gradient",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "渐变网格风（AI 产品落地页）",
-      "summary": "深墨紫底叠四团柔焦色雾的 mesh 渐变 + 玻璃拟态卡片：产品界面模拟、能力三卡、数字带与定价双卡。",
+      "group": null,
+      "title": "Mesh Gradient (AI Landing Page)",
+      "summary": "A deep ink-purple ground layered with four soft-focus color clouds forming a mesh gradient, plus glassmorphic cards: a product UI mock-up, three capability cards, a metrics band, and two pricing cards.",
       "tags": [
-        "渐变网格",
-        "玻璃拟态",
-        "SaaS 落地页"
+        "mesh gradient",
+        "glassmorphism",
+        "saas landing"
       ],
       "pages": 1,
       "capabilities": [
@@ -814,36 +844,37 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-lowpoly3d",
-      "kind": "app-template",
       "tab": "product",
       "group": "design",
-      "title": "低多边形 3D 风（潮玩藏品页）",
-      "summary": "暗房底 + 面片装饰 + 双强调色的 low-poly 视觉：核心区用 model3d 组件承载真实可旋转的 3D 模型（glb 走素材库，建应用自动播种），面片插画藏品卡与工序带收束。",
+      "title": "Low-Poly 3D (Collectible Drop)",
+      "summary": "Darkroom ground with faceted decorations and two accent colors: the core section uses the model3d component to host a real rotatable 3D model (a glb served from the asset library and seeded automatically on app creation), closing with faceted collectible cards and a process band.",
       "tags": [
-        "3D",
-        "低多边形",
-        "藏品页"
+        "3d",
+        "low poly",
+        "collectibles"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-bw-photo",
-      "kind": "app-template",
       "tab": "content",
-      "title": "黑白摄影排版风（摄影师作品集）",
-      "summary": "纯黑白灰三阶 + 编辑排版：阶梯错位超大标题、全幅作品图叠压题注卡与竖排系列标、行式系列索引、黑底自述带——素材驱动（作品图走素材库，建应用自动播种）。",
+      "group": null,
+      "title": "Black and White Photography Portfolio",
+      "summary": "Pure black, white, and grey in three steps with editorial typography: staggered oversized headings, full-bleed work images overlaid with caption cards and vertical series labels, a row-based series index, and a black statement band — asset-driven, with photographs served from the asset library and seeded on app creation.",
       "tags": [
-        "黑白摄影",
-        "编辑排版",
-        "作品集"
+        "black and white",
+        "editorial",
+        "portfolio"
       ],
       "pages": 1,
       "capabilities": [
@@ -851,18 +882,19 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "sty-bauhaus",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "包豪斯风（几何工作室官网）",
-      "summary": "三原色 + 基本形 + 大字重排印的包豪斯语言：首屏阶梯错位超大字与几何装饰叠层、黑底宣言带、阶梯错位作品卡、红底 CTA——版式驱动的高设计感起点。",
+      "group": null,
+      "title": "Bauhaus (Geometry Studio)",
+      "summary": "The Bauhaus language of primary colors, primitive shapes, and heavy typography: a hero with staggered oversized type under layered geometric ornaments, a black manifesto band, staggered work cards, and a red CTA — a typography-driven starting point with strong design presence.",
       "tags": [
-        "包豪斯",
-        "视觉风格",
-        "工作室官网"
+        "bauhaus",
+        "visual style",
+        "studio website"
       ],
       "pages": 1,
       "capabilities": [
@@ -870,58 +902,62 @@
       ],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-19"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "mkt-seoul-after-dark",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "复古丝网印海报（首尔夜市 · 图文叠印）",
-      "summary": "一张插画底图 + 全排版层叠印的海报复刻件：超粗压题黑描边与品红错位色影、旋转圆徽章、韩文点缀、红底菜单牌与黄底三栏信息条——单素材 + 平台能力 = 设计师成稿。",
+      "group": null,
+      "title": "Retro Screen Print Poster",
+      "summary": "A poster reproduction built from one illustrated base image with everything else overprinted in type: extra-heavy outlined headline with a misregistered magenta shadow, rotated circular badges, script accents, a red menu board, and a yellow three-column info strip — one asset plus platform capability equals a finished piece.",
       "tags": [
-        "海报",
-        "复古丝网印",
-        "图文叠印"
+        "poster",
+        "screen print",
+        "overprint"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-23"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "mkt-portfolio-cover",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "3D 作品集封面（双素材叠放）",
-      "summary": "底图 + 人物双素材叠放的作品集封面：超大渐变字标题压在人物之下、薄荷徽章与技能标签、应用图标瓦片与上下信息条——多素材定位与透明素材前置的完整示范。",
+      "group": null,
+      "title": "3D Portfolio Cover",
+      "summary": "A portfolio cover stacking two assets, a background and a cut-out figure: an oversized gradient headline tucked beneath the figure, mint badges and skill tags, app-icon tiles, and top and bottom info bars — a full demonstration of multi-asset positioning with transparent art in front.",
       "tags": [
-        "作品集",
-        "封面",
-        "双素材"
+        "portfolio",
+        "cover",
+        "multi-asset"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-23"
+      "lang": "zh",
+      "thumbLang": "zh"
     },
     {
       "id": "mkt-portfolio-page",
-      "kind": "app-template",
       "tab": "marketing",
-      "title": "3D 作品集落地页（自适应）",
-      "summary": "与封面同素材的完整页面形态：hero 用容器查询单位（cqw）保持版式比例，作品栅格 auto-fit 自动 3/2/1 列、关于区自动堆叠，仅两处显式断点决策——响应式复刻的参考实现。",
+      "group": null,
+      "title": "3D Portfolio Landing Page",
+      "summary": "The full-page counterpart to the cover, sharing its assets: the hero uses container query units (cqw) to hold its proportions, the work grid auto-fits between three, two, and one columns, and the about section stacks on its own — only two explicit breakpoint decisions in the whole page.",
       "tags": [
-        "作品集",
-        "落地页",
-        "响应式"
+        "portfolio",
+        "landing page",
+        "responsive"
       ],
       "pages": 1,
       "capabilities": [],
       "priority": "P0",
       "status": "built",
-      "updated": "2026-09-23"
+      "lang": "zh",
+      "thumbLang": "zh"
     }
   ]
 }

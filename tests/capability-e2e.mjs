@@ -1,11 +1,13 @@
 /**
- * capability-e2e — 展示站能力实证（真浏览器）。
+ * capability-e2e — capability proof for the showcase (real browser).
  *
- * 跑法：先 `pnpm --filter showcase dev`（:3010），再 `node apps/showcase/tests/capability-e2e.mjs`。
- * 断言覆盖：画廊目录（47 模板 / 四 tab / sty- 置顶 / 缩略图可达）与**平台能力在模板里真实生效**——
- * 动效（Animate + motion.counter）、多页 nav.to、页内 nav.scroll（回顶 + 定位避让）、
- * 浮层 overlay.open/close（子页 + onOverlayInit 传参 + 跨页写回）、拖拽 Sortable（数据轴跨列）、
- * 事件代码沙箱（DOM.data 写回 / 受控校验绑定）。
+ * How to run: start `pnpm --filter showcase dev` (:3010), then `node apps/showcase/tests/capability-e2e.mjs`.
+ * Assertions cover the gallery directory (47 templates / four tabs / sty- pinned first / thumbnails
+ * reachable) and that **platform capabilities actually work inside the templates** — motion
+ * (Animate + motion.counter), multi-page nav.to, in-page nav.scroll (back to top + landing offset),
+ * overlay.open/close (sub-page + onOverlayInit payload + cross-page write-back), Sortable drag
+ * (data-axis across columns), and the event-code sandbox (DOM.data write-back / controlled
+ * validation bindings).
  */
 
 import { createRequire } from 'node:module';
@@ -56,7 +58,7 @@ const probeScrollport = (nodeId) =>
     return { scrollTop: Math.round(port.scrollTop), scrollHeight: port.scrollHeight };
   }, nodeId);
 
-// ─── 1. 画廊目录 ─────────────────────────────────────────────────────────
+// ─── 1. Gallery directory ────────────────────────────────────────────────
 
 await page.goto(BASE, { waitUntil: 'networkidle' });
 await page.waitForTimeout(800);
@@ -64,7 +66,7 @@ await page.waitForTimeout(800);
 const tabIds = await page.$$eval('[data-showcase-tab]', (els) =>
   els.map((e) => e.getAttribute('data-showcase-tab')),
 );
-check('画廊：四个主题 tab 齐全', tabIds.join(',') === 'marketing,product,content,interaction', tabIds.join(','));
+check('Gallery: all four theme tabs present', tabIds.join(',') === 'marketing,product,content,interaction', tabIds.join(','));
 
 let pinnedOk = true;
 const perTabFirst = {};
@@ -79,13 +81,13 @@ for (const tab of tabIds) {
   perTabCount[tab] = ids.length;
   if (!String(ids[0]).startsWith('sty-')) pinnedOk = false;
 }
-check('画廊：每 tab 首卡为 sty- 风格系列（置顶）', pinnedOk, JSON.stringify(perTabFirst));
+check('Gallery: first card of every tab is a pinned sty- style piece', pinnedOk, JSON.stringify(perTabFirst));
 
 const templateTotal = Object.values(perTabCount).reduce((sum, n) => sum + n, 0);
 check(
-  '画廊：47 个模板全量可点（四 tab 合计）',
+  'Gallery: all 47 templates are clickable (sum across four tabs)',
   templateTotal === 47,
-  `perTab=${JSON.stringify(perTabCount)} → 合计=${templateTotal}`,
+  `perTab=${JSON.stringify(perTabCount)} → total=${templateTotal}`,
 );
 
 const thumbStatus = await page.evaluate(async () => {
@@ -97,9 +99,9 @@ const thumbStatus = await page.evaluate(async () => {
   }
   return { count: srcs.length, bad: statuses.filter((s) => s !== 200).length };
 });
-check('画廊：缩略图全部 200', thumbStatus.count > 0 && thumbStatus.bad === 0, JSON.stringify(thumbStatus));
+check('Gallery: every thumbnail returns 200', thumbStatus.count > 0 && thumbStatus.bad === 0, JSON.stringify(thumbStatus));
 
-// ─── 2. 动效：Animate 入场 + motion.counter 数字滚动 ──────────────────────
+// ─── 2. Motion: Animate entrance + motion.counter number roll ────────────
 
 await openExhibit('mkt-landing');
 const counterTextual0 = await page.textContent('[data-node-id="hero_stat_teams_value"]');
@@ -118,16 +120,16 @@ const animatedSoon = await page
   )
   .then(() => true)
   .catch(() => false);
-check('mkt-landing：Animate onMount 入场动效已施加', animatedSoon, `首次文本=${counterTextual0}`);
+check('mkt-landing: Animate onMount entrance motion applied', animatedSoon, `first text=${counterTextual0}`);
 await page.waitForTimeout(2600);
 const counterTextual1 = await page.textContent('[data-node-id="hero_stat_teams_value"]');
 check(
-  'mkt-landing：motion.counter 数字滚动回到默认终帧（1200+）',
+  'mkt-landing: motion.counter rolls back to its default final frame (1200+)',
   counterTextual1 === '1200+',
   `t0=${counterTextual0} → tEnd=${counterTextual1}`,
 );
 
-// ─── 3. 多页：nav.to 页面切换（ctn-deck 5 页）─────────────────────────────
+// ─── 3. Multi-page: nav.to page switching (ctn-deck, 5 pages) ────────────
 
 await openExhibit('ctn-deck');
 await page.click('[data-node-id="dk_cover_next"]');
@@ -137,9 +139,9 @@ const deckAfter = await page.evaluate(() => ({
   insight: Boolean(document.querySelector('[data-node-id="dk_insight_root"]')),
   cover: Boolean(document.querySelector('[data-node-id="dk_cover_root"]')),
 }));
-check('ctn-deck：nav.to 切到第 2 页（hash + 新页树）', deckAfter.insight && !deckAfter.cover, JSON.stringify(deckAfter));
+check('ctn-deck: nav.to switches to page 2 (hash + new page tree)', deckAfter.insight && !deckAfter.cover, JSON.stringify(deckAfter));
 
-// ─── 4. 页内滚动：nav.scroll() 回顶（模板页脚）────────────────────────────
+// ─── 4. In-page scroll: nav.scroll() back to top (template footer) ───────
 
 await openExhibit('sty-memphis');
 await page.evaluate(() => {
@@ -165,12 +167,12 @@ await page.click('[data-node-id="mp_footer_f3"]');
 await page.waitForTimeout(1500);
 const afterTop = await probeScrollport('mp_footer_f3');
 check(
-  'sty-memphis：页脚「返回顶部 ↑」→ nav.scroll() 回到顶部',
+  'sty-memphis: footer "Back to top ↑" → nav.scroll() returns to the top',
   beforeTop && beforeTop.scrollTop > 300 && afterTop && afterTop.scrollTop <= 4,
   `before=${beforeTop?.scrollTop} → after=${afterTop?.scrollTop}`,
 );
 
-// ─── 5. 页内定位：nav.scroll({target}) 落点避让 scroll-margin-top ──────────
+// ─── 5. In-page anchoring: nav.scroll({target}) respects scroll-margin-top ─
 
 await openExhibit('sty-bauhaus');
 await page.click('[data-node-id="bh_hero_barcap_r"]');
@@ -200,12 +202,12 @@ const landing = await page.evaluate(() => {
   };
 });
 check(
-  'sty-bauhaus：首屏「向下滚动 ↓」→ nav.scroll({target}) 落点避让（±28px）',
+  'sty-bauhaus: hero "Scroll down ↓" → nav.scroll({target}) offset respected (±28px)',
   Math.abs(landing.topInPort - landing.margin) <= 28,
   JSON.stringify(landing),
 );
 
-// ─── 6. 浮层 + 事件代码沙箱：itr-loop 二次确认（open → 校验 → 跨页写回）────
+// ─── 6. Overlay + event-code sandbox: itr-loop confirmation (open → validate → cross-page write-back) ─
 
 await openExhibit('itr-loop');
 await page.click('[data-node-id="loop_delete_btn"]');
@@ -217,7 +219,7 @@ const overlayOpen = await page.evaluate(() => ({
   readyVisible: Boolean(document.querySelector('[data-node-id="loop_confirm_ok_ready"]')),
 }));
 check(
-  'itr-loop：overlay.open 打开子页浮层（onOverlayInit 传入 sendData → 初始名不符态）',
+  'itr-loop: overlay.open opens a sub-page overlay (onOverlayInit passes sendData → initial name-mismatch state)',
   overlayOpen.overlays === 1 && overlayOpen.root && overlayOpen.mismatchVisible && !overlayOpen.readyVisible,
   JSON.stringify(overlayOpen),
 );
@@ -229,7 +231,7 @@ const afterTyping = await page.evaluate(() => ({
   readyVisible: Boolean(document.querySelector('[data-node-id="loop_confirm_ok_ready"]')),
 }));
 check(
-  'itr-loop：事件代码 onChange 写 data → 校验态翻转（名称一致 → 确认按钮出现）',
+  'itr-loop: event code onChange writes data → validation flips (name matches → confirm button appears)',
   !afterTyping.mismatchVisible && afterTyping.readyVisible,
   JSON.stringify(afterTyping),
 );
@@ -241,12 +243,12 @@ const afterConfirm = await page.evaluate(() => ({
   deleted: Boolean(document.querySelector('[data-node-id="loop_deleted_text"]')),
 }));
 check(
-  'itr-loop：overlay.close(result) → onOverlayClose 跨页写回（笔记页出现「已删除」态）',
+  'itr-loop: overlay.close(result) → onOverlayClose cross-page write-back (note page shows the "deleted" state)',
   afterConfirm.overlays === 0 && afterConfirm.deleted,
   JSON.stringify(afterConfirm),
 );
 
-// ─── 7. 拖拽：Sortable 数据轴跨列（itr-kanban）────────────────────────────
+// ─── 7. Drag: Sortable data axis across columns (itr-kanban) ─────────────
 
 await openExhibit('itr-kanban');
 const kanbanInitial = await page.evaluate(() => ({
@@ -254,7 +256,7 @@ const kanbanInitial = await page.evaluate(() => ({
   doing: Array.from(document.querySelectorAll('[data-node-id="kb_list_doing"] [data-node-id="kb_doing_card_title"]')).map((n) => n.textContent?.trim()),
 }));
 check(
-  'itr-kanban：Sortable 数据轴行集渲染（{{DOM.kb_root.data.todo}} 绑定）',
+  'itr-kanban: Sortable renders the data-axis row set ({{DOM.kb_root.data.todo}} binding)',
   kanbanInitial.todo.length > 0,
   JSON.stringify(kanbanInitial).slice(0, 200),
 );
@@ -281,18 +283,18 @@ const kanbanAfter = await page.evaluate(() => ({
   doing: Array.from(document.querySelectorAll('[data-node-id="kb_list_doing"] [data-node-id="kb_doing_card_title"]')).map((n) => n.textContent?.trim()),
 }));
 check(
-  'itr-kanban：拖动把手 → 跨列移动 + 数据写回（onChange 代码轨）',
+  'itr-kanban: dragging the handle → cross-column move + data write-back (onChange code track)',
   kanbanAfter.todo.length === kanbanInitial.todo.length - 1 &&
     kanbanAfter.doing.length === kanbanInitial.doing.length + 1 &&
     kanbanAfter.doing.includes(kanbanInitial.todo[0]),
   `todo ${kanbanInitial.todo.length}→${kanbanAfter.todo.length} / doing ${kanbanInitial.doing.length}→${kanbanAfter.doing.length}`,
 );
 
-// ─── 总检查：零未捕获错误 ────────────────────────────────────────────────
+// ─── Final check: zero uncaught errors ───────────────────────────────────
 
 const ignorable = /favicon|Download the React DevTools/i;
 const realErrors = pageErrors.filter((e) => !ignorable.test(e));
-check('全程零未捕获错误（pageerror / console.error）', realErrors.length === 0, realErrors.slice(0, 4).join(' | '));
+check('Zero uncaught errors throughout (pageerror / console.error)', realErrors.length === 0, realErrors.slice(0, 4).join(' | '));
 
 await browser.close();
 

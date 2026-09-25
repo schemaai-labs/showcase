@@ -1,18 +1,18 @@
 /**
- * catalog — 展品目录（画廊消费）+ Lang DSL 懒加载。
+ * catalog — exhibit directory (consumed by the gallery) plus lazy Lang DSL loading.
  *
- * 数据来自构建期同步产物（scripts/sync-exhibits.mjs，见 apps/showcase/.gitignore）：
- * - `generated/catalog.json`：模板目录（ai-knowledge manifest 投影）；
- * - `generated/templates/<id>.lang.txt`：每模板一份 Lang DSL 文本（import.meta.glob 懒加载）。
+ * Data comes from build-time sync artifacts (scripts/sync-exhibits.mjs; see apps/showcase/.gitignore):
+ * - `generated/catalog.json`        — template directory, already projected to English;
+ * - `generated/templates/<id>.lang.txt` — one Lang DSL document per template, lazy-loaded via import.meta.glob.
  */
 
 import rawCatalog from '../generated/catalog.json';
 
 export interface ExhibitEntry {
   id: string;
-  /** 所属 tab。 */
+  /** Owning tab. */
   tab: string;
-  /** tab 内分组（manifest group）。 */
+  /** Group within the tab (from the manifest). */
   group?: string | null;
   title: string;
   summary?: string;
@@ -20,8 +20,16 @@ export interface ExhibitEntry {
   pages?: number;
   capabilities?: string[];
   priority?: string;
-  /** sty- 风格系列（画廊置顶 + 「风格」角标）。 */
+  /** `sty-` style series — pinned to the top of the gallery and badged as a style piece. */
   style?: boolean;
+  /**
+   * Language the shipped document is actually written in — `'en'` or `'zh'`.
+   *
+   * Templates are being translated in batches, so during the rollout some still fall back to
+   * their Chinese source. The gallery badges those, so visitors know what to expect before
+   * opening one. Remove the badge once the rollout completes.
+   */
+  lang?: 'en' | 'zh';
   thumb?: string | null;
   langFile: string;
 }
@@ -50,17 +58,18 @@ export function findExhibit(id: string): ExhibitEntry | undefined {
   return CATALOG.templates.find((entry) => entry.id === id);
 }
 
-/** 懒加载展品的 Lang DSL 文本（构建期已内联为独立 chunk）。 */
+/** Lazily load an exhibit's Lang DSL text (inlined at build time as its own chunk). */
 export async function loadExhibitLang(entry: ExhibitEntry): Promise<string> {
   const loader = TEMPLATE_LANGS[`../generated/${entry.langFile}`];
   if (!loader) {
-    throw new Error(`[catalog] Lang 资源缺失：${entry.langFile}（请重跑 sync:exhibits）`);
+    throw new Error(`[catalog] Lang asset missing: ${entry.langFile} (re-run sync:exhibits)`);
   }
   return loader();
 }
 
 /**
- * 画廊分组：每 tab 内 **sty- 风格系列置顶**（对外宣传优先），其余按 manifest 原序。
+ * Gallery grouping: `sty-` style pieces first within each tab (they lead the external story),
+ * everything else in manifest order.
  */
 export function templatesByTab(tabId: string): ExhibitEntry[] {
   const list = CATALOG.templates.filter((t) => t.tab === tabId);

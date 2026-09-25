@@ -1,15 +1,15 @@
 /**
- * query — 展示站查询执行器（runtime-core executeQuery 的 mock 传输版）。
+ * query — the showcase's query executor (mock-transport version of runtime-core's executeQuery).
  *
- * 与 runtime-core 的 executeQuery 同语义的部分直接复用（`resolveString` 解析
- * url / params 里的 {{}} 绑定），只把 **传输层换成 mock-api**：
- * - 编辑器的执行器（apps/studio-web）走真实 HTTP + token；
- * - 展示站无后端 → method/url 命中本地 fixture（见 ./mock-api.ts），
- *   返回结构与真实执行器一致：`{ success, data, error?, executionTime }`。
+ * Parts with the same semantics as runtime-core's executeQuery are reused directly (`resolveString`
+ * resolving {{}} bindings in url / params); only the **transport is swapped for mock-api**:
+ * - the editor's executor (apps/studio-web) uses real HTTP + tokens;
+ * - the showcase has no backend → method/url hit a local fixture (see ./mock-api.ts), returning
+ *   the same structure as the real executor: `{ success, data, error?, executionTime }`.
  *
- * 这样 `data.query` / `data.refresh` / 代码轨 `runQuery()` 的**可见行为**
- * （loading → ready/error 的 asyncState 派生、QueryResults 写回、绑定消费）
- * 与平台一致，换掉只是数据来源。
+ * This keeps the **visible behavior** of `data.query` / `data.refresh` / code-track `runQuery()`
+ * identical to the platform (asyncState derivation loading → ready/error, QueryResults write-back,
+ * binding consumption) — only the data source is swapped out.
  */
 
 import { resolveString } from '@schemaai/runtime-core';
@@ -27,7 +27,7 @@ export async function executeQueryMock(
     const rawUrl = String(resolveString(query.url ?? '', context) ?? '');
     if (!rawUrl) throw new Error('URL is required');
 
-    // params（key/value 均支持 {{}} 绑定）→ 查询串（与 runtime-core 同语义）
+    // params (both key and value support {{}} bindings) → query string (same semantics as runtime-core)
     const search = new URLSearchParams();
     for (const param of query.params ?? []) {
       if (!param?.key) continue;

@@ -1,9 +1,9 @@
 /**
- * main — 展示站入口。
+ * main — showcase entry point.
  *
- * 启动即注册**全部 canonical 组件渲染器**（@schemaai/renderer-react 的
- * registerCanonicalComponents：55 个类型，零 antd 依赖）——平台渲染链路的
- * 唯一启动前提。
+ * Registers **all canonical component renderers** on startup (@schemaai/renderer-react's
+ * registerCanonicalComponents: 55 types, zero antd dependency) — the sole startup precondition
+ * of the platform rendering pipeline.
  */
 
 import React from 'react';
