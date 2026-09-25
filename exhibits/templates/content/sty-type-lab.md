@@ -208,7 +208,12 @@
       # the middle layer is the whole point of that line (the word demonstrates its own subject).
       @tl_hero_kicker = { color: rgba(245, 245, 240, 0.45); font-size: 12px; font-weight: 600; letter-spacing: 3px; }
       @tl_hero_type1 = { color: #F5F5F0; font-size: 132px; font-weight: 900; letter-spacing: -3px; line-height: 1.0; }
-      @tl_hero_type2 = { color: transparent; font-size: 132px; font-weight: 900; letter-spacing: 22px; line-height: 1.0; :scope { -webkit-text-stroke: 2.5px #F5F5F0; } }
+      # ⚠️ Latin outline type needs `paint-order: stroke fill`. Chromium strokes every sub-path of a
+      # glyph independently, so Inter's R / A / C / K … (built from overlapping sub-paths) show their
+      # internal seams as a second "ghost" outline inside the letter. Painting the fill last hides
+      # them — which means the fill can no longer be transparent: it becomes the page colour, and the
+      # stroke doubles (5px → a 2.5px rim) because the fill now covers its inner half.
+      @tl_hero_type2 = { color: #111111; font-size: 132px; font-weight: 900; letter-spacing: 22px; line-height: 1.0; :scope { -webkit-text-stroke: 5px #F5F5F0; paint-order: stroke fill; } }
       @tl_hero_reverse = { background: #D4FF3F; }
       @tl_hero_type3 = { color: #111111; font-size: 132px; font-weight: 900; letter-spacing: -3px; line-height: 1.0; }
       @tl_hero_meta_l = { color: rgba(245, 245, 240, 0.6); font-size: 14px; line-height: 1.75; }
@@ -321,7 +326,7 @@ now almost exactly as wide as the mixed-case row below it (1001px). Row 4 was CJ
 in the Mono card. The glyph count (27,533) and the "every punctuation mark and symbol" claim still
 hold — the page just shows the Latin half of the set.
 
-**Two deliberate fixes:**
+**Three deliberate fixes:**
 
 1. `tl_fam2_big` / `tl_fam2_small` now carry `font-family: Georgia, 'Songti SC', 'Times New Roman',
    serif`. In the Chinese source the "Song" specimen card was set in the page's default sans, which
@@ -329,6 +334,21 @@ hold — the page just shows the Latin half of the set.
    gives the Song card a real serif stack so the three cards genuinely differ.
 2. Prices move to `$260 / year` to match the currency style of the other English templates; the
    fictional-brand disclaimer is restated in English.
+3. **The outlined hero layer needed `paint-order: stroke fill`** — without it, `TRACKING` rendered
+   as *two* overlapping outlines. Chromium strokes each sub-path of a glyph independently, and
+   Inter builds Latin capitals (R, A, C, K …) from overlapping sub-paths, so the internal seams were
+   stroked too and read as a ghost letter inside the real one. Chromium's own font-independent
+   repro:
+
+   ```html
+   <span style="font: 900 300px Inter; color: transparent; -webkit-text-stroke: 3px #fff">R</span>
+   <!-- spurious ink appears along the stem/bowl junction — measured, not a guess -->
+   ```
+
+   Painting the fill last covers those seams; the price is that the fill can no longer be
+   `transparent` (it becomes `#111111`, the page colour) and the stroke doubles to 5px so the
+   visible rim stays 2.5px. CJK glyphs are built without overlapping sub-paths, which is why the
+   Chinese edition (`字距即呼吸`) looked fine and the bug only surfaced on the English one.
 
 **No structural refactor was needed.** Every node id is identical to the Chinese version, including
 the ones the E2E and the thumbnail pipeline address (`tl_hero_meta_r`, `tl_glyph_region`,

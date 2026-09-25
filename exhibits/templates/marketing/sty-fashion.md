@@ -234,7 +234,12 @@
       # indent stays at 180px: uppercase Latin already carries its own sidebearings, so it needs less
       # negative tracking than the two-glyph Chinese line did.
       @fs_hero_l1 = { color: #FFFFFF; font-size: 148px; font-weight: 900; line-height: 0.98; letter-spacing: -4px; :scope { text-shadow: 0 3px 26px rgba(0, 0, 0, 0.4); } }
-      @fs_hero_l2 = { color: #F5F5F2; font-size: 148px; font-weight: 900; line-height: 0.98; letter-spacing: -4px; :scope { -webkit-text-stroke: 3px #141414; } }
+      # ⚠️ `paint-order: stroke fill` is required for Latin outline type: Chromium strokes every
+      # sub-path of a glyph independently, so Inter's R / A / N / C … (overlapping sub-paths) leak
+      # their internal seams through the fill as a "ghost" outline (the zh edition's 优雅 is CJK and
+      # never showed it). The fill is painted last now, so it hides the seams; the stroke doubles
+      # (3px → 6px) to keep the same visible rim, since the fill covers its inner half.
+      @fs_hero_l2 = { color: #F5F5F2; font-size: 148px; font-weight: 900; line-height: 0.98; letter-spacing: -4px; :scope { -webkit-text-stroke: 6px #141414; paint-order: stroke fill; } }
       @fs_hero_meta_l = { color: rgba(245, 245, 242, 0.85); font-size: 12.5px; font-weight: 600; letter-spacing: 1.2px; }
       @fs_hero_meta_r = { color: rgba(245, 245, 242, 0.85); font-size: 12.5px; font-weight: 600; letter-spacing: 1.2px; }
 
@@ -343,3 +348,10 @@ Chinese and stays. `订阅全年` → "Subscribe for a year"; `往期` → "Back
 credit line, `Photography / Shen Mo · Styling / A. Che · Editor / MUSE`. The film caption
 `02:11 的幕后` → "Behind 02:11" so the runtime keeps its place in both the label and the heading.
 Node ids are unchanged throughout.
+
+**One rendering fix, same root cause as `sty-type-lab`.** The outlined hero line needed
+`paint-order: stroke fill`. Chromium strokes each sub-path of a glyph independently, and Inter builds
+Latin capitals (E, L, G, A, N, C …) out of *overlapping* sub-paths, so the internal seams got stroked
+too and bled through the off-white fill as a ghost outline inside each letter. Painting the fill last
+covers them; the stroke doubles 3px → 6px so the visible rim is unchanged (the fill now covers the
+stroke's inner half). The zh edition's 优雅 is CJK — no overlapping sub-paths, no artifact.

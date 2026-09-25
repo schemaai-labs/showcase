@@ -238,7 +238,12 @@
       # minus 48px gutters). The Chinese 是生产力 is 4 glyphs / 496px for the same slot, so the English
       # line is re-split ("FUN IS" / "PRODUCTIVITY") to keep both the two-line staircase and the size.
       @mp_hero_l1 = { color: #111; font-size: 124px; font-weight: 900; line-height: 1.02; letter-spacing: -3px; }
-      @mp_hero_l2 = { color: #FF3D8B; font-size: 124px; font-weight: 900; line-height: 1.02; letter-spacing: -3px; :scope { -webkit-text-stroke: 3px #111; } }
+      # ⚠️ `paint-order: stroke fill` is required for Latin outline type: Chromium strokes every
+      # sub-path of a glyph independently, so Inter's R / D / U / C … (overlapping sub-paths) leak
+      # their internal seams through the fill as a "ghost" outline (the zh edition's 是生产力 is CJK
+      # and never showed it). The fill is painted last now, so it hides the seams; the stroke doubles
+      # (3px → 6px) to keep the same visible rim, since the fill covers its inner half.
+      @mp_hero_l2 = { color: #FF3D8B; font-size: 124px; font-weight: 900; line-height: 1.02; letter-spacing: -3px; :scope { -webkit-text-stroke: 6px #111; paint-order: stroke fill; } }
       @mp_hero_sub = { color: #3F3A33; font-size: 16px; line-height: 1.8; font-weight: 500; }
       @mp_hero_btn = { background: #111; border: 3px solid #111; border-radius: 999px; transition: transform 0.2s ease; :scope:hover { transform: translateY(-3px); } }
       @mp_hero_btn_txt = { color: #FFFBF2; font-size: 15px; font-weight: 800; letter-spacing: 0.6px; }
@@ -348,3 +353,10 @@ quotes replacing the CJK corner brackets, since the brackets are a CJK punctuati
 `小红书` → **Instagram** (the international equivalent in the same footer slot, beside Behance),
 and `创意热店` → "creative hot shop" ("hot shop" is the English industry term for exactly this kind
 of studio). Node ids are unchanged throughout.
+
+**One rendering fix, same root cause as `sty-type-lab`.** The outlined hero line needed
+`paint-order: stroke fill`. Chromium strokes each sub-path of a glyph independently, and Inter builds
+Latin capitals (P, R, D, U, C …) out of *overlapping* sub-paths, so the internal seams got stroked
+too and bled through the pink fill as a ghost outline inside each letter. Painting the fill last
+covers them; the stroke doubles 3px → 6px so the visible rim is unchanged (the fill now covers the
+stroke's inner half). The zh edition's 是生产力 is CJK — no overlapping sub-paths, no artifact.
