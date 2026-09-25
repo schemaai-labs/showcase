@@ -17,15 +17,15 @@ export const PreviewPage: React.FC<{ exhibitId: string }> = ({ exhibitId }) => {
 
   if (!entry) {
     return (
-      <div className="min-h-screen grid place-items-center bg-ink-900 text-slate-300">
-        <div className="text-center space-y-3">
-          <p className="text-lg font-semibold">No such exhibit: {exhibitId}</p>
-          <p className="text-xs text-slate-500">
+      <div className="grid min-h-screen place-items-center bg-ink-950 text-ink-300">
+        <div className="space-y-3 text-center">
+          <p className="text-lg font-semibold text-ink-100">No such exhibit: {exhibitId}</p>
+          <p className="text-xs text-ink-500">
             The exhibit catalog is generated at build time (sync:exhibits)
           </p>
           <button
             type="button"
-            className="text-sm text-accent-400 hover:text-accent-500"
+            className="text-sm text-accent-400 transition-colors hover:text-accent-300"
             onClick={() => navigate('/')}
           >
             ← Back to the gallery
@@ -36,7 +36,7 @@ export const PreviewPage: React.FC<{ exhibitId: string }> = ({ exhibitId }) => {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-ink-900" data-showcase-exhibit={entry.id}>
+    <div className="flex h-screen flex-col bg-ink-950" data-showcase-exhibit={entry.id}>
       <ExhibitRuntime key={entry.id} entry={entry} />
     </div>
   );

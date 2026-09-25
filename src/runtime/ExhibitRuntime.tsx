@@ -68,9 +68,9 @@ const RuntimeBridge: React.FC<{ payload: PreviewInitPayload }> = ({ payload }) =
     >
       <ShowcaseHostAdapters />
       <ToastHost />
-      <div className="flex flex-col h-screen bg-ink-900">
+      <div className="flex h-screen flex-col bg-ink-950">
         <PreviewToolbar />
-        <div className="flex-1 min-h-0 flex flex-col bg-slate-200">
+        <div className="flex min-h-0 flex-1 flex-col bg-ink-950">
           <CanvasSurface />
         </div>
       </div>
@@ -84,12 +84,15 @@ const CanvasSurface: React.FC = () => {
   const artboardWidth = useArtboardWidth();
   const page = state.pages.find((p) => p.id === state.activePageId) ?? state.pages[0];
   if (!page) {
-    return <div className="flex-1 grid place-items-center text-slate-500 text-sm">Empty page</div>;
+    return <div className="grid flex-1 place-items-center text-sm text-ink-500">Empty page</div>;
   }
   return (
-    <div className="flex min-h-0 flex-1 overflow-hidden bg-slate-300/60">
+    <div className="flex min-h-0 flex-1 overflow-hidden bg-ink-950">
+      {/* Dark surround + a soft shadow on the frame: the template reads as a lit page in a dark room.
+          The shadow also separates dark templates (sty-luxe, ctn-deck's cover) from the backdrop.
+          box-shadow only — no ring or border, which would shift layout and break the scroll assertions. */}
       <div
-        className="min-h-0 flex-1 flex flex-col overflow-hidden"
+        className="flex min-h-0 flex-1 flex-col overflow-hidden shadow-[0_0_80px_-12px_rgba(0,0,0,0.9)]"
         style={{ width: artboardWidth, maxWidth: '100%', margin: '0 auto' }}
         data-showcase-artboard-frame="true"
       >
@@ -135,7 +138,7 @@ export const ExhibitRuntime: React.FC<{ entry: ExhibitEntry }> = ({ entry }) => 
   }
   if (!payload) {
     return (
-      <div className="flex-1 grid place-items-center bg-ink-900 text-slate-400 text-sm">
+      <div className="flex-1 grid place-items-center bg-ink-950 text-ink-400 text-sm">
         Compiling exhibit DSL…
       </div>
     );

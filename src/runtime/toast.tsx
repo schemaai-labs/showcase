@@ -75,14 +75,14 @@ export const ToastHost: React.FC = () => {
             key={item.id}
             className={`pointer-events-auto bg-ink-800/95 backdrop-blur border ${style.ring} rounded-lg shadow-xl px-4 py-3 ${
               wide ? 'w-[360px]' : 'min-w-[200px]'
-            } text-slate-100`}
+            } text-ink-100`}
           >
             <div className="flex items-center gap-2">
               <span className={`w-2 h-2 rounded-full ${style.dot}`} />
               <span className="text-sm font-medium">{item.message ?? style.label}</span>
             </div>
             {wide && item.description ? (
-              <p className="mt-1 text-xs text-slate-400 leading-relaxed">{item.description}</p>
+              <p className="mt-1 text-xs text-ink-400 leading-relaxed">{item.description}</p>
             ) : null}
           </div>
         );

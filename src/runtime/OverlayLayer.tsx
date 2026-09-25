@@ -124,7 +124,7 @@ export const OverlayLayer: React.FC = () => {
                 <button
                   type="button"
                   aria-label="Close"
-                  className="absolute top-3 right-4 text-slate-400 hover:text-slate-700 text-xl leading-none"
+                  className="absolute top-3 right-4 text-ink-400 hover:text-ink-100 text-xl leading-none"
                   onClick={() => closeTop(modal)}
                 >
                   ×
@@ -141,7 +141,7 @@ export const OverlayLayer: React.FC = () => {
                     />
                   </ShowcaseSurfaceProvider>
                 ) : (
-                  <div className="p-6 text-sm text-slate-500">Overlay target is empty</div>
+                  <div className="p-6 text-sm text-ink-500">Overlay target is empty</div>
                 )}
               </div>
             </div>

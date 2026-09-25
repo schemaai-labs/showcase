@@ -3,33 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SchemaAI Showcase · Template Gallery</title>
+    <title>SchemaAI Showcase — schema-driven UI, running live</title>
+    <meta
+      name="description"
+      content="A capability showcase for SchemaAI, a schema-driven low-code engine: 43 templates rendered live by the Lang DSL → compile → render pipeline. No editor, no backend."
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+      // Design tokens. Deliberately narrow: one accent, a short neutral ramp, nothing else.
+      // Anything that competes with the templates' own artwork makes the gallery feel noisy —
+      // the chrome's job is to recede.
       tailwind.config = {
         theme: {
           extend: {
             fontFamily: { sans: ['Inter', 'sans-serif'] },
             colors: {
+              // Neutral ramp. `ink-950` is the canvas; cards sit one step up.
               ink: {
-                900: '#0b0f19',
-                800: '#111827',
-                700: '#1f2937',
-                600: '#374151',
-                500: '#6b7280',
+                950: '#08090c', // canvas
+                900: '#0e1015', // raised surface (header, chips)
+                850: '#14171e', // card
+                800: '#1a1e27', // card hover
+                700: '#262b36', // hairline borders
+                600: '#39404e', // strong borders / disabled
+                500: '#6b7280', // muted text
+                400: '#9aa3b2', // secondary text
+                300: '#c8ced9', // body text
+                100: '#f4f6fa', // headings
               },
+              // Single interactive accent. Used for: active state, links, focus, hover affordances.
               accent: {
-                400: '#38bdf8',
-                500: '#0ea5e9',
-                600: '#0284c7',
+                300: '#7fecff',
+                400: '#3fe0ff',
+                500: '#00d4ff',
+                600: '#00a8cc',
               },
+            },
+            letterSpacing: {
+              tightest: '-0.04em',
             },
           },
         },
@@ -44,7 +62,21 @@
       }
       body {
         font-family: Inter, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-        background: #0b0f19;
+        background: #08090c;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* The gallery is a lightbox: thumbnails load lazily and fade in, never popping. */
+      img {
+        transition: opacity 0.3s ease;
+      }
+      ::selection {
+        background: rgba(0, 212, 255, 0.28);
+      }
+      /* Restrained focus ring — matches the accent, visible without shouting. */
+      :focus-visible {
+        outline: 2px solid rgba(0, 212, 255, 0.65);
+        outline-offset: 2px;
       }
     </style>
   </head>

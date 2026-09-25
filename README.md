@@ -10,11 +10,13 @@
 
 Every template in the gallery is **a real app that actually runs** — not a recording, not a screenshot. Motion, navigation, overlays, drag and drop, and the event-code sandbox all execute for real.
 
-> **A note on language**: the showcase is in English for an international audience. The 47 template bodies are being translated in batches; templates not yet translated carry a `中文` badge in the gallery.
+> **A note on language**: the showcase is in English for an international audience. The 43 template bodies are being translated in batches; templates not yet translated carry a `中文` badge in the gallery.
+
+> **A note on curation**: this gallery is a **curated selection**, not a mirror of the full template library. Which templates ship here is declared in [`exhibits.config.json`](./exhibits.config.json); the rest stay in the platform without appearing on this site.
 
 ## What's inside
 
-47 templates across four themes:
+43 templates across four themes:
 
 | Theme | Contents |
 | --- | --- |
@@ -23,7 +25,7 @@ Every template in the gallery is **a real app that actually runs** — not a rec
 | Content / Brand | Brand storytelling, editorial layout, photography… |
 | Interaction / Motion | Scroll narratives, flip cards, kanban drag and drop… |
 
-19 of them are the `sty-` style series (Bauhaus, Memphis, quiet luxury, editorial fashion, low-poly 3D…), pinned to the top of the gallery.
+17 of them are the `sty-` style series (Bauhaus, Memphis, quiet luxury, editorial fashion, low-poly 3D…), pinned to the top of each tab.
 
 **Capabilities proven here** (each one has a real-browser assertion behind it):
 
