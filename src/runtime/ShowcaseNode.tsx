@@ -18,6 +18,7 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import {
   CANONICAL_COMPONENT_META,
+  NodeErrorBoundary,
   RenderNodeFrame,
   SchemaRenderer,
   assembleLayoutStyles,
@@ -49,32 +50,6 @@ interface ShowcaseNodeProps {
 }
 
 const IS_PREVIEW = true;
-
-class NodeErrorBoundary extends React.Component<
-  { nodeId: string; nodeType: string; children: React.ReactNode },
-  { error: Error | null }
-> {
-  state: { error: Error | null } = { error: null };
-
-  static getDerivedStateFromError(error: Error) {
-    return { error };
-  }
-
-  componentDidCatch(error: Error) {
-    console.error(`[showcase] node '${this.props.nodeId}' (${this.props.nodeType}) failed:`, error);
-  }
-
-  render() {
-    if (this.state.error) {
-      return (
-        <div className="p-2 text-[11px] text-amber-300/90 border border-amber-400/30 rounded bg-amber-500/10">
-          Component {this.props.nodeType} failed to render: {this.state.error.message}
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
 
 export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
   node,
@@ -326,8 +301,24 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
   }
   if (!shouldRenderNode) return null;
 
+  // 渲染兜底（批次 E1）：引擎层 NodeErrorBoundary 统一实现；showcase 只保留暗色
+  // 兜底外观与 `[showcase]` 日志风格。外层（宿主包装）与帧内（组件子树）同款兜底。
+  const renderNodeError = (error: Error) => (
+    <div className="p-2 text-[11px] text-amber-300/90 border border-amber-400/30 rounded bg-amber-500/10">
+      Component {node.type} failed to render: {error.message}
+    </div>
+  );
+  const logNodeError = (error: Error) => {
+    console.error(`[showcase] node '${node.id}' (${node.type}) failed:`, error);
+  };
+
   return (
-    <NodeErrorBoundary nodeId={node.id} nodeType={node.type}>
+    <NodeErrorBoundary
+      nodeId={node.id}
+      nodeType={node.type}
+      fallback={renderNodeError}
+      onError={logNodeError}
+    >
       <div onPointerDownCapture={handlePointerDown} className="contents">
         <RenderNodeFrame
           nodeId={node.id}
@@ -343,6 +334,8 @@ export const ShowcaseNode: React.FC<ShowcaseNodeProps> = ({
           ComponentToRender={ComponentToRender}
           componentProps={componentProps}
           acceptsChildren={Boolean(meta.acceptsChildren)}
+          errorFallback={renderNodeError}
+          onRenderError={logNodeError}
           missingRendererFallback={
             <>
               Missing renderer: <span className="font-mono">{missingRendererType ?? node.type}</span> (plugin components require the plugin to be loaded first)
