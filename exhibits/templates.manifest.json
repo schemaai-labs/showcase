@@ -1,6 +1,6 @@
 {
   "$comment": "生成物 —— 由 monorepo 的 scripts/sync-showcase-exhibits.mjs 生成，请勿手改。 元数据已投影为英文；lang 字段标记该模板正文实际用的语言（过渡期中文回退）。",
-  "generatedAt": "2026-09-25T12:55:17.673Z",
+  "generatedAt": "2026-09-29T07:00:01.782Z",
   "tabs": [
     {
       "id": "marketing",
@@ -78,6 +78,29 @@
       "status": "built",
       "lang": "en",
       "thumbLang": "en"
+    },
+    {
+      "id": "app-live-ops",
+      "tab": "product",
+      "group": "saas",
+      "title": "Live Ops Console",
+      "summary": "A real-time utility page with state domains: SSE metrics, a polling card, page-domain filters synced to the URL, an App-domain unread badge, per-row acknowledge state, ⌘R/⌘K hotkeys, a route-param detail page and a search overlay.",
+      "tags": [
+        "monitoring",
+        "realtime",
+        "state domains",
+        "hotkeys"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "data",
+        "realtime",
+        "keyboard"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "lang": "en",
+      "thumbLang": null
     },
     {
       "id": "mkt-campaign",
@@ -878,6 +901,69 @@
       "status": "built",
       "lang": "en",
       "thumbLang": "en"
+    },
+    {
+      "id": "mkt-3d-hero",
+      "tab": "marketing",
+      "group": null,
+      "title": "3D Hero (Pure Geometry)",
+      "summary": "A 3D hero that needs no assets: native geometry (a ring knot, a halo and orbiting satellites) builds the key visual at runtime, two camera buttons switch viewpoints live, and three capability cards reveal on scroll.",
+      "tags": [
+        "3D",
+        "hero",
+        "pure geometry"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "3d",
+        "motion"
+      ],
+      "priority": "P0",
+      "status": "built",
+      "lang": "en",
+      "thumbLang": "zh"
+    },
+    {
+      "id": "mkt-3d-launch",
+      "tab": "marketing",
+      "group": null,
+      "title": "3D Product Launch (Model + Primitives)",
+      "summary": "A launch page where a model and primitives share one scene: a 3D stage pairing a .glb subject with a geometry staging, a scroll-driven assembly band (one declaration binds the trajectory progress), def/ref instance reuse, and detail cards revealed on scroll.",
+      "tags": [
+        "3D",
+        "launch page",
+        "model mixing"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "3d",
+        "motion"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "lang": "en",
+      "thumbLang": "zh"
+    },
+    {
+      "id": "itr-3d-narrative",
+      "tab": "interaction",
+      "group": null,
+      "title": "3D Pinned Narrative (Scroll Assembly)",
+      "summary": "Pinned travel plus windowed assembly: inside a 300vh travel a sticky frame sends the base, body and crown in one after another by scroll ratio (reversible), with a reading-progress bar and two camera buttons; the assembled state is the default.",
+      "tags": [
+        "3D",
+        "pinning",
+        "scroll narrative"
+      ],
+      "pages": 1,
+      "capabilities": [
+        "3d",
+        "motion"
+      ],
+      "priority": "P1",
+      "status": "built",
+      "lang": "en",
+      "thumbLang": "zh"
     }
   ]
 }

@@ -24,13 +24,13 @@
           </FlexContainer>
         </Container>
 
-        <!-- Note card (owner: value / draft / editing / idle / present / deleted) -->
+        <!-- Note card (component domain: value / draft / editing / idle; deleted state lives in the App domain: noteDeleted / notePresent) -->
         <Container id="loop_note_card" style="height:auto; width:100%">
           <FlexContainer id="loop_note_col" props={direction: "column"} style="height:auto; width:100%; align-items:stretch; gap:16px; padding:24px 26px">
 
             <!-- Deleted state -->
             <Container id="loop_deleted_cell" style="height:auto; width:100%">
-              <Text id="loop_deleted_text" props={content: "Note deleted — the overlay returned confirmed = true. Refresh to restore the demo data.", visible: "{{DOM.loop_note_card.data.deleted}}"} style="height:auto; width:100%; padding:14px 16px"/>
+              <Result id="loop_deleted_result" props={status: "success", title: "Note deleted", subTitle: "The overlay returned confirmed = true. Refresh to restore the demo data.", visible: "{{app.noteDeleted}}"} style="height:auto; width:100%"/>
             </Container>
 
             <!-- Title row (view / edit states swap in pairs) -->
@@ -52,7 +52,7 @@
             <Container id="loop_meta_row_cell" style="height:auto; width:100%; padding-top:2px">
               <FlexContainer id="loop_meta_row" props={direction: "row"} style="height:auto; width:100%; align-items:center; justify-content:space-between">
                 <Container id="loop_meta_cell" style="height:auto; width:auto"><Text id="loop_meta" props={content: "Last edited today 14:20 · filed under Work", tagName: "span"}/></Container>
-                <Container id="loop_delete_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_delete_btn" props={content: "Delete note", variant: "danger", visible: "{{DOM.loop_note_card.data.present}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
+                <Container id="loop_delete_cell" style="height:auto; width:auto; flex-shrink:0"><Button id="loop_delete_btn" props={content: "Delete note", variant: "danger", visible: "{{app.notePresent}}"} style="height:auto; width:auto; padding:8px 18px"/></Container>
               </FlexContainer>
             </Container>
           </FlexContainer>
@@ -86,7 +86,11 @@
       }
       # owner: inline-edit state (the overlay result is written back cross-page by the **sub-page root**, see below)
       @loop_note_card = {
-        data: { value: "Weekly draft", draft: "Weekly draft", editing: false, idle: true, present: true, deleted: false }
+        data: { value: "Weekly draft", draft: "Weekly draft", editing: false, idle: true }
+      }
+      # App domain (F10): the cross-page deleted state — the writer (sub-page root) must declare writes
+      @app = {
+        data: { noteDeleted: false, notePresent: true }
       }
     </script>
     <styles>
@@ -101,7 +105,6 @@
       @loop_cancel_btn = { color: #334155; background: #ffffff; border-radius: 10px; font-size: 13px; font-weight: 600; :scope { border: 1px solid #e2e8f0; transition: border-color 0.2s ease; } :scope:hover { border-color: #94a3b8; } }
       @loop_delete_btn = { color: #b91c1c; background: #fef2f2; border-radius: 10px; font-size: 13px; font-weight: 700; :scope { border: 1px solid #fecaca; transition: background-color 0.2s ease; } :scope:hover { background-color: #fee2e2; } }
       @loop_deleted_cell = { background: #f0fdf4; border-radius: 12px; :scope { border: 1px solid #bbf7d0; } }
-      @loop_deleted_text = { color: #15803d; font-size: 13px; font-weight: 600; line-height: 1.7; }
       @loop_tip_card = { background: #fffbeb; border-radius: 14px; :scope { border: 1px solid #fde68a; } }
       @loop_tip_title = { color: #92400e; font-size: 15px; font-weight: 800; }
       @loop_tip_1 = { color: #a16207; font-size: 13px; line-height: 1.7; }
@@ -140,14 +143,15 @@
       # Page root: receives sendData (the original values; the name comparison happens in the event code — bindings must not carry expressions)
       # The gate UI swaps two static buttons via **paired visibility flags** (phrase_ok / name_mismatch):
       # a `disabled` **literal boolean** does not take part in re-resolution, which avoids the known
-      # binding re-resolution hazard inside overlays (see roadmap/template-library.md §13).
+      # binding re-resolution hazard inside overlays (see archive/2026-09-completed-waves/template-library.md §13).
       @loop_confirm_root = {
         data: { confirm_text: "", required_phrase: "Weekly draft", name_mismatch: true, phrase_ok: false },
         events: {
           initFromSendData: { trigger: "onOverlayInit", input: "data", code: "DOM.loop_confirm_root.data.required_phrase = data.name" },
           # Result hand-back: the sub-page root receives closeResult before the instance is removed and
           # **writes back across pages** to the main page owner
-          commitResult: { trigger: "onOverlayClose", input: "event", code: "if (event && event.confirmed) { Notes.loop_note_card.data.deleted = true; Notes.loop_note_card.data.present = false; }" }
+          commitResult: { trigger: "onOverlayClose", input: "event", code: "if (event && event.confirmed) { app.noteDeleted = true; app.notePresent = false; }",
+          writes: ["app.noteDeleted", "app.notePresent"] }
         }
       }
       # Validate on input: the onChange code compares directly and flips the gate flags, writing text
@@ -155,7 +159,9 @@
       # "late stale execution overwrites" in the ledger).
       @loop_confirm_input = {
         events: {
-          verifyPhrase: { trigger: "onChange", input: "event", code: "var v = event && event.target ? event.target.value : event; DOM.loop_confirm_root.data.confirm_text = v; DOM.loop_confirm_root.data.name_mismatch = v !== DOM.loop_confirm_root.data.required_phrase; DOM.loop_confirm_root.data.phrase_ok = v === DOM.loop_confirm_root.data.required_phrase" }
+          verifyPhrase: { trigger: "onChange", input: "event", code: "var v = event && event.target ? event.target.value : event; DOM.loop_confirm_root.data.confirm_text = v; DOM.loop_confirm_root.data.name_mismatch = v !== DOM.loop_confirm_root.data.required_phrase; DOM.loop_confirm_root.data.phrase_ok = v === DOM.loop_confirm_root.data.required_phrase" },
+          # 输入聚焦时按 Esc = 取消（onKeyDown 仅登记在表单面组件；引擎不代管 ESC——批次 E3 契约）
+          escCancel: { trigger: "onKeyDown", input: "event", code: "if (event && event.key === 'Escape') { overlay.close({ result: { confirmed: false } }) }" }
         }
       }
       @loop_confirm_cancel = {
@@ -212,7 +218,8 @@ Geometry and type:
 `编辑 / 保存 / 取消 / 删除此笔记` → "Edit / Save / Cancel / Delete note"; the overlay page name
 `确认删除` → "Delete note" (the `overlay.open({page})` argument was updated with it).
 
-**One structural rename.** The main page's `name` is the alias used for cross-page write-back in event
-code (`笔记.loop_note_card.data…`), so it became `Notes` and that code line follows. Node **ids** are
-identical to the Chinese version, so tooling and E2E can address either document with the same
-selectors.
+**Localized page name.** The main page's `name` is the display/localization alias (it became
+`Notes`); the cross-page write-back now goes through the **App domain** (`app.noteDeleted` /
+`app.notePresent` + `writes` declaration) instead of a bare cross-page write — so localized page
+names no longer leak into event code. Node **ids** are identical to the Chinese version, so tooling
+and E2E can address either document with the same selectors.

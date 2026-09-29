@@ -170,7 +170,7 @@
     </FlexContainer>
 
     <script>
-      # Board data (a data-driven row set; row key = item.value)
+      # Board data (a data-driven row set; unified row key chain = id -> key -> value — this sample uses value)
       @kb_root = {
         data: {
           todo: [
@@ -198,7 +198,7 @@
         events: {
           todoChange: {
             trigger: "onChange",
-            code: "var rows = DOM.kb_root.data.todo; if (event.removed) { DOM.kb_root.data.todo = rows.filter(function(r){ return r.value !== event.removed.key; }); } else if (event.inserted) { var next = rows.slice(); next.splice(event.inserted.index, 0, event.inserted.item); DOM.kb_root.data.todo = next; } else { DOM.kb_root.data.todo = event.order.map(function(k){ return rows.filter(function(r){ return r.value === k; })[0]; }); }"
+            code: "var rows = DOM.kb_root.data.todo; if (event.removed) { DOM.kb_root.data.todo = rows.filter(function(r){ return (r.id || r.key || r.value) !== event.removed.key; }); } else if (event.inserted) { var next = rows.slice(); next.splice(event.inserted.index, 0, event.inserted.item); DOM.kb_root.data.todo = next; } else { DOM.kb_root.data.todo = event.order.map(function(k){ return rows.filter(function(r){ return (r.id || r.key || r.value) === k; })[0]; }); }"
           }
         }
       }
@@ -206,7 +206,7 @@
         events: {
           doingChange: {
             trigger: "onChange",
-            code: "var rows = DOM.kb_root.data.doing; if (event.removed) { DOM.kb_root.data.doing = rows.filter(function(r){ return r.value !== event.removed.key; }); } else if (event.inserted) { var next = rows.slice(); next.splice(event.inserted.index, 0, event.inserted.item); DOM.kb_root.data.doing = next; } else { DOM.kb_root.data.doing = event.order.map(function(k){ return rows.filter(function(r){ return r.value === k; })[0]; }); }"
+            code: "var rows = DOM.kb_root.data.doing; if (event.removed) { DOM.kb_root.data.doing = rows.filter(function(r){ return (r.id || r.key || r.value) !== event.removed.key; }); } else if (event.inserted) { var next = rows.slice(); next.splice(event.inserted.index, 0, event.inserted.item); DOM.kb_root.data.doing = next; } else { DOM.kb_root.data.doing = event.order.map(function(k){ return rows.filter(function(r){ return (r.id || r.key || r.value) === k; })[0]; }); }"
           }
         }
       }
@@ -214,7 +214,7 @@
         events: {
           doneChange: {
             trigger: "onChange",
-            code: "var rows = DOM.kb_root.data.done; if (event.removed) { DOM.kb_root.data.done = rows.filter(function(r){ return r.value !== event.removed.key; }); } else if (event.inserted) { var next = rows.slice(); next.splice(event.inserted.index, 0, event.inserted.item); DOM.kb_root.data.done = next; } else { DOM.kb_root.data.done = event.order.map(function(k){ return rows.filter(function(r){ return r.value === k; })[0]; }); }"
+            code: "var rows = DOM.kb_root.data.done; if (event.removed) { DOM.kb_root.data.done = rows.filter(function(r){ return (r.id || r.key || r.value) !== event.removed.key; }); } else if (event.inserted) { var next = rows.slice(); next.splice(event.inserted.index, 0, event.inserted.item); DOM.kb_root.data.done = next; } else { DOM.kb_root.data.done = event.order.map(function(k){ return rows.filter(function(r){ return (r.id || r.key || r.value) === k; })[0]; }); }"
           }
         }
       }

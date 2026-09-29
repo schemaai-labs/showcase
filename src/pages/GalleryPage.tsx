@@ -24,6 +24,9 @@ const CAPABILITY_LABEL: Record<string, string> = {
   drag: 'Drag',
   data: 'Data',
   export: 'Export',
+  realtime: 'Realtime',
+  keyboard: 'Keyboard',
+  '3d': '3D',
 };
 
 /** Brand mark — the same schema-node glyph as the favicon, inlined so it inherits currentColor. */
